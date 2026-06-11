@@ -78,7 +78,7 @@ export default function Home() {
 
    <div className="text-center mb-12">
 
-  <div className="inline-block bg-gradient-to-r from-yellow-800 to-amber-600 text-black px-11 py-10 rounded-full font-bold text-lg shadow-lg mb-8">
+  <div className="inline-block bg-gradient-to-r from-yellow-400 to-amber-300 text-black px-10 py-6 rounded-full font-bold text-lg shadow-lg mb-8">
     ⭐⭐⭐⭐⭐ Mysore's Family Entertainment Center
   </div>
 
@@ -96,7 +96,7 @@ export default function Home() {
 
     <div className="grid md:grid-cols-3 gap-8">
 
-      <div className="bg-white rounded-3xl shadow-xl p-8 text-center">
+      <div className="bg-white rounded-3xl shadow-xl p-8 text-center text-gray-900">
         <div className="text-5xl mb-4">🎠</div>
         <h3 className="text-2xl font-bold mb-3">
   Indoor Play Zone
@@ -108,7 +108,7 @@ export default function Home() {
 </p>
       </div>
 
-      <div className="bg-white rounded-3xl shadow-xl p-8 text-center">
+      <div className="bg-white rounded-3xl shadow-xl p-8 text-center text-gray-900">
         <div className="text-5xl mb-4">🤸</div>
         <h3 className="text-2xl font-bold mb-3">
   Trampoline & Fun Rides
@@ -120,7 +120,7 @@ export default function Home() {
 </p>
       </div>
 
-      <div className="bg-white rounded-3xl shadow-xl p-8 text-center">
+      <div className="bg-white rounded-3xl shadow-xl p-8 text-center text-gray-900">
         <div className="text-5xl mb-4">🥽</div>
         <h3 className="text-2xl font-bold mb-3">
   VR & Gaming Experiences
