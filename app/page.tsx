@@ -78,7 +78,7 @@ export default function Home() {
 
    <div className="text-center mb-12">
 
-  <div className="inline-block bg-gradient-to-r from-yellow-400 to-amber-300 text-black px-10 py-6 rounded-full font-bold text-lg shadow-lg mb-8">
+  <div className="inline-block bg-gradient-to-r from-yellow-700 to-amber-500 text-black px-10 py-6 rounded-full font-bold text-lg shadow-lg mb-8">
     ⭐⭐⭐⭐⭐ Mysore's Family Entertainment Center
   </div>
 
