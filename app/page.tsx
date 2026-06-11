@@ -50,6 +50,8 @@ export default function Home() {
   Book Now
 </a>
         </div>
+
+      
       </section>
 
       {/* About */}
@@ -70,6 +72,82 @@ export default function Home() {
         </p>
       </section>
 
+{/* Why Choose Us */}
+<section className="pt-8 pb-16 px-6 bg-gradient-to-b from-white to-yellow-50">
+  <div className="max-w-6xl mx-auto">
+
+   <div className="text-center mb-12">
+
+  <div className="inline-block bg-gradient-to-r from-yellow-800 to-amber-600 text-black px-11 py-10 rounded-full font-bold text-lg shadow-lg mb-8">
+    ⭐⭐⭐⭐⭐ Mysore's Family Entertainment Center
+  </div>
+
+  <h2 className="text-4xl md:text-6xl font-extrabold text-gray-900 leading-tight max-w-5xl mx-auto">
+    Kids Play Zone & Family Entertainment in Mysuru
+  </h2>
+
+  <p className="mt-8 text-xl md:text-2xl text-gray-600 leading-relaxed max-w-4xl mx-auto">
+    Sarojani Funland is Mysore's destination for indoor play, trampolines,
+    electric car rides, scooter adventures and immersive VR gaming experiences,
+    creating unforgettable memories for children and families.
+  </p>
+
+</div>
+
+    <div className="grid md:grid-cols-3 gap-8">
+
+      <div className="bg-white rounded-3xl shadow-xl p-8 text-center">
+        <div className="text-5xl mb-4">🎠</div>
+        <h3 className="text-2xl font-bold mb-3">
+  Indoor Play Zone
+</h3>
+
+<p className="text-gray-600">
+  A vibrant indoor play area in Mysore featuring slides, soft play
+  attractions, and interactive activities designed for children of all ages.
+</p>
+      </div>
+
+      <div className="bg-white rounded-3xl shadow-xl p-8 text-center">
+        <div className="text-5xl mb-4">🤸</div>
+        <h3 className="text-2xl font-bold mb-3">
+  Trampoline & Fun Rides
+</h3>
+
+<p className="text-gray-600">
+  Enjoy exciting trampoline sessions, scooter rides, and electric car
+  adventures in a safe and family-friendly environment.
+</p>
+      </div>
+
+      <div className="bg-white rounded-3xl shadow-xl p-8 text-center">
+        <div className="text-5xl mb-4">🥽</div>
+        <h3 className="text-2xl font-bold mb-3">
+  VR & Gaming Experiences
+</h3>
+
+<p className="text-gray-600">
+  Experience the future of entertainment with immersive VR games and
+  interactive virtual adventures available exclusively at Sarojani Funland.
+</p>
+      </div>
+
+    </div>
+  </div>
+
+  <div className="text-center mb-12">
+ 
+
+  <p className="mt-6 text-xl text-gray-600 max-w-4xl mx-auto leading-9">
+    Sarojani Funland is one of Mysore's most exciting destinations for
+    children and families, offering a modern indoor play zone, trampoline
+    fun, electric car rides, scooter rides, and immersive VR gaming
+    experiences. Located in Nazarbad, Mysore, we provide a safe, engaging,
+    and memorable environment where kids can play, explore, and create
+    unforgettable memories.
+  </p>
+</div>
+</section>
 
      
  {/* Our Attractions */}
@@ -374,13 +452,16 @@ export default function Home() {
 
   </div>
 </section>
+
+{/* WhatsApp */}
 <a
   href="https://wa.me/916360921458"
   target="_blank"
-  className="fixed bottom-6 right-6 bg-green-500 text-white px-5 py-3 rounded-full shadow-lg z-50"
+  className="fixed bottom-6 right-6 bg-green-500 hover:bg-green-600 text-white px-5 py-3 rounded-full shadow-lg z-[9999] transition-all"
 >
   WhatsApp Us
 </a>
+
 
     </main>
   );
