@@ -3,6 +3,14 @@
 import Image from "next/image";
 import { useState } from "react";
 
+import {
+  User,
+  Phone,
+  Calendar,
+  Clock,
+  Gamepad2,
+} from "lucide-react";
+
 export default function BookingPage() {
 const [parentName, setParentName] = useState("");
 const [childName, setChildName] = useState("");
@@ -48,7 +56,7 @@ ${notes}
             height={250}
             className="mx-auto rounded-3xl shadow-2xl"
           />
-<h1 className="text-5xl md:text-6xl font-extrabold">
+<h1 className="text-4xl md:text-6xl font-extrabold text-gray-900">
   Book Your Visit
 </h1>
 
@@ -102,13 +110,31 @@ ${notes}
         
         {/* Booking Form */}
 
-        <div className="bg-white rounded-[32px] shadow-[0_25px_60px_rgba(0,0,0,0.15)] p-8 md:p-10 border-2 border-yellow-200">
-
-          <h2 className="text-4xl font-bold text-center mb-8">
-            Reservation Form
-          </h2>
-
+      <div
+  className="
+    max-w-3xl
+    mx-auto
+    bg-white
+    rounded-[40px]
+    border-4
+    border-yellow-400
+    shadow-[0_0_30px_rgba(250,204,21,0.25)]
+    p-8
+    md:p-10
+  "
+>
+  <h2 className="text-5xl md:text-7xl font-black text-center text-slate-900">
+  Reservation
+  <br />
+  Form
+</h2>
           <div className="space-y-5">
+
+   <div className="flex items-center justify-center gap-4 mb-8">
+  <div className="w-20 h-1 bg-yellow-400 rounded-full" />
+  <span className="text-3xl">⭐</span>
+  <div className="w-20 h-1 bg-yellow-400 rounded-full" />
+</div>
         
 
   <input
@@ -116,14 +142,42 @@ ${notes}
   placeholder="Parent Name"
   value={parentName}
   onChange={(e) => setParentName(e.target.value)}
-  className="w-full p-4 border rounded-xl"
+   className="
+w-full
+h-20
+px-6
+text-xl
+border-2
+border-gray-200
+rounded-3xl
+bg-white
+text-gray-900
+placeholder:text-gray-500
+focus:outline-none
+focus:ring-4
+focus:ring-yellow-200
+"
 />
 <input
   type="text"
   placeholder="Child Name"
   value={childName}
   onChange={(e) => setChildName(e.target.value)}
-  className="w-full p-4 border rounded-xl"
+   className="
+w-full
+h-20
+px-6
+text-xl
+border-2
+border-gray-200
+rounded-3xl
+bg-white
+text-gray-900
+placeholder:text-gray-500
+focus:outline-none
+focus:ring-4
+focus:ring-yellow-200
+"
 />
 
 <input
@@ -131,12 +185,40 @@ ${notes}
   placeholder="Mobile Number"
   value={mobile}
   onChange={(e) => setMobile(e.target.value)}
-  className="w-full p-4 border rounded-xl"
+  className="
+w-full
+h-20
+px-6
+text-xl
+border-2
+border-gray-200
+rounded-3xl
+bg-white
+text-gray-900
+placeholder:text-gray-500
+focus:outline-none
+focus:ring-4
+focus:ring-yellow-200
+"
 />
-           <select
+   <select
   value={activity}
   onChange={(e) => setActivity(e.target.value)}
-  className="w-full p-4 border rounded-xl"
+ className="
+w-full
+h-20
+px-6
+text-xl
+border-2
+border-gray-200
+rounded-3xl
+bg-white
+text-gray-900
+placeholder:text-gray-500
+focus:outline-none
+focus:ring-4
+focus:ring-yellow-200
+"
 >
               <option>Select Activity</option>
               <option>Full Play Zone Package - ₹250</option>
@@ -152,13 +234,41 @@ ${notes}
   type="date"
   value={date}
   onChange={(e) => setDate(e.target.value)}
-  className="w-full p-4 border rounded-xl"
+    className="
+w-full
+h-20
+px-6
+text-xl
+border-2
+border-gray-200
+rounded-3xl
+bg-white
+text-gray-900
+placeholder:text-gray-500
+focus:outline-none
+focus:ring-4
+focus:ring-yellow-200
+"
 />
 
         <select
   value={timeSlot}
   onChange={(e) => setTimeSlot(e.target.value)}
-  className="w-full p-4 border rounded-xl"
+  className="
+w-full
+h-20
+px-6
+text-xl
+border-2
+border-gray-200
+rounded-3xl
+bg-white
+text-gray-900
+placeholder:text-gray-500
+focus:outline-none
+focus:ring-4
+focus:ring-yellow-200
+"
 >
               <option>Select Time Slot</option>
               <option>10:00 AM</option>
@@ -177,7 +287,21 @@ ${notes}
   rows={4}
   value={notes}
   onChange={(e) => setNotes(e.target.value)}
-  className="w-full p-4 border rounded-xl"
+  className="
+w-full
+h-20
+px-6
+text-xl
+border-2
+border-gray-200
+rounded-3xl
+bg-white
+text-gray-900
+placeholder:text-gray-500
+focus:outline-none
+focus:ring-4
+focus:ring-yellow-200
+"
 />
 
             <label className="flex items-start gap-3 text-gray-700">

@@ -57,7 +57,7 @@ export default function Home() {
         id="about"
         className="max-w-6xl mx-auto px-6 py-20"
       >
-        <h2 className="text-5xl font-bold mb-8">
+        <h2 className="text-5xl font-bold mb-8 text-gray-900">
           Welcome to Sarojani Funland
         </h2>
 
@@ -76,7 +76,7 @@ export default function Home() {
 <section className="py-20 bg-gray-100">
   <div className="max-w-7xl mx-auto px-6">
 
-    <h2 className="text-5xl font-bold text-center mb-4">
+    <h2 className="text-5xl font-bold text-center mb-4 text-gray-900">
       Our Attractions
     </h2>
 
@@ -94,7 +94,7 @@ export default function Home() {
           className="w-full h-56 object-cover"
         />
         <div className="p-5">
-          <h3 className="text-xl font-bold mb-2">🛝 Play Area</h3>
+          <h3 className="text-xl font-bold mb-2 text-gray-900">🛝 Play Area</h3>
           <p className="text-gray-600">
             Slides, ball pool, swings and fun indoor activities.
           </p>
@@ -109,7 +109,7 @@ export default function Home() {
           className="w-full h-56 object-cover"
         />
         <div className="p-5">
-          <h3 className="text-xl font-bold mb-2">🤸 Trampoline</h3>
+          <h3 className="text-xl font-bold mb-2 text-gray-900">🤸 Trampoline</h3>
           <p className="text-gray-600">
             Safe and exciting trampoline fun for energetic kids.
           </p>
@@ -124,7 +124,7 @@ export default function Home() {
           className="w-full h-56 object-cover"
         />
         <div className="p-5">
-          <h3 className="text-xl font-bold mb-2">🚗 Electric Cars</h3>
+          <h3 className="text-xl font-bold mb-2 text-gray-900">🚗 Electric Cars</h3>
           <p className="text-gray-600">
             Exciting electric car rides in a safe environment.
           </p>
@@ -139,7 +139,7 @@ export default function Home() {
           className="w-full h-56 object-cover"
         />
         <div className="p-5">
-          <h3 className="text-xl font-bold mb-2">🛵 Scooter Rides</h3>
+          <h3 className="text-xl font-bold mb-2 text-gray-900">🛵 Scooter Rides</h3>
           <p className="text-gray-600">
             Fun scooter rides designed especially for kids.
           </p>
@@ -154,7 +154,7 @@ export default function Home() {
           className="w-full h-56 object-cover"
         />
         <div className="p-5">
-          <h3 className="text-xl font-bold mb-2">🥽 VR Games</h3>
+          <h3 className="text-xl font-bold mb-2 text-gray-900">🥽 VR Games</h3>
           <p className="text-gray-600">
             Immersive VR and AR gaming experiences for all ages.
           </p>
@@ -172,7 +172,7 @@ export default function Home() {
       >
         <div className="max-w-7xl mx-auto px-6">
 
-          <h2 className="text-5xl font-bold text-center mb-12">
+          <h2 className="text-5xl font-bold text-center mb-12 text-gray-900">
             Explore The Fun
           </h2>
 
@@ -237,43 +237,43 @@ export default function Home() {
       >
         <div className="max-w-7xl mx-auto px-6">
 
-          <h2 className="text-5xl font-bold text-center mb-12">
+          <h2 className="text-5xl font-bold text-center mb-12 text-gray-900">
             Activities & Pricing
           </h2>
 
           <div className="grid md:grid-cols-3 gap-6">
 
-            <div className="p-6 border rounded-2xl shadow">
+            <div className="p-6 border rounded-2xl shadow bg-white text-gray-900">
               <h3 className="text-2xl font-bold">Full Play Zone Package</h3>
               <p>30 mins (+10 mins extendable)</p>
               <p className="text-4xl font-bold mt-4">₹250</p>
             </div>
 
-            <div className="p-6 border rounded-2xl shadow">
+           <div className="p-6 border rounded-2xl shadow bg-white text-gray-900">
               <h3 className="text-2xl font-bold">Play Zone</h3>
               <p>15 mins</p>
               <p className="text-4xl font-bold mt-4">₹100</p>
             </div>
 
-            <div className="p-6 border rounded-2xl shadow">
+            <div className="p-6 border rounded-2xl shadow bg-white text-gray-900">
               <h3 className="text-2xl font-bold">Trampoline</h3>
               <p>15 mins</p>
               <p className="text-4xl font-bold mt-4">₹100</p>
             </div>
 
-            <div className="p-6 border rounded-2xl shadow">
+            <div className="p-6 border rounded-2xl shadow bg-white text-gray-900">
               <h3 className="text-2xl font-bold">Scooter Ride</h3>
               <p>10 mins</p>
               <p className="text-4xl font-bold mt-4">₹100</p>
             </div>
 
-            <div className="p-6 border rounded-2xl shadow">
+            <div className="p-6 border rounded-2xl shadow bg-white text-gray-900">
               <h3 className="text-2xl font-bold">Small Electric Car</h3>
               <p>2 Rounds</p>
               <p className="text-4xl font-bold mt-4">₹120</p>
             </div>
 
-            <div className="p-6 border rounded-2xl shadow">
+            <div className="p-6 border rounded-2xl shadow bg-white text-gray-900">
               <h3 className="text-2xl font-bold">Large Electric Car</h3>
               <p>2 Rounds</p>
               <p className="text-4xl font-bold mt-4">₹150</p>
