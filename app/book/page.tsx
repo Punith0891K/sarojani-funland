@@ -19,8 +19,44 @@ const [activity, setActivity] = useState("");
 const [date, setDate] = useState("");
 const [timeSlot, setTimeSlot] = useState("");
 const [notes, setNotes] = useState("");
+const [showSuccess, setShowSuccess] = useState(false);
 
 const handleBooking = () => {
+
+  const handleBooking = () => {
+  if (!parentName.trim()) {
+    alert("Please enter Parent Name");
+    return;
+  }
+
+  if (!childName.trim()) {
+    alert("Please enter Child Name");
+    return;
+  }
+
+  if (!/^[0-9]{10}$/.test(mobile)) {
+    alert("Please enter a valid 10-digit mobile number");
+    return;
+  }
+
+  if (!activity || activity === "Select Activity") {
+    alert("Please select an activity");
+    return;
+  }
+
+  if (!date) {
+    alert("Please select a date");
+    return;
+  }
+
+  if (!timeSlot || timeSlot === "Select Time Slot") {
+    alert("Please select a time slot");
+    return;
+  }
+
+  // Existing WhatsApp code below
+};
+
   const message = `
 🎟️ New Booking Request
 
@@ -36,15 +72,40 @@ const handleBooking = () => {
 ${notes}
   `;
 
+  
   const whatsappUrl = `https://wa.me/916360921458?text=${encodeURIComponent(
     message
   )}`;
+setShowSuccess(true);
 
+setTimeout(() => {
   window.open(whatsappUrl, "_blank");
+  setShowSuccess(false);
+}, 2000);
+
+
 };
-  return (
-   <main className="min-h-screen bg-gradient-to-b from-amber-100 via-white to-sky-100 py-10 px-4">
-      <div className="max-w-6xl mx-auto">
+
+return (
+  <main className="min-h-screen bg-gradient-to-b from-amber-100 via-white to-sky-100 py-10 px-4">
+
+    {showSuccess && (
+      <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-[9999]">
+        <div className="bg-white rounded-3xl p-8 text-center shadow-2xl max-w-md mx-4">
+          <div className="text-6xl mb-4">🎉</div>
+
+          <h3 className="text-3xl font-bold text-green-600 mb-2">
+            Booking Ready!
+          </h3>
+
+          <p className="text-gray-600">
+            Redirecting you to WhatsApp...
+          </p>
+        </div>
+      </div>
+    )}
+
+    <div className="max-w-6xl mx-auto">
 
         {/* Header */}
         <div className="text-center mb-10">
