@@ -21,7 +21,6 @@ const [timeSlot, setTimeSlot] = useState("");
 const [notes, setNotes] = useState("");
 const [showSuccess, setShowSuccess] = useState(false);
 
-const handleBooking = () => {
 
   const handleBooking = () => {
   if (!parentName.trim()) {
@@ -54,9 +53,6 @@ const handleBooking = () => {
     return;
   }
 
-  // Existing WhatsApp code below
-};
-
   const message = `
 🎟️ New Booking Request
 
@@ -83,11 +79,10 @@ setTimeout(() => {
   setShowSuccess(false);
 }, 2000);
 
-
 };
 
 return (
-  <main className="min-h-screen bg-gradient-to-b from-amber-100 via-white to-sky-100 py-10 px-4">
+  <main className="min-h-screen bg-gradient-to-br from-yellow-50 via-white to-blue-50 py-10 px-4">
 
     {showSuccess && (
       <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-[9999]">
@@ -167,27 +162,60 @@ return (
   </div>
 
 </div>
+<div className="max-w-5xl mx-auto mb-10">
+  <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
 
+    <div className="bg-white rounded-2xl p-4 shadow-xl hover:-translate-y-2 hover:shadow-2xl transition-all duration-300 text-center">
+      <div className="text-3xl mb-2">⚡</div>
+      <h3 className="font-bold text-gray-900">
+        Instant Confirmation
+      </h3>
+    </div>
+
+    <div className="bg-white rounded-2xl p-4 shadow-xl hover:-translate-y-2 hover:shadow-2xl transition-all duration-300 text-center">
+      <div className="text-3xl mb-2">🛡️</div>
+      <h3 className="font-bold text-gray-900">
+        Safe Environment
+      </h3>
+    </div>
+
+    <div className="bg-white rounded-2xl p-4 shadow-xl hover:-translate-y-2 hover:shadow-2xl transition-all duration-300 text-center">
+      <div className="text-3xl mb-2">🎮</div>
+      <h3 className="font-bold text-gray-900">
+        Multiple Activities
+      </h3>
+    </div>
+
+    <div className="bg-white rounded-2xl p-4 shadow-xl hover:-translate-y-2 hover:shadow-2xl transition-all duration-300 text-center">
+      <div className="text-3xl mb-2">👨‍👩‍👧</div>
+      <h3 className="font-bold text-gray-900">
+        Family Friendly
+      </h3>
+    </div>
+
+  </div>
+</div>
         
         {/* Booking Form */}
 
       <div
-  className="
-    max-w-3xl
-    mx-auto
-    bg-white
-    rounded-[40px]
-    border-4
-    border-yellow-400
-    shadow-[0_0_30px_rgba(250,204,21,0.25)]
-    p-8
-    md:p-10
-  "
+ className="
+  max-w-3xl
+  mx-auto
+  bg-white/80
+  backdrop-blur-xl
+  rounded-[40px]
+  border
+  border-white/50
+  shadow-[0_20px_60px_rgba(0,0,0,0.15)]
+  p-8
+  md:p-10
+"
 >
-  <h2 className="text-5xl md:text-7xl font-black text-center text-slate-900">
-  Reservation
+  <h2 className="text-4xl md:text-5xl font-black text-center text-slate-900">
+  Reserve Your
   <br />
-  Form
+  Adventure
 </h2>
           <div className="space-y-5">
 
@@ -197,154 +225,200 @@ return (
   <div className="w-20 h-1 bg-yellow-400 rounded-full" />
 </div>
         
+<div className="relative">
+  <User
+    size={24}
+    className="absolute left-6 top-1/2 -translate-y-1/2 text-yellow-500 z-10"
+  />
 
   <input
-  type="text"
-  placeholder="Parent Name"
-  value={parentName}
-  onChange={(e) => setParentName(e.target.value)}
-   className="
-w-full
-h-20
-px-6
-text-xl
-border-2
-border-gray-200
-rounded-3xl
-bg-white
-text-gray-900
-placeholder:text-gray-500
-focus:outline-none
-focus:ring-4
-focus:ring-yellow-200
-"
-/>
-<input
-  type="text"
-  placeholder="Child Name"
-  value={childName}
-  onChange={(e) => setChildName(e.target.value)}
-   className="
-w-full
-h-20
-px-6
-text-xl
-border-2
-border-gray-200
-rounded-3xl
-bg-white
-text-gray-900
-placeholder:text-gray-500
-focus:outline-none
-focus:ring-4
-focus:ring-yellow-200
-"
-/>
-
-<input
-  type="tel"
-  placeholder="Mobile Number"
-  value={mobile}
-  onChange={(e) => setMobile(e.target.value)}
-  className="
-w-full
-h-20
-px-6
-text-xl
-border-2
-border-gray-200
-rounded-3xl
-bg-white
-text-gray-900
-placeholder:text-gray-500
-focus:outline-none
-focus:ring-4
-focus:ring-yellow-200
-"
-/>
-   <select
-  value={activity}
-  onChange={(e) => setActivity(e.target.value)}
- className="
-w-full
-h-20
-px-6
-text-xl
-border-2
-border-gray-200
-rounded-3xl
-bg-white
-text-gray-900
-placeholder:text-gray-500
-focus:outline-none
-focus:ring-4
-focus:ring-yellow-200
-"
->
-              <option>Select Activity</option>
-              <option>Full Play Zone Package - ₹250</option>
-              <option>Play Area - ₹100</option>
-              <option>Trampoline - ₹100</option>
-              <option>Scooter Ride - ₹100</option>
-              <option>Small Electric Car - ₹120</option>
-              <option>Large Electric Car - ₹150</option>
-              <option>VR / AR Games - ₹150</option>
-            </select>
-
-            <input
-  type="date"
-  value={date}
-  onChange={(e) => setDate(e.target.value)}
+    type="text"
+    placeholder="Parent Name"
+    value={parentName}
+    onChange={(e) => setParentName(e.target.value)}
     className="
-w-full
-h-20
-px-6
-text-xl
-border-2
-border-gray-200
-rounded-3xl
-bg-white
-text-gray-900
-placeholder:text-gray-500
-focus:outline-none
-focus:ring-4
-focus:ring-yellow-200
-"
-/>
+      w-full
+      h-20
+      pl-24
+      pr-6
+      text-xl
+      border-2
+      border-gray-200
+      rounded-3xl
+      bg-white
+      text-gray-900
+      placeholder:text-gray-500
+      focus:outline-none
+      focus:ring-4
+      focus:ring-yellow-200
+    "
+  />
+</div>
+  
+<div className="relative">
+  <User
+    size={24}
+    className="absolute left-6 top-1/2 -translate-y-1/2 text-yellow-500"
+  />
 
-        <select
-  value={timeSlot}
-  onChange={(e) => setTimeSlot(e.target.value)}
-  className="
-w-full
-h-20
-px-6
-text-xl
-border-2
-border-gray-200
-rounded-3xl
-bg-white
-text-gray-900
-placeholder:text-gray-500
-focus:outline-none
-focus:ring-4
-focus:ring-yellow-200
-"
->
-              <option>Select Time Slot</option>
-              <option>10:00 AM</option>
-              <option>11:00 AM</option>
-              <option>12:00 PM</option>
-              <option>01:00 PM</option>
-              <option>02:00 PM</option>
-              <option>03:00 PM</option>
-              <option>04:00 PM</option>
-              <option>05:00 PM</option>
-              <option>06:00 PM</option>
-            </select>
+  <input
+    type="text"
+    placeholder="Child Name"
+    value={childName}
+    onChange={(e) => setChildName(e.target.value)}
+    className="
+      w-full
+      h-20
+      pl-24
+      pr-6
+      text-xl
+      border-2
+      border-gray-200
+      rounded-3xl
+      bg-white
+      text-gray-900
+      placeholder:text-gray-500
+      focus:outline-none
+      focus:ring-4
+      focus:ring-yellow-200
+    "
+  />
+</div>
 
-            <textarea
-  placeholder="Special Requests"
+<div className="relative">
+  <Phone
+    size={24}
+    className="absolute left-6 top-1/2 -translate-y-1/2 text-green-500"
+  />
+
+  <input
+    type="tel"
+    placeholder="Mobile Number"
+    value={mobile}
+    onChange={(e) => setMobile(e.target.value)}
+    className="
+      w-full
+      h-20
+      pl-24
+      pr-6
+      text-xl
+      border-2
+      border-gray-200
+      rounded-3xl
+      bg-white
+      text-gray-900
+      placeholder:text-gray-500
+      focus:outline-none
+      focus:ring-4
+      focus:ring-yellow-200
+    "
+  />
+</div>
+
+   <div className="relative">
+  <Gamepad2
+    size={24}
+    className="absolute left-6 top-1/2 -translate-y-1/2 text-purple-500 pointer-events-none"
+  />
+
+  <select
+    value={activity}
+    onChange={(e) => setActivity(e.target.value)}
+    className="
+      w-full
+      h-20
+      pl-24
+      pr-6
+      text-xl
+      border-2
+      border-gray-200
+      rounded-3xl
+      bg-white
+      text-gray-900
+      focus:outline-none
+      focus:ring-4
+      focus:ring-yellow-200
+    "
+  >
+    <option value="">Select Activity</option>
+    <option>Full Play Zone Package - ₹250</option>
+    <option>Play Area - ₹100</option>
+    <option>Trampoline - ₹100</option>
+    <option>Scooter Ride - ₹100</option>
+    <option>Small Electric Car - ₹120</option>
+    <option>Large Electric Car - ₹150</option>
+    <option>VR / AR Games - ₹150</option>
+  </select>
+</div>
+
+    <div className="relative">
+  <Calendar
+    size={24}
+    className="absolute left-6 top-1/2 -translate-y-1/2 text-blue-500"
+  />
+
+  <input
+    type="date"
+    value={date}
+    onChange={(e) => setDate(e.target.value)}
+    className="
+      w-full
+      h-20
+      pl-24
+      pr-6
+      text-xl
+      border-2
+      border-gray-200
+      rounded-3xl
+      bg-white
+      text-gray-900
+      focus:outline-none
+      focus:ring-4
+      focus:ring-yellow-200
+    "
+  />
+</div>
+
+<div className="relative">
+  <Clock
+    size={24}
+    className="absolute left-6 top-1/2 -translate-y-1/2 text-red-500 pointer-events-none"
+  />
+
+  <select
+    value={timeSlot}
+    onChange={(e) => setTimeSlot(e.target.value)}
+    className="
+      w-full
+      h-20
+      pl-24
+      pr-6
+      text-xl
+      border-2
+      border-gray-200
+      rounded-3xl
+      bg-white
+      text-gray-900
+      focus:outline-none
+      focus:ring-4
+      focus:ring-yellow-200
+    "
+  >
+    <option value="">Select Time Slot</option>
+    <option>10:00 AM</option>
+    <option>11:00 AM</option>
+    <option>12:00 PM</option>
+    <option>01:00 PM</option>
+    <option>02:00 PM</option>
+    <option>03:00 PM</option>
+    <option>04:00 PM</option>
+    <option>05:00 PM</option>
+    <option>06:00 PM</option>
+  </select>
+</div>
+
+    <textarea
+  placeholder="Special Requests(Optional)"
   rows={4}
   value={notes}
   onChange={(e) => setNotes(e.target.value)}
@@ -373,6 +447,17 @@ focus:ring-yellow-200
               </span>
             </label>
 
+<div className="bg-gradient-to-r from-yellow-50 to-amber-50 border-2 border-yellow-200 rounded-3xl p-6">
+  <h3 className="text-2xl font-bold mb-4">
+    🎟️ Booking Summary
+  </h3>
+
+  <div className="space-y-2 text-lg">
+    <p><strong>Activity:</strong> {activity || "Not Selected"}</p>
+    <p><strong>Date:</strong> {date || "Not Selected"}</p>
+    <p><strong>Time:</strong> {timeSlot || "Not Selected"}</p>
+  </div>
+</div>
 
 <button
   type="button"
@@ -404,7 +489,10 @@ focus:ring-yellow-200
 
       </div>
 
-
+<div className="mt-6 text-center text-gray-600">
+  <p>🔒 Your details are secure and never shared.</p>
+  <p className="mt-2">📞 Need help? Call +91 63609 21458</p>
+</div>
     </main>
   );
 }
