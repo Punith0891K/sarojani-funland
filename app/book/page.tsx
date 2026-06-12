@@ -126,37 +126,37 @@ return (
         <div className="grid md:grid-cols-3 gap-6 mb-12">
 
   <div className="bg-white rounded-3xl p-6 shadow-xl hover:scale-105 transition">
-    <h3 className="text-2xl font-bold">🎠 Play Area</h3>
+    <h3 className="text-2xl font-bold text-gray-600">🎠 Play Area</h3>
     <p className="text-gray-600 mt-2">Slides, Ball Pool & Indoor Fun</p>
     <p className="text-4xl font-black text-orange-500 mt-4">₹100</p>
   </div>
 
   <div className="bg-white rounded-3xl p-6 shadow-xl hover:scale-105 transition">
-    <h3 className="text-2xl font-bold">🤸 Trampoline</h3>
+    <h3 className="text-2xl font-bold text-gray-600">🤸 Trampoline</h3>
     <p className="text-gray-600 mt-2">Jump, Bounce & Enjoy</p>
     <p className="text-4xl font-black text-green-500 mt-4">₹100</p>
   </div>
 
   <div className="bg-white rounded-3xl p-6 shadow-xl hover:scale-105 transition">
-    <h3 className="text-2xl font-bold">🛵 Scooter Ride</h3>
+    <h3 className="text-2xl font-bold text-gray-600">🛵 Scooter Ride</h3>
     <p className="text-gray-600 mt-2">Safe Scooter Fun For Kids</p>
     <p className="text-4xl font-black text-pink-500 mt-4">₹100</p>
   </div>
 
   <div className="bg-white rounded-3xl p-6 shadow-xl hover:scale-105 transition">
-    <h3 className="text-2xl font-bold">🚗 Small Electric Car</h3>
+    <h3 className="text-2xl font-bold text-gray-600">🚗 Small Electric Car</h3>
     <p className="text-gray-600 mt-2">Exciting Driving Experience</p>
     <p className="text-4xl font-black text-blue-500 mt-4">₹120</p>
   </div>
 
   <div className="bg-white rounded-3xl p-6 shadow-xl hover:scale-105 transition">
-    <h3 className="text-2xl font-bold">🚙 Large Electric Car</h3>
+    <h3 className="text-2xl font-bold text-gray-600">🚙 Large Electric Car</h3>
     <p className="text-gray-600 mt-2">Bigger Ride, Bigger Fun</p>
     <p className="text-4xl font-black text-purple-500 mt-4">₹150</p>
   </div>
 
   <div className="bg-white rounded-3xl p-6 shadow-xl hover:scale-105 transition">
-    <h3 className="text-2xl font-bold">🥽 VR / AR Games</h3>
+    <h3 className="text-2xl font-bold text-gray-600">🥽 VR / AR Games</h3>
     <p className="text-gray-600 mt-2">Immersive Virtual Adventures</p>
     <p className="text-4xl font-black text-indigo-500 mt-4">₹150</p>
   </div>
@@ -228,7 +228,7 @@ return (
 <div className="relative">
   <User
     size={24}
-    className="absolute left-6 top-1/2 -translate-y-1/2 text-yellow-500 z-10"
+    className="absolute left-5 top-1/2 -translate-y-1/2 text-yellow-500 z-10"
   />
 
   <input
@@ -258,7 +258,7 @@ return (
 <div className="relative">
   <User
     size={24}
-    className="absolute left-6 top-1/2 -translate-y-1/2 text-yellow-500"
+    className="absolute left-5 top-1/2 -translate-y-1/2 text-yellow-500"
   />
 
   <input
@@ -288,7 +288,7 @@ return (
 <div className="relative">
   <Phone
     size={24}
-    className="absolute left-6 top-1/2 -translate-y-1/2 text-green-500"
+    className="absolute left-5 top-1/2 -translate-y-1/2 text-green-500"
   />
 
   <input
@@ -318,7 +318,7 @@ return (
    <div className="relative">
   <Gamepad2
     size={24}
-    className="absolute left-6 top-1/2 -translate-y-1/2 text-purple-500 pointer-events-none"
+    className="absolute left-5 top-1/2 -translate-y-1/2 text-purple-500 pointer-events-none"
   />
 
   <select
@@ -354,7 +354,7 @@ return (
     <div className="relative">
   <Calendar
     size={24}
-    className="absolute left-6 top-1/2 -translate-y-1/2 text-blue-500"
+    className="absolute left-5 top-1/2 -translate-y-1/2 text-blue-500"
   />
 
   <input
@@ -382,7 +382,7 @@ return (
 <div className="relative">
   <Clock
     size={24}
-    className="absolute left-6 top-1/2 -translate-y-1/2 text-red-500 pointer-events-none"
+    className="absolute left-5 top-1/2 -translate-y-1/2 text-red-500 pointer-events-none"
   />
 
   <select
@@ -448,11 +448,11 @@ focus:ring-yellow-200
             </label>
 
 <div className="bg-gradient-to-r from-yellow-50 to-amber-50 border-2 border-yellow-200 rounded-3xl p-6">
-  <h3 className="text-2xl font-bold mb-4">
+  <h3 className="text-2xl font-bold mb-4 text-gray-800">
     🎟️ Booking Summary
   </h3>
 
-  <div className="space-y-2 text-lg">
+  <div className="space-y-2 text-lg text-gray-800">
     <p><strong>Activity:</strong> {activity || "Not Selected"}</p>
     <p><strong>Date:</strong> {date || "Not Selected"}</p>
     <p><strong>Time:</strong> {timeSlot || "Not Selected"}</p>
