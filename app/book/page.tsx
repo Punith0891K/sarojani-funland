@@ -262,7 +262,7 @@ return (
     className="
       w-full
       h-20
-      pl-24
+      pl-20
       pr-6
       text-xl
       border-2
@@ -292,7 +292,7 @@ return (
     className="
       w-full
       h-20
-      pl-24
+      pl-20
       pr-6
       text-xl
       border-2
@@ -322,7 +322,7 @@ return (
     className="
       w-full
       h-20
-      pl-24
+      pl-20
       pr-6
       text-xl
       border-2
@@ -350,7 +350,7 @@ return (
     className="
       w-full
       h-20
-      pl-24
+      pl-20
       pr-6
       text-xl
       border-2
@@ -387,7 +387,7 @@ return (
     className="
       w-full
       h-20
-      pl-24
+      pl-20
       pr-6
       text-xl
       border-2
@@ -414,7 +414,7 @@ return (
     className="
       w-full
       h-20
-      pl-24
+      pl-20
       pr-6
       text-xl
       border-2

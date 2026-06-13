@@ -55,11 +55,11 @@ export default async function BookingSuccess({
 
 <div className="bg-green-50 rounded-3xl p-6 mt-8 text-left border border-green-100">
 
-  <h3 className="text-2xl font-bold mb-4">
+  <h3 className="text-2xl font-bold mb-4 text-gray-700">
     🎟 Booking Details
   </h3>
 
-  <div className="space-y-3 text-lg">
+  <div className="space-y-3 text-lg text-gray-700">
 
    <p>
   <strong>Booking ID:</strong> SF-{bookingId}
@@ -92,7 +92,7 @@ export default async function BookingSuccess({
 
 <div className="mt-6 bg-blue-50 border border-blue-200 rounded-3xl p-6">
 
-  <h3 className="text-2xl font-bold mb-3">
+  <h3 className="text-2xl font-bold mb-3 text-gray-700">
     📍 Visit Sarojani Funland
   </h3>
 
@@ -115,7 +115,7 @@ export default async function BookingSuccess({
 
 <div className="mt-6 bg-yellow-50 border border-yellow-200 rounded-3xl p-5">
 
-  <h4 className="font-bold text-lg mb-2">
+  <h4 className="font-bold text-lg mb-2 text-gray-700">
     ⭐ Important
   </h4>
 
