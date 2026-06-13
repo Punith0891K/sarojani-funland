@@ -46,10 +46,10 @@ const totalPrice =
     return;
   }
 
-  if (!childName.trim()) {
-    alert("Please enter Child Name");
-    return;
-  }
+if (childrenNames.some((name) => !name.trim())) {
+  alert("Please enter Child Name");
+  return;
+}
 
   if (!/^[0-9]{10}$/.test(mobile)) {
     alert("Please enter a valid 10-digit mobile number");
@@ -83,8 +83,8 @@ setLoading(true);
   .insert([
    {
   parent_name: parentName,
-  child_name: childrenNames.join(", "),
   children_count: childrenCount,
+  child_name: childrenNames.join(", "),
   mobile: mobile,
   activity: activity,
   booking_date: date,
@@ -99,7 +99,7 @@ setLoading(true);
 if (error) {
   setLoading(false);
   console.error(error);
-  alert("Failed to save booking");
+  alert("Failed to save booking. Please try again.");
   return;
 }
 
@@ -292,7 +292,7 @@ return (
 <div className="relative">
   <User
     size={24}
-    className="absolute left-5 top-1/2 -translate-y-1/2 text-yellow-500 z-10"
+    className="absolute left-5 top-1/2 -translate-y-1/2 text-yellow-500"
   />
 
   <input
@@ -317,6 +317,7 @@ return (
       focus:ring-yellow-200
     "
   />
+</div>
 
   <div className="bg-gray-50 border border-gray-200 rounded-3xl p-4">
 
@@ -357,8 +358,6 @@ return (
     </select>
 
   </div>
-
-</div>
 
 
 </div>
@@ -465,35 +464,6 @@ return (
   </select>
 </div>
 
-{activity && childrenCount && (
-  <div className="bg-yellow-50 border border-yellow-200 rounded-3xl p-6">
-
-    <h3 className="text-xl font-bold text-gray-800 mb-3">
-      🎟 Booking Summary
-    </h3>
-
-    <div className="space-y-2 text-gray-700">
-      <p>
-        <strong>Activity:</strong> {activity}
-      </p>
-
-      <p>
-        <strong>Children:</strong> {childrenCount}
-      </p>
-    </div>
-
-    <div className="mt-4 pt-4 border-t border-yellow-200">
-      <p className="text-gray-600">
-        Total Amount
-      </p>
-
-      <p className="text-4xl font-black text-green-600">
-        ₹{totalPrice}
-      </p>
-    </div>
-
-  </div>
-)}
 
     <div className="relative">
   <Calendar
@@ -602,15 +572,26 @@ focus:ring-yellow-200
 </label>
 
 <div className="bg-gradient-to-r from-yellow-50 to-amber-50 border-2 border-yellow-200 rounded-3xl p-6">
+
   <h3 className="text-2xl font-bold mb-4 text-gray-800">
     🎟️ Booking Summary
   </h3>
 
   <div className="space-y-2 text-lg text-gray-800">
     <p><strong>Activity:</strong> {activity || "Not Selected"}</p>
+    <p><strong>Children:</strong> {childrenCount || "Not Selected"}</p>
     <p><strong>Date:</strong> {date || "Not Selected"}</p>
     <p><strong>Time:</strong> {timeSlot || "Not Selected"}</p>
   </div>
+
+  <div className="mt-4 pt-4 border-t border-yellow-200">
+    <p className="text-gray-600">Total Amount</p>
+
+    <p className="text-4xl font-black text-green-600">
+      ₹{totalPrice}
+    </p>
+  </div>
+
 </div>
 
 <button
