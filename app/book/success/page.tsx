@@ -3,12 +3,14 @@ import Link from "next/link";
 export default async function BookingSuccess({
   searchParams,
 }: {
-  searchParams: Promise<{
-    id?: string;
-    activity?: string;
-    date?: string;
-    time?: string;
-  }>;
+ searchParams: Promise<{
+  id?: string;
+  activity?: string;
+  date?: string;
+  time?: string;
+  children?: string;
+  total?: string;
+}>;
 }) {
   const params = await searchParams;
 
@@ -16,6 +18,8 @@ export default async function BookingSuccess({
   const activity = params.activity;
   const date = params.date;
   const time = params.time;
+  const children = params.children;
+  const total = params.total;
 
   return (
     <main className="min-h-screen flex items-center justify-center bg-gradient-to-br from-yellow-50 via-white to-green-50">

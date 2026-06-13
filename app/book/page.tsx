@@ -23,6 +23,21 @@ const [timeSlot, setTimeSlot] = useState("");
 const [notes, setNotes] = useState("");
 const [showSuccess, setShowSuccess] = useState(false);
 const [agreed, setAgreed] = useState(false);
+const [loading, setLoading] = useState(false);
+const [childrenCount, setChildrenCount] = useState<number | "">("");
+const [childrenNames, setChildrenNames] = useState([""]);
+const activityPrices: Record<string, number> = {
+  "Full Play Zone Package - ₹250": 250,
+  "Play Area - ₹100": 100,
+  "Trampoline - ₹100": 100,
+  "Scooter Ride - ₹100": 100,
+  "Small Electric Car - ₹120": 120,
+  "Large Electric Car - ₹150": 150,
+  "VR / AR Games - ₹150": 150,
+};
+
+const totalPrice =
+  (activityPrices[activity] || 0) * Number(childrenCount || 0);
 
 
   const handleBooking = async () => {
@@ -61,23 +76,28 @@ const [agreed, setAgreed] = useState(false);
   return;
 }
 
+setLoading(true);
+
   const { data, error } = await supabase
   .from("bookings")
   .insert([
-    {
-      parent_name: parentName,
-      child_name: childName,
-      mobile: mobile,
-      activity: activity,
-      booking_date: date,
-      time_slot: timeSlot,
-      notes: notes,
-    },
+   {
+  parent_name: parentName,
+  child_name: childrenNames.join(", "),
+  children_count: childrenCount,
+  mobile: mobile,
+  activity: activity,
+  booking_date: date,
+  time_slot: timeSlot,
+  notes: notes,
+  total_amount: totalPrice,
+}
   ])
   .select()
   .single();
 
 if (error) {
+  setLoading(false);
   console.error(error);
   alert("Failed to save booking");
   return;
@@ -98,14 +118,35 @@ if (error) {
 ${notes}
   `;
 
-  router.push(
-  `/book/success?id=${data.id}&activity=${encodeURIComponent(activity)}&date=${encodeURIComponent(date)}&time=${encodeURIComponent(timeSlot)}`
+ router.push(
+  `/book/success?id=${data.id}&activity=${encodeURIComponent(activity)}&date=${encodeURIComponent(date)}&time=${encodeURIComponent(timeSlot)}&children=${childrenCount}&total=${totalPrice}`
 );
 
 };
 
 return (
   <main className="min-h-screen bg-gradient-to-br from-yellow-50 via-white to-blue-50 py-10 px-4">
+
+    {loading && (
+  <div className="fixed inset-0 bg-black/30 backdrop-blur-sm flex items-center justify-center z-[9999]">
+
+    <div className="bg-white/20 backdrop-blur-xl border border-white/30 rounded-3xl p-8 shadow-2xl text-center">
+
+    <div className="flex justify-center mb-4">
+    <div className="w-14 h-14 border-[5px] border-yellow-400 border-t-transparent rounded-full animate-spin"></div>
+    </div> 
+      <h3 className="text-2xl font-bold text-gray-900">
+        Processing your reservation...
+      </h3>
+
+      <p className="text-gray-700 mt-2">
+        Please wait a moment
+      </p>
+
+    </div>
+
+  </div>
+)}
 
     {showSuccess && (
       <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-[9999]">
@@ -276,37 +317,87 @@ return (
       focus:ring-yellow-200
     "
   />
+
+  <div className="bg-gray-50 border border-gray-200 rounded-3xl p-4">
+
+  <p className="text-sm font-semibold text-gray-500 mb-2">
+    Number of Children
+  </p>
+
+  <div className="relative">
+
+    <select
+      value={childrenCount}
+      onChange={(e) => {
+        const count = Number(e.target.value);
+        setChildrenCount(count);
+        setChildrenNames(Array(count).fill(""));
+      }}
+      className="
+        w-full
+        h-20
+        px-6
+        text-xl
+        border-2
+        border-gray-200
+        rounded-3xl
+        bg-white
+        text-gray-900
+        focus:outline-none
+        focus:ring-4
+        focus:ring-yellow-200
+      "
+    >
+      <option value="">Select Number of Children</option>
+      <option value={1}>1 Child</option>
+      <option value={2}>2 Children</option>
+      <option value={3}>3 Children</option>
+      <option value={4}>4 Children</option>
+      <option value={5}>5 Children</option>
+    </select>
+
+  </div>
+
+</div>
+
+
 </div>
   
-<div className="relative">
-  <User
-    size={24}
-    className="absolute left-5 top-1/2 -translate-y-1/2 text-yellow-500"
-  />
+{childrenNames.map((name, index) => (
+  <div key={index} className="relative">
+    <User
+      size={24}
+      className="absolute left-5 top-1/2 -translate-y-1/2 text-yellow-500"
+    />
 
-  <input
-    type="text"
-    placeholder="Child Name"
-    value={childName}
-    onChange={(e) => setChildName(e.target.value)}
-    className="
-      w-full
-      h-20
-      pl-20
-      pr-6
-      text-xl
-      border-2
-      border-gray-200
-      rounded-3xl
-      bg-white
-      text-gray-900
-      placeholder:text-gray-500
-      focus:outline-none
-      focus:ring-4
-      focus:ring-yellow-200
-    "
-  />
-</div>
+    <input
+      type="text"
+      placeholder={`Child ${index + 1} Name`}
+      value={name}
+      onChange={(e) => {
+        const updated = [...childrenNames];
+        updated[index] = e.target.value;
+        setChildrenNames(updated);
+      }}
+      className="
+        w-full
+        h-20
+        pl-20
+        pr-6
+        text-xl
+        border-2
+        border-gray-200
+        rounded-3xl
+        bg-white
+        text-gray-900
+        placeholder:text-gray-500
+        focus:outline-none
+        focus:ring-4
+        focus:ring-yellow-200
+      "
+    />
+  </div>
+))}
 
 <div className="relative">
   <Phone
@@ -373,6 +464,36 @@ return (
     <option>VR / AR Games - ₹150</option>
   </select>
 </div>
+
+{activity && childrenCount && (
+  <div className="bg-yellow-50 border border-yellow-200 rounded-3xl p-6">
+
+    <h3 className="text-xl font-bold text-gray-800 mb-3">
+      🎟 Booking Summary
+    </h3>
+
+    <div className="space-y-2 text-gray-700">
+      <p>
+        <strong>Activity:</strong> {activity}
+      </p>
+
+      <p>
+        <strong>Children:</strong> {childrenCount}
+      </p>
+    </div>
+
+    <div className="mt-4 pt-4 border-t border-yellow-200">
+      <p className="text-gray-600">
+        Total Amount
+      </p>
+
+      <p className="text-4xl font-black text-green-600">
+        ₹{totalPrice}
+      </p>
+    </div>
+
+  </div>
+)}
 
     <div className="relative">
   <Calendar
