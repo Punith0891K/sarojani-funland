@@ -1,7 +1,8 @@
 "use client";
-
+import { supabase } from "@/lib/supabase";
 import Image from "next/image";
 import { useState } from "react";
+import { useRouter } from "next/navigation";
 
 import {
   User,
@@ -12,6 +13,7 @@ import {
 } from "lucide-react";
 
 export default function BookingPage() {
+const router = useRouter();
 const [parentName, setParentName] = useState("");
 const [childName, setChildName] = useState("");
 const [mobile, setMobile] = useState("");
@@ -20,9 +22,10 @@ const [date, setDate] = useState("");
 const [timeSlot, setTimeSlot] = useState("");
 const [notes, setNotes] = useState("");
 const [showSuccess, setShowSuccess] = useState(false);
+const [agreed, setAgreed] = useState(false);
 
 
-  const handleBooking = () => {
+  const handleBooking = async () => {
   if (!parentName.trim()) {
     alert("Please enter Parent Name");
     return;
@@ -53,6 +56,34 @@ const [showSuccess, setShowSuccess] = useState(false);
     return;
   }
 
+  if (!agreed) {
+  alert("Please agree to the safety rules and ticket policy.");
+  return;
+}
+
+  const { data, error } = await supabase
+  .from("bookings")
+  .insert([
+    {
+      parent_name: parentName,
+      child_name: childName,
+      mobile: mobile,
+      activity: activity,
+      booking_date: date,
+      time_slot: timeSlot,
+      notes: notes,
+    },
+  ])
+  .select()
+  .single();
+
+if (error) {
+  console.log("Supabase Error:", error);
+alert(JSON.stringify(error));
+  alert("Failed to save booking");
+  return;
+}
+
   const message = `
 🎟️ New Booking Request
 
@@ -68,16 +99,9 @@ const [showSuccess, setShowSuccess] = useState(false);
 ${notes}
   `;
 
-  
-  const whatsappUrl = `https://wa.me/916360921458?text=${encodeURIComponent(
-    message
-  )}`;
-setShowSuccess(true);
-
-setTimeout(() => {
-  window.open(whatsappUrl, "_blank");
-  setShowSuccess(false);
-}, 2000);
+  router.push(
+  `/book/success?id=${data.id}&activity=${encodeURIComponent(activity)}&date=${encodeURIComponent(date)}&time=${encodeURIComponent(timeSlot)}`
+);
 
 };
 
@@ -414,6 +438,9 @@ return (
     <option>04:00 PM</option>
     <option>05:00 PM</option>
     <option>06:00 PM</option>
+    <option>07:00 PM</option>
+    <option>08:00 PM</option>
+    <option>09:00 PM</option>
   </select>
 </div>
 
@@ -439,13 +466,20 @@ focus:ring-yellow-200
 "
 />
 
-            <label className="flex items-start gap-3 text-gray-700">
-              <input type="checkbox" className="mt-1" />
-              <span>
-                I agree to follow all safety rules and understand
-                that tickets are non-refundable.
-              </span>
-            </label>
+      <label className="flex items-start gap-3 bg-yellow-50 border border-yellow-200 rounded-2xl p-4 text-gray-700">
+
+  <input
+    type="checkbox"
+    checked={agreed}
+    onChange={(e) => setAgreed(e.target.checked)}
+    className="mt-1 w-5 h-5"
+  />
+
+  <span>
+    I agree to follow all safety rules and understand that tickets are non-refundable.
+  </span>
+
+</label>
 
 <div className="bg-gradient-to-r from-yellow-50 to-amber-50 border-2 border-yellow-200 rounded-3xl p-6">
   <h3 className="text-2xl font-bold mb-4 text-gray-800">
