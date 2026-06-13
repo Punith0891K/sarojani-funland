@@ -1,16 +1,21 @@
-"use client";
-
-import { useSearchParams } from "next/navigation";
-
 import Link from "next/link";
 
-export default function BookingSuccess() {
+export default async function BookingSuccess({
+  searchParams,
+}: {
+  searchParams: Promise<{
+    id?: string;
+    activity?: string;
+    date?: string;
+    time?: string;
+  }>;
+}) {
+  const params = await searchParams;
 
-  const searchParams = useSearchParams();
-  const bookingId = searchParams.get("id");
-  const activity = searchParams.get("activity");
-  const date = searchParams.get("date");
-  const time = searchParams.get("time");
+  const bookingId = params.id;
+  const activity = params.activity;
+  const date = params.date;
+  const time = params.time;
 
   return (
     <main className="min-h-screen flex items-center justify-center bg-gradient-to-br from-yellow-50 via-white to-green-50">

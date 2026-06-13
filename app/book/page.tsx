@@ -78,8 +78,7 @@ const [agreed, setAgreed] = useState(false);
   .single();
 
 if (error) {
-  console.log("Supabase Error:", error);
-alert(JSON.stringify(error));
+  console.error(error);
   alert("Failed to save booking");
   return;
 }
