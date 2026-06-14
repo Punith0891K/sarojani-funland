@@ -13,20 +13,39 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Sarojani Funland | Kids Play Zone in Mysore",
+  metadataBase: new URL("https://sarojanifunland.vercel.app"),
+
+  title: "Sarojani Funland | Kids Play Area & Indoor Play Zone in Mysuru (Mysore)",
+
   description:
-    "Indoor play area, trampoline, electric cars, scooter rides and VR games for children and families in Mysore.",
+    "Sarojani Funland is a premium indoor kids play area in Mysuru (Mysore) featuring trampolines, electric cars, scooter rides, VR games, family entertainment, and online booking.",
+
   keywords: [
     "Sarojani Funland",
-    "Play Zone Mysore",
-    "Kids Activities Mysore",
+    "Kids Play Area Mysuru",
+    "Kids Play Area Mysore",
+    "Indoor Play Zone Mysuru",
+    "Indoor Play Zone Mysore",
+    "Trampoline Park Mysuru",
     "Trampoline Park Mysore",
+    "VR Games Mysuru",
     "VR Games Mysore",
+    "Kids Activities Mysuru",
+    "Kids Activities Mysore",
+    "Family Entertainment Mysuru",
+    "Family Entertainment Mysore",
+    "Electric Car Ride Mysuru",
+    "Play Area Near Me",
   ],
+
+  alternates: {
+    canonical: "/",
+  },
+
   openGraph: {
-    title: "Sarojani Funland",
+    title: "Sarojani Funland | Kids Play Area in Mysuru",
     description:
-      "Fun • Adventure • Family Entertainment in Mysore",
+      "Fun • Adventure • Family Entertainment • Online Booking",
     images: ["/images/logo.png"],
   },
 };
