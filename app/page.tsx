@@ -322,7 +322,7 @@ export default function Home() {
   {/* Electric Cars */}
   <div className="relative group h-72 overflow-hidden rounded-3xl shadow-xl hover:shadow-2xl transition-all duration-300">
     <img
-      src="/images/20260604_220555.jpg"
+      src="/images/20260604_220227.jpg"
       alt="Electric Car Ride Mysuru"
       className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
     />
