@@ -240,13 +240,14 @@ export default function Home() {
       </div>
 
     </div>
-
   </div>
+  </section>
   
 <section
   id="gallery"
   className="py-24 px-6 bg-gradient-to-b from-white to-yellow-50"
-></section>
+>
+  <div className="max-w-7xl mx-auto"></div>
         <div className="max-w-7xl mx-auto px-6">
 <div className="text-center mb-16">
   <h2 className="text-4xl md:text-5xl font-black text-gray-900">
@@ -645,6 +646,30 @@ export default function Home() {
   WhatsApp Us
 </a>
 
+<a
+  href="/book"
+  className="
+    fixed
+    bottom-24
+    right-6
+    z-50
+    bg-gradient-to-r
+    from-yellow-400
+    to-amber-500
+    text-black
+    font-extrabold
+    px-7
+    py-4
+    rounded-full
+    shadow-2xl
+    hover:scale-110
+    transition-all
+    duration-300
+    animate-pulse
+  "
+>
+  🎟️ Book Now
+</a>
 
     </main>
   );
