@@ -242,70 +242,136 @@ export default function Home() {
     </div>
 
   </div>
-</section>
-      {/* Gallery */}
-      <section
-        id="gallery"
-        className="bg-gray-100 py-20"
-      >
+  
+<section
+  id="gallery"
+  className="py-24 px-6 bg-gradient-to-b from-white to-yellow-50"
+></section>
         <div className="max-w-7xl mx-auto px-6">
+<div className="text-center mb-16">
+  <h2 className="text-4xl md:text-5xl font-black text-gray-900">
+    Fun Moments Gallery
+  </h2>
 
-          <h2 className="text-5xl font-bold text-center mb-12 text-gray-900">
-            Explore The Fun
-          </h2>
+  <div className="flex items-center justify-center gap-4 mt-5">
+<div className="flex items-center justify-center gap-4 mt-5">
+  <div className="w-20 h-1 bg-yellow-400 rounded-full"></div>
+  <span className="text-4xl">📸</span>
+  <div className="w-20 h-1 bg-yellow-400 rounded-full"></div>
+</div>
+  </div>
 
-          <div className="grid md:grid-cols-3 gap-6">
+  <p className="text-xl text-gray-600 mt-6">
+    Explore the excitement and adventure waiting at Sarojani Funland
+  </p>
+</div>
 
-            <div className="h-72 overflow-hidden rounded-2xl shadow-lg">
-              <img
-                src="/images/20260604_220537.jpg"
-                alt=""
-                className="w-full h-full object-cover"
-              />
-            </div>
+<div className="grid md:grid-cols-3 gap-8">
 
-            <div className="h-72 overflow-hidden rounded-2xl shadow-lg">
-              <img
-                src="/images/20260604_220623.jpg"
-                alt=""
-                className="w-full h-full object-cover"
-              />
-            </div>
+  {/* Play Zone */}
+  <div className="relative group h-72 overflow-hidden rounded-3xl shadow-xl hover:shadow-2xl transition-all duration-300">
+    <img
+      src="/images/20260604_220537.jpg"
+      alt="Kids Play Zone Mysuru"
+      className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
+    />
 
-            <div className="h-72 overflow-hidden rounded-2xl shadow-lg">
-              <img
-                src="/images/20260302_203851.jpg"
-                alt=""
-                className="w-full h-full object-cover"
-              />
-            </div>
+    <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-transparent to-transparent"></div>
 
-            <div className="h-72 overflow-hidden rounded-2xl shadow-lg">
-              <img
-                src="/images/20260604_220555.jpg"
-                alt=""
-                className="w-full h-full object-cover"
-              />
-            </div>
+    <div className="absolute bottom-4 left-4">
+      <h3 className="text-white text-xl font-bold">
+        🎠 Play Zone Adventure
+      </h3>
+    </div>
+  </div>
 
-            <div className="h-72 overflow-hidden rounded-2xl shadow-lg">
-              <img
-                src="/images/20260604_220719.jpg"
-                alt=""
-                className="w-full h-full object-cover"
-              />
-            </div>
+  {/* Indoor Play */}
+  <div className="relative group h-72 overflow-hidden rounded-3xl shadow-xl hover:shadow-2xl transition-all duration-300">
+    <img
+      src="/images/20260604_220623.jpg"
+      alt="Indoor Play Area Mysuru"
+      className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
+    />
 
-            <div className="h-72 overflow-hidden rounded-2xl shadow-lg">
-              <img
-                src="/images/20260604_220824.jpg"
-                alt=""
-                className="w-full h-full object-cover"
-              />
-            </div>
+    <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-transparent to-transparent"></div>
 
-          </div>
-        </div>
+    <div className="absolute bottom-4 left-4">
+      <h3 className="text-white text-xl font-bold">
+        🧸 Indoor Play Area
+      </h3>
+    </div>
+  </div>
+
+  {/* Trampoline */}
+  <div className="relative group h-72 overflow-hidden rounded-3xl shadow-xl hover:shadow-2xl transition-all duration-300">
+    <img
+      src="/images/20260302_203851.jpg"
+      alt="Trampoline Park Mysuru"
+      className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
+    />
+
+    <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-transparent to-transparent"></div>
+
+    <div className="absolute bottom-4 left-4">
+      <h3 className="text-white text-xl font-bold">
+        🤸 Trampoline Fun
+      </h3>
+    </div>
+  </div>
+
+  {/* Electric Cars */}
+  <div className="relative group h-72 overflow-hidden rounded-3xl shadow-xl hover:shadow-2xl transition-all duration-300">
+    <img
+      src="/images/20260604_220555.jpg"
+      alt="Electric Car Ride Mysuru"
+      className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
+    />
+
+    <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-transparent to-transparent"></div>
+
+    <div className="absolute bottom-4 left-4">
+      <h3 className="text-white text-xl font-bold">
+        🚗 Electric Car Ride
+      </h3>
+    </div>
+  </div>
+
+  {/* Family Fun */}
+  <div className="relative group h-72 overflow-hidden rounded-3xl shadow-xl hover:shadow-2xl transition-all duration-300">
+    <img
+      src="/images/20260604_220719.jpg"
+      alt="Family Fun Mysuru"
+      className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
+    />
+
+    <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-transparent to-transparent"></div>
+
+    <div className="absolute bottom-4 left-4">
+      <h3 className="text-white text-xl font-bold">
+        ⭐ Family Fun Moments
+      </h3>
+    </div>
+  </div>
+
+  {/* Funland View */}
+  <div className="relative group h-72 overflow-hidden rounded-3xl shadow-xl hover:shadow-2xl transition-all duration-300">
+    <img
+      src="/images/20260604_220824.jpg"
+      alt="Sarojani Funland Mysuru"
+      className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
+    />
+
+    <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-transparent to-transparent"></div>
+
+    <div className="absolute bottom-4 left-4">
+      <h3 className="text-white text-xl font-bold">
+        🎉 Sarojani Funland
+      </h3>
+    </div>
+  </div>
+</div>
+</div>
+     
       </section>
 
       {/* Pricing */}
@@ -313,52 +379,169 @@ export default function Home() {
         id="pricing"
         className="py-20"
       >
-        <div className="max-w-7xl mx-auto px-6">
+       <section
 
-          <h2 className="text-5xl font-bold text-center mb-12 text-gray-900">
-            Activities & Pricing
-          </h2>
+  id="pricing"
+  className="bg-gradient-to-b from-white to-yellow-50 rounded-[40px] p-10"
+>
+  <div className="max-w-7xl mx-auto">
 
-          <div className="grid md:grid-cols-3 gap-6">
+    <h2 className="text-5xl md:text-6xl font-black text-center text-gray-900">
+      🎡 Activities & Pricing
+    </h2>
 
-            <div className="p-6 border rounded-2xl shadow bg-white text-gray-900">
-              <h3 className="text-2xl font-bold">Full Play Zone Package</h3>
-              <p>30 mins (+10 mins extendable)</p>
-              <p className="text-4xl font-bold mt-4">₹250</p>
-            </div>
+    <div className="flex items-center justify-center gap-6 mt-6 mb-12">
+      <div className="h-1 w-24 bg-yellow-400 rounded-full"></div>
+      <span className="text-4xl">⭐</span>
+      <div className="h-1 w-24 bg-yellow-400 rounded-full"></div>
+    </div>
 
-           <div className="p-6 border rounded-2xl shadow bg-white text-gray-900">
-              <h3 className="text-2xl font-bold">Play Zone</h3>
-              <p>15 mins</p>
-              <p className="text-4xl font-bold mt-4">₹100</p>
-            </div>
+    <p className="text-center text-xl text-gray-600 mb-16">
+      Choose your adventure and create unforgettable memories
+    </p>
 
-            <div className="p-6 border rounded-2xl shadow bg-white text-gray-900">
-              <h3 className="text-2xl font-bold">Trampoline</h3>
-              <p>15 mins</p>
-              <p className="text-4xl font-bold mt-4">₹100</p>
-            </div>
+  <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
 
-            <div className="p-6 border rounded-2xl shadow bg-white text-gray-900">
-              <h3 className="text-2xl font-bold">Scooter Ride</h3>
-              <p>10 mins</p>
-              <p className="text-4xl font-bold mt-4">₹100</p>
-            </div>
-
-            <div className="p-6 border rounded-2xl shadow bg-white text-gray-900">
-              <h3 className="text-2xl font-bold">Small Electric Car</h3>
-              <p>2 Rounds</p>
-              <p className="text-4xl font-bold mt-4">₹120</p>
-            </div>
-
-            <div className="p-6 border rounded-2xl shadow bg-white text-gray-900">
-              <h3 className="text-2xl font-bold">Large Electric Car</h3>
-              <p>2 Rounds</p>
-              <p className="text-4xl font-bold mt-4">₹150</p>
-            </div>
-
-          </div>
+      {/* Full Package */}
+      <div className="bg-white border-2 border-yellow-200 rounded-3xl p-8 shadow-lg hover:shadow-2xl hover:-translate-y-2 transition-all duration-300">
+        <div className="flex justify-between items-center mb-4">
+          <span className="text-5xl">🎠</span>
+          <span className="bg-yellow-100 text-yellow-700 px-3 py-1 rounded-full text-sm font-bold">
+            30 mins
+          </span>
         </div>
+
+        <div className="flex items-center justify-between mb-2">
+  <h3 className="text-2xl font-bold text-gray-900">
+    Full Play Zone Package
+  </h3>
+
+  <span className="bg-green-500 text-white text-xs px-3 py-1 rounded-full font-bold">
+    MOST POPULAR
+  </span>
+</div>
+
+        <p className="text-gray-600 mb-6">
+          +10 mins extendable
+        </p>
+
+        <p className="text-5xl font-black text-yellow-600">
+          ₹250
+        </p>
+      </div>
+
+      {/* Play Zone */}
+      <div className="bg-white border-2 border-yellow-200 rounded-3xl p-8 shadow-lg hover:shadow-2xl hover:-translate-y-2 transition-all duration-300">
+        <div className="flex justify-between items-center mb-4">
+          <span className="text-5xl">🧸</span>
+          <span className="bg-blue-100 text-blue-700 px-3 py-1 rounded-full text-sm font-bold">
+            15 mins
+          </span>
+        </div>
+
+        <h3 className="text-2xl font-bold text-gray-900 mb-6">
+          Play Zone
+        </h3>
+
+        <p className="text-5xl font-black text-blue-600">
+          ₹100
+        </p>
+      </div>
+
+      {/* Trampoline */}
+      <div className="bg-white border-2 border-yellow-200 rounded-3xl p-8 shadow-lg hover:shadow-2xl hover:-translate-y-2 transition-all duration-300">
+        <div className="flex justify-between items-center mb-4">
+          <span className="text-5xl">🤸</span>
+          <span className="bg-green-100 text-green-700 px-3 py-1 rounded-full text-sm font-bold">
+            15 mins
+          </span>
+        </div>
+
+        <h3 className="text-2xl font-bold text-gray-900 mb-6">
+          Trampoline
+        </h3>
+
+        <p className="text-5xl font-black text-green-600">
+          ₹100
+        </p>
+      </div>
+
+      {/* Scooter */}
+      <div className="bg-white border-2 border-yellow-200 rounded-3xl p-8 shadow-lg hover:shadow-2xl hover:-translate-y-2 transition-all duration-300">
+        <div className="flex justify-between items-center mb-4">
+          <span className="text-5xl">🛴</span>
+          <span className="bg-purple-100 text-purple-700 px-3 py-1 rounded-full text-sm font-bold">
+            10 mins
+          </span>
+        </div>
+
+        <h3 className="text-2xl font-bold text-gray-900 mb-6">
+          Scooter Ride
+        </h3>
+
+        <p className="text-5xl font-black text-purple-600">
+          ₹100
+        </p>
+      </div>
+
+      {/* Small Car */}
+      <div className="bg-white border-2 border-yellow-200 rounded-3xl p-8 shadow-lg hover:shadow-2xl hover:-translate-y-2 transition-all duration-300">
+        <div className="flex justify-between items-center mb-4">
+          <span className="text-5xl">🚗</span>
+          <span className="bg-red-100 text-red-700 px-3 py-1 rounded-full text-sm font-bold">
+            2 Rounds
+          </span>
+        </div>
+
+        <h3 className="text-2xl font-bold text-gray-900 mb-6">
+          Small Electric Car
+        </h3>
+
+        <p className="text-5xl font-black text-red-600">
+          ₹120
+        </p>
+      </div>
+
+      {/* Large Car */}
+      <div className="bg-white border-2 border-yellow-200 rounded-3xl p-8 shadow-lg hover:shadow-2xl hover:-translate-y-2 transition-all duration-300">
+        <div className="flex justify-between items-center mb-4">
+          <span className="text-5xl">🏎️</span>
+          <span className="bg-orange-100 text-orange-700 px-3 py-1 rounded-full text-sm font-bold">
+            2 Rounds
+          </span>
+        </div>
+
+        <h3 className="text-2xl font-bold text-gray-900 mb-6">
+          Large Electric Car
+        </h3>
+
+        <p className="text-5xl font-black text-orange-600">
+          ₹150
+        </p>
+      </div>
+
+      <div className="bg-white border-2 border-yellow-200 rounded-3xl p-8 shadow-lg hover:shadow-2xl hover:-translate-y-2 transition-all duration-300">
+  <div className="flex justify-between items-center mb-4">
+    <span className="text-5xl">🎮</span>
+
+    <span className="bg-indigo-100 text-indigo-700 px-3 py-1 rounded-full text-sm font-bold">
+      15 mins
+    </span>
+  </div>
+
+  <h3 className="text-2xl font-bold text-gray-900 mb-6">
+    VR / AR Games
+  </h3>
+
+  <p className="text-5xl font-black text-indigo-600">
+    ₹150
+  </p>
+</div>
+
+    </div>
+  </div>
+</section>
+          
       </section>
 
       {/* Contact */}
