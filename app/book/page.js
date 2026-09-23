@@ -115,8 +115,8 @@ function BookingInner() {
       <div className="sticky top-0 z-30 glass border-b border-white/40">
         <div className="max-w-4xl mx-auto px-5 h-14 flex items-center justify-between">
           <Link href="/" className="flex items-center gap-2 text-slate-800 hover:text-slate-900">
-            <div className="h-8 w-8 rounded-lg brand-gradient grid place-items-center"><span className="font-display text-white font-bold text-sm">S</span></div>
-            <span className="font-display font-bold">Sarojani Funland</span>
+            <Image src="/images/logo-sm.png" alt="Sarojani Funland" width={64} height={42} className="h-8 w-auto rounded-md ring-1 ring-black/5" />
+            <span className="font-display font-bold hidden sm:inline">Sarojani Funland</span>
           </Link>
           <Link href="/" className="text-sm text-slate-600 hover:text-slate-900 inline-flex items-center gap-1"><Home className="h-4 w-4" /> Home</Link>
         </div>

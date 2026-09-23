@@ -113,11 +113,9 @@ function Nav() {
         className={`fixed top-[34px] inset-x-0 z-50 transition-all ${scrolled ? 'glass border-b border-white/40 shadow-soft' : ''}`}
       >
         <div className="max-w-7xl mx-auto px-5 sm:px-8 h-16 flex items-center justify-between">
-          <Link href="/" className="flex items-center gap-2 group">
-            <div className="h-9 w-9 rounded-xl brand-gradient grid place-items-center shadow-soft">
-              <span className="font-display font-extrabold text-white">S</span>
-            </div>
-            <span className={`font-display font-bold text-lg tracking-tight ${scrolled ? 'text-slate-900' : 'text-white drop-shadow'}`}>Sarojani Funland</span>
+          <Link href="/" className="flex items-center gap-2.5 group" aria-label="Sarojani Funland home">
+            <Image src="/images/logo-sm.png" alt="Sarojani Funland" width={56} height={37} priority className="h-9 w-auto rounded-md shadow-soft ring-1 ring-black/5" />
+            <span className={`hidden sm:inline font-display font-bold text-lg tracking-tight transition-colors ${scrolled ? 'text-slate-900' : 'text-white drop-shadow'}`}>Sarojani Funland</span>
           </Link>
           <div className="hidden lg:flex items-center gap-1">
             {NAV.map((n) => (
@@ -141,7 +139,7 @@ function Nav() {
         {open && (
           <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} className="fixed inset-0 z-[70] brand-gradient animate-gradient lg:hidden">
             <div className="flex items-center justify-between px-6 py-5 text-white">
-              <div className="font-display font-bold text-lg">Sarojani Funland</div>
+              <Image src="/images/logo-sm.png" alt="Sarojani Funland" width={80} height={53} className="h-10 w-auto rounded-md ring-1 ring-white/30" />
               <button onClick={() => setOpen(false)} aria-label="Close menu"><X /></button>
             </div>
             <div className="px-6 mt-10 flex flex-col gap-5">
@@ -220,17 +218,17 @@ function Hero() {
           ))}
         </h1>
         <motion.p initial={{ opacity: 0, y: 12 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 2.2, duration: 0.6 }}
-          className="mt-6 max-w-2xl text-white/85 text-base sm:text-lg">
+          className="mt-6 max-w-2xl text-white/95 text-base sm:text-lg leading-relaxed [text-shadow:0_2px_18px_rgba(0,0,0,0.5)]">
           Trampolines, electric car rides, VR games and more — curated indoor adventures for the family at Hotel Continental, Nazarbad.
         </motion.p>
         <motion.div initial={{ opacity: 0, y: 12 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 2.35, duration: 0.6 }}
           className="mt-8 flex flex-col sm:flex-row items-center gap-3">
           <Link href="/book" className="relative group inline-flex items-center gap-2 px-7 py-4 rounded-full text-base font-bold text-slate-900 bg-white shadow-glow hover:shadow-[0_25px_60px_-20px_rgba(255,255,255,0.5)] transition">
             <span className="absolute inset-0 rounded-full brand-gradient opacity-0 group-hover:opacity-100 transition" />
-            <span className="relative z-10 flex items-center gap-2 group-hover:text-white transition">Book your visit <ArrowRight className="h-5 w-5" /></span>
+            <span className="relative z-10 flex items-center gap-2 group-hover:text-white transition">Book your fun <ArrowRight className="h-5 w-5" /></span>
           </Link>
           <a href="#attractions" className="inline-flex items-center gap-2 px-6 py-4 rounded-full text-base font-semibold text-white border border-white/30 hover:bg-white/10 transition">
-            Explore attractions
+            Explore Funland
           </a>
         </motion.div>
         <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 3, duration: 0.8 }} className="absolute bottom-8 flex flex-col items-center gap-2 text-white/70">
@@ -259,12 +257,94 @@ function Stats() {
   const ref = useRef(null)
   const inView = useInView(ref, { once: true, margin: '-80px' })
   return (
-    <section ref={ref} className="py-10 sm:py-14 bg-white">
-      <div className="max-w-6xl mx-auto px-6 grid grid-cols-2 md:grid-cols-4 gap-8">
+    <section ref={ref} className="relative py-10 sm:py-14 bg-white overflow-hidden">
+      <div className="pointer-events-none absolute inset-0 dot-grid opacity-50" />
+      <div className="relative max-w-6xl mx-auto px-6 grid grid-cols-2 md:grid-cols-4 gap-8">
         <Stat to={12000} suffix="+" label="Happy kids" icon={Heart} start={inView} />
         <Stat to={7} suffix="" label="Fun activities" icon={Sparkles} start={inView} />
         <Stat to={100} suffix="%" label="Safe & supervised" icon={ShieldCheck} start={inView} />
         <Stat to={5} suffix="★" label="Loved by parents" icon={Star} start={inView} />
+      </div>
+    </section>
+  )
+}
+
+/* ---------- About ---------- */
+function About() {
+  const pillars = [
+    { icon: Sparkles, title: 'Play', desc: 'Slides, ball pits & soft play built for pure imagination.' },
+    { icon: Rocket, title: 'Explore', desc: 'Trampolines and rides that let energy fly free.' },
+    { icon: Gamepad2, title: 'Experience', desc: 'Meta Quest VR & AR adventures kids beg to try again.' },
+    { icon: Heart, title: 'Memories', desc: 'Little wins, big grins — moments parents love to keep.' },
+  ]
+  return (
+    <section className="relative py-16 sm:py-24 overflow-hidden bg-gradient-to-b from-white to-amber-50/40">
+      {/* Decorative blobs */}
+      <div className="pointer-events-none absolute -top-24 -left-24 h-80 w-80 rounded-full bg-rose-300/30 blur-3xl" />
+      <div className="pointer-events-none absolute -bottom-24 -right-16 h-96 w-96 rounded-full bg-sky-300/30 blur-3xl" />
+      <div className="pointer-events-none absolute inset-0 dot-grid opacity-40" />
+
+      <div className="relative max-w-7xl mx-auto px-6 grid lg:grid-cols-2 gap-12 lg:gap-16 items-center">
+        <Reveal>
+          <div>
+            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-amber-100 text-amber-800 text-xs font-semibold uppercase tracking-wider">Our Story</div>
+            <h2 className="mt-4 font-display text-4xl sm:text-5xl md:text-6xl font-extrabold text-slate-900 leading-[1.02]">
+              Where fun &amp; <span className="brand-text">happiness</span> come alive.
+            </h2>
+            <p className="mt-5 text-slate-700 text-lg leading-relaxed max-w-xl">
+              Sarojani Funland is Mysuru&apos;s cheerful indoor world, tucked inside Hotel Continental at Nazarbad. From soft-play adventures to trampoline flights and Meta Quest VR, every corner is designed for grins that families take home.
+            </p>
+            <div className="mt-8 grid sm:grid-cols-2 gap-4">
+              {pillars.map((p) => (
+                <div key={p.title} className="group rounded-2xl bg-white/80 backdrop-blur-sm border border-slate-100 p-5 flex gap-4 shadow-soft hover:-translate-y-0.5 transition-transform">
+                  <div className="h-11 w-11 rounded-xl brand-gradient grid place-items-center shrink-0 shadow-soft">
+                    <p.icon className="h-5 w-5 text-white" />
+                  </div>
+                  <div>
+                    <div className="font-display font-bold text-slate-900">{p.title}</div>
+                    <div className="text-sm text-slate-600">{p.desc}</div>
+                  </div>
+                </div>
+              ))}
+            </div>
+            <div className="mt-8 flex flex-wrap items-center gap-3">
+              <Link href="/book" className="inline-flex items-center gap-2 px-5 py-3 rounded-full brand-gradient text-white font-semibold shadow-glow hover:brightness-110 transition">Book your fun <ArrowRight className="h-4 w-4" /></Link>
+              <a href="#attractions" className="inline-flex items-center gap-2 px-5 py-3 rounded-full bg-white border border-slate-200 text-slate-800 font-semibold hover:border-slate-300">Explore Funland</a>
+            </div>
+          </div>
+        </Reveal>
+        <Reveal delay={0.1}>
+          <div className="relative">
+            {/* Layered image collage */}
+            <div className="relative aspect-[5/6] rounded-[2rem] overflow-hidden shadow-glow ring-1 ring-black/5">
+              <Image src="/images/new/play-detail.jpg" alt="Kids playing at Sarojani Funland" fill sizes="(max-width:1024px) 100vw, 45vw" className="object-cover" />
+              <div className="absolute inset-0 bg-gradient-to-t from-slate-950/40 via-transparent to-transparent" />
+            </div>
+            <motion.div
+              initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }}
+              transition={{ delay: 0.15, duration: 0.6 }}
+              className="hidden sm:block absolute -bottom-6 -left-6 w-48 rounded-2xl overflow-hidden ring-4 ring-white shadow-soft rotate-[-4deg]">
+              <div className="relative aspect-[4/3]">
+                <Image src="/images/new/vr.jpg" alt="VR games" fill sizes="200px" className="object-cover" />
+              </div>
+            </motion.div>
+            <motion.div
+              initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }}
+              transition={{ delay: 0.25, duration: 0.6 }}
+              className="hidden sm:block absolute -top-6 -right-6 w-44 rounded-2xl overflow-hidden ring-4 ring-white shadow-soft rotate-[5deg]">
+              <div className="relative aspect-[4/3]">
+                <Image src="/images/new/trampoline.jpg" alt="Trampoline" fill sizes="180px" className="object-cover" />
+              </div>
+            </motion.div>
+            {/* Floating logo badge */}
+            <motion.div
+              initial={{ opacity: 0, scale: 0.9 }} whileInView={{ opacity: 1, scale: 1 }} viewport={{ once: true }}
+              transition={{ delay: 0.35, duration: 0.5 }}
+              className="absolute bottom-4 right-4 sm:bottom-6 sm:right-6 rounded-2xl overflow-hidden ring-4 ring-white shadow-glow rotate-[-3deg]">
+              <Image src="/images/logo-sm.png" alt="Sarojani Funland" width={120} height={80} className="w-24 sm:w-32 h-auto" />
+            </motion.div>
+          </div>
+        </Reveal>
       </div>
     </section>
   )
@@ -294,7 +374,9 @@ function TiltCard({ children }) {
 
 function Attractions() {
   return (
-    <section id="attractions" className="relative py-16 sm:py-24 bg-gradient-to-b from-white to-rose-50/40">
+    <section id="attractions" className="relative py-16 sm:py-24 bg-gradient-to-b from-white to-rose-50/40 overflow-hidden">
+      <div className="pointer-events-none absolute top-40 -right-20 h-72 w-72 rounded-full bg-amber-200/30 blur-3xl" />
+      <div className="pointer-events-none absolute bottom-10 -left-24 h-80 w-80 rounded-full bg-rose-200/30 blur-3xl" />
       <div className="max-w-7xl mx-auto px-6">
         <Reveal>
           <div className="max-w-2xl">
@@ -387,7 +469,8 @@ function Gallery() {
     return () => window.removeEventListener('keydown', onKey)
   }, [active])
   return (
-    <section id="gallery" className="py-16 sm:py-24 bg-gradient-to-b from-rose-50/40 to-white">
+    <section id="gallery" className="relative py-16 sm:py-24 bg-gradient-to-b from-rose-50/40 via-white to-amber-50/30 overflow-hidden">
+      <div className="pointer-events-none absolute top-20 right-10 h-64 w-64 rounded-full bg-emerald-200/30 blur-3xl" />
       <div className="max-w-7xl mx-auto px-6">
         <Reveal>
           <div className="flex flex-col md:flex-row md:items-end md:justify-between gap-6">
@@ -468,7 +551,9 @@ function PriceCard({ p, i }) {
 }
 function Pricing() {
   return (
-    <section id="pricing" className="py-16 sm:py-24 bg-white">
+    <section id="pricing" className="relative py-16 sm:py-24 bg-gradient-to-b from-white via-sky-50/30 to-white overflow-hidden">
+      <div className="pointer-events-none absolute top-1/3 -left-24 h-80 w-80 rounded-full bg-sky-200/40 blur-3xl" />
+      <div className="pointer-events-none absolute -bottom-20 -right-20 h-96 w-96 rounded-full bg-rose-200/30 blur-3xl" />
       <div className="max-w-7xl mx-auto px-6">
         <Reveal>
           <div className="text-center max-w-2xl mx-auto">
@@ -626,7 +711,8 @@ function Parties() {
 function Faq() {
   const [open, setOpen] = useState(0)
   return (
-    <section id="faq" className="py-16 sm:py-24 bg-white">
+    <section id="faq" className="relative py-16 sm:py-24 bg-white overflow-hidden">
+      <div className="pointer-events-none absolute top-40 left-1/2 -translate-x-1/2 h-64 w-[36rem] rounded-full bg-amber-200/25 blur-3xl" />
       <div className="max-w-4xl mx-auto px-6">
         <Reveal>
           <div className="text-center">
@@ -718,7 +804,7 @@ function Footer() {
     <footer className="bg-slate-950 text-white/70 border-t border-white/5">
       <div className="max-w-7xl mx-auto px-6 py-10 flex flex-col md:flex-row items-center justify-between gap-4">
         <div className="flex items-center gap-3">
-          <div className="h-9 w-9 rounded-xl brand-gradient grid place-items-center"><span className="font-display font-extrabold text-white">S</span></div>
+          <Image src="/images/logo-sm.png" alt="Sarojani Funland" width={80} height={53} className="h-11 w-auto rounded-md ring-1 ring-white/10" />
           <div>
             <div className="font-display font-bold text-white">Sarojani Funland</div>
             <div className="text-xs">© {new Date().getFullYear()} All rights reserved.</div>
@@ -767,6 +853,7 @@ function App() {
       <Nav />
       <Hero />
       <Stats />
+      <About />
       <Attractions />
       <How />
       <Gallery />

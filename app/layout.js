@@ -32,7 +32,7 @@ export const metadata = {
     images: ['/images/new/hero-wide.jpg'],
   },
   robots: { index: true, follow: true },
-  icons: { icon: '/images/logo.png', apple: '/images/logo.png' },
+  icons: { icon: '/images/favicon-256.png', apple: '/images/favicon-256.png', shortcut: '/images/favicon-256.png' },
 }
 
 export const viewport = {

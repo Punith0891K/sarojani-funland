@@ -65,6 +65,7 @@ async function route(request, { params }) {
         createdAt: new Date().toISOString(),
       }
       await db.collection('bookings').insertOne(doc)
+      delete doc._id
       return NextResponse.json({ ok: true, booking: doc }, { status: 201, headers: CORS })
     }
 
@@ -86,6 +87,7 @@ async function route(request, { params }) {
         return NextResponse.json({ error: 'Invalid input' }, { status: 400, headers: CORS })
       }
       await db.collection('enquiries').insertOne(doc)
+      delete doc._id
       return NextResponse.json({ ok: true, enquiry: doc }, { status: 201, headers: CORS })
     }
 
