@@ -24,21 +24,21 @@ const NAV = [
 ]
 
 const ATTRACTIONS = [
-  { icon: Sparkles, title: 'Indoor Play Zone', desc: 'Slides, ball pool, soft play and interactive activities designed for kids of all ages.', img: '/images/20260604_220537.jpg', tint: 'from-fuchsia-500 to-pink-500' },
-  { icon: Rocket, title: 'Trampoline', desc: 'Safe, springy trampoline sessions to burn energy and make kids giggle.', img: '/images/20260302_203851.jpg', tint: 'from-violet-500 to-indigo-500' },
-  { icon: Car, title: 'Electric Cars', desc: 'Small and large electric car rides on a controlled indoor track.', img: '/images/20260604_220227.jpg', tint: 'from-amber-500 to-orange-500' },
-  { icon: Bike, title: 'Scooter Rides', desc: 'Kid-sized scooter rides in a fully supervised, safe environment.', img: '/images/20260610_175214.jpg', tint: 'from-emerald-500 to-teal-500' },
-  { icon: Gamepad2, title: 'VR & AR Games', desc: 'Immersive VR and AR gaming that kids and parents love to try.', img: '/images/20260302_205538.jpg', tint: 'from-sky-500 to-cyan-500' },
+  { icon: Sparkles, title: 'Indoor Play Zone', desc: 'Slides, ball pool, soft play and interactive activities designed for kids of all ages.', img: '/images/new/play-zone.jpg', tint: 'from-rose-500 to-amber-400' },
+  { icon: Rocket, title: 'Trampoline', desc: 'Safe, springy trampoline sessions to burn energy and make kids giggle.', img: '/images/new/trampoline.jpg', tint: 'from-amber-400 to-rose-500' },
+  { icon: Car, title: 'Electric Cars', desc: 'Small and large electric car rides on a controlled indoor track.', img: '/images/new/electric-cars.jpg', tint: 'from-sky-500 to-blue-600' },
+  { icon: Bike, title: 'Scooter Rides', desc: 'Kid-sized scooter rides in a fully supervised, safe environment.', img: '/images/new/scooters-play.jpg', tint: 'from-emerald-500 to-lime-500' },
+  { icon: Gamepad2, title: 'VR & AR Games', desc: 'Immersive VR (Meta Quest 3S) and AR gaming that kids and parents love to try.', img: '/images/new/vr.jpg', tint: 'from-sky-500 to-violet-500' },
 ]
 
 const PRICING = [
-  { title: 'Full Play Zone Package', price: 250, duration: '30 mins + 10 mins extendable', popular: true, icon: PartyPopper, tint: 'from-fuchsia-600 to-orange-500' },
-  { title: 'Play Zone', price: 100, duration: '15 mins', icon: Sparkles, tint: 'from-pink-500 to-rose-500' },
-  { title: 'Trampoline', price: 100, duration: '15 mins', icon: Rocket, tint: 'from-violet-500 to-indigo-500' },
-  { title: 'Scooter Ride', price: 100, duration: '10 mins', icon: Bike, tint: 'from-emerald-500 to-teal-500' },
-  { title: 'Small Electric Car', price: 120, duration: '2 rounds', icon: Car, tint: 'from-amber-500 to-orange-500' },
-  { title: 'Large Electric Car', price: 150, duration: '2 rounds', icon: Car, tint: 'from-orange-500 to-red-500' },
-  { title: 'VR / AR Games', price: 150, duration: '15 mins', icon: Gamepad2, tint: 'from-sky-500 to-cyan-500' },
+  { title: 'Full Play Zone Package', price: 250, duration: '30 mins + 10 mins extendable', popular: true, icon: PartyPopper, tint: 'from-rose-600 to-amber-400' },
+  { title: 'Play Zone', price: 100, duration: '15 mins', icon: Sparkles, tint: 'from-rose-500 to-pink-500' },
+  { title: 'Trampoline', price: 100, duration: '15 mins', icon: Rocket, tint: 'from-amber-400 to-orange-500' },
+  { title: 'Scooter Ride', price: 100, duration: '10 mins', icon: Bike, tint: 'from-emerald-500 to-lime-500' },
+  { title: 'Small Electric Car', price: 120, duration: '2 rounds', icon: Car, tint: 'from-sky-400 to-blue-600' },
+  { title: 'Large Electric Car', price: 150, duration: '2 rounds', icon: Car, tint: 'from-blue-500 to-indigo-600' },
+  { title: 'VR / AR Games', price: 150, duration: '15 mins', icon: Gamepad2, tint: 'from-violet-500 to-rose-500' },
 ]
 
 const STEPS = [
@@ -184,17 +184,17 @@ function Hero() {
   return (
     <section ref={ref} onMouseMove={onMove} className="relative h-[100svh] min-h-[640px] w-full overflow-hidden">
       <motion.div style={{ y, scale }} className="absolute inset-0">
-        <Image src="/images/20260604_220824.jpg" alt="Sarojani Funland kids play area in Mysuru" fill priority sizes="100vw" className="object-cover" />
+        <Image src="/images/new/hero-wide.jpg" alt="Sarojani Funland kids play area in Mysuru" fill priority sizes="100vw" className="object-cover" />
       </motion.div>
-      <div className="absolute inset-0 bg-gradient-to-b from-black/50 via-black/40 to-black/70" />
-      <div className="absolute inset-0 brand-gradient opacity-25 mix-blend-overlay animate-gradient" />
+      <div className="absolute inset-0 bg-gradient-to-b from-slate-900/55 via-slate-900/50 to-slate-950/90" />
+      <div className="absolute inset-0 brand-gradient opacity-20 mix-blend-overlay animate-gradient" />
 
       {/* Floating shapes */}
       {[
-        { c: 'from-fuchsia-400 to-pink-500', s: 90, x: '8%', y: '18%', d: 0 },
-        { c: 'from-amber-300 to-orange-500', s: 60, x: '85%', y: '22%', d: 0.4 },
-        { c: 'from-violet-400 to-indigo-500', s: 110, x: '82%', y: '68%', d: 0.8 },
-        { c: 'from-emerald-300 to-teal-500', s: 70, x: '12%', y: '72%', d: 1.2 },
+        { c: 'from-rose-400 to-red-500', s: 90, x: '8%', y: '18%', d: 0 },
+        { c: 'from-amber-300 to-yellow-500', s: 60, x: '85%', y: '22%', d: 0.4 },
+        { c: 'from-sky-400 to-blue-500', s: 110, x: '82%', y: '68%', d: 0.8 },
+        { c: 'from-emerald-300 to-green-500', s: 70, x: '12%', y: '72%', d: 1.2 },
       ].map((b, i) => (
         <motion.div
           key={i}
@@ -210,12 +210,12 @@ function Hero() {
           className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full glass-dark text-white/90 text-xs sm:text-sm font-medium border border-white/15">
           <Star className="h-3.5 w-3.5 fill-amber-300 text-amber-300" /> Mysuru’s premium indoor play destination
         </motion.div>
-        <h1 className="mt-6 font-display text-5xl sm:text-7xl md:text-8xl font-extrabold leading-[0.95] max-w-5xl">
+        <h1 className="mt-6 font-display text-[2.75rem] leading-[1] sm:text-7xl md:text-8xl font-extrabold max-w-5xl px-2">
           {words.map((w, i) => (
             <motion.span key={i} initial={{ y: '110%', opacity: 0 }} animate={{ y: 0, opacity: 1 }}
               transition={{ duration: 0.7, delay: 1.5 + i * 0.08, ease: [0.16, 1, 0.3, 1] }}
-              className="inline-block mr-3">
-              <span className={i === 2 || i === 3 ? 'brand-text drop-shadow-[0_2px_10px_rgba(236,72,153,0.35)]' : ''}>{w}</span>
+              className="inline-block mr-2 sm:mr-3">
+              <span className={i === 2 || i === 3 ? 'brand-text drop-shadow-[0_2px_10px_rgba(225,29,72,0.35)]' : ''}>{w}</span>
             </motion.span>
           ))}
         </h1>
@@ -259,7 +259,7 @@ function Stats() {
   const ref = useRef(null)
   const inView = useInView(ref, { once: true, margin: '-80px' })
   return (
-    <section ref={ref} className="py-14 bg-white">
+    <section ref={ref} className="py-10 sm:py-14 bg-white">
       <div className="max-w-6xl mx-auto px-6 grid grid-cols-2 md:grid-cols-4 gap-8">
         <Stat to={12000} suffix="+" label="Happy kids" icon={Heart} start={inView} />
         <Stat to={7} suffix="" label="Fun activities" icon={Sparkles} start={inView} />
@@ -294,11 +294,11 @@ function TiltCard({ children }) {
 
 function Attractions() {
   return (
-    <section id="attractions" className="relative py-24 bg-gradient-to-b from-white to-fuchsia-50/40">
+    <section id="attractions" className="relative py-16 sm:py-24 bg-gradient-to-b from-white to-rose-50/40">
       <div className="max-w-7xl mx-auto px-6">
         <Reveal>
           <div className="max-w-2xl">
-            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-fuchsia-100 text-fuchsia-700 text-xs font-semibold uppercase tracking-wider">Attractions</div>
+            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-rose-100 text-rose-700 text-xs font-semibold uppercase tracking-wider">Attractions</div>
             <h2 className="mt-4 font-display text-4xl sm:text-6xl font-extrabold text-slate-900 leading-[1.02]">Adventures for every little explorer</h2>
             <p className="mt-4 text-slate-600 text-lg">Handpicked activities, thoughtfully designed spaces and staff who genuinely love kids.</p>
           </div>
@@ -318,7 +318,7 @@ function Attractions() {
                   <div className="p-6">
                     <h3 className="font-display text-2xl font-bold text-slate-900">{a.title}</h3>
                     <p className="mt-2 text-slate-600">{a.desc}</p>
-                    <Link href="/book" className="mt-4 inline-flex items-center gap-1 text-sm font-semibold text-fuchsia-700 group-hover:gap-2 transition-all">Book this <ArrowUpRight className="h-4 w-4" /></Link>
+                    <Link href="/book" className="mt-4 inline-flex items-center gap-1 text-sm font-semibold text-rose-700 group-hover:gap-2 transition-all">Book this <ArrowUpRight className="h-4 w-4" /></Link>
                   </div>
                   <div className="pointer-events-none absolute inset-0 rounded-3xl opacity-0 group-hover:opacity-100 transition [background:conic-gradient(from_180deg_at_50%_50%,rgba(236,72,153,.35),rgba(124,58,237,.35),rgba(251,146,60,.35),rgba(236,72,153,.35))] [mask:linear-gradient(#000,#000)_content-box,linear-gradient(#000,#000)] [mask-composite:exclude] p-[1.5px]" />
                 </div>
@@ -334,7 +334,7 @@ function Attractions() {
 /* ---------- How ---------- */
 function How() {
   return (
-    <section id="how" className="py-24 bg-slate-950 text-white relative overflow-hidden">
+    <section id="how" className="py-16 sm:py-24 bg-slate-950 text-white relative overflow-hidden">
       <div className="absolute inset-0 mesh-bg opacity-70" />
       <div className="relative max-w-6xl mx-auto px-6">
         <Reveal>
@@ -349,7 +349,7 @@ function How() {
             <Reveal key={s.title} delay={i * 0.08}>
               <div className="relative rounded-3xl p-8 bg-white/5 border border-white/10 backdrop-blur-sm hover:bg-white/10 transition">
                 <div className="absolute -top-4 left-6 h-8 w-8 rounded-full brand-gradient grid place-items-center font-bold text-white shadow-glow">{i + 1}</div>
-                <s.icon className="h-8 w-8 text-fuchsia-300" />
+                <s.icon className="h-8 w-8 text-rose-300" />
                 <h3 className="mt-4 font-display text-2xl font-bold">{s.title}</h3>
                 <p className="mt-2 text-white/70">{s.desc}</p>
               </div>
@@ -363,16 +363,16 @@ function How() {
 
 /* ---------- Gallery ---------- */
 const GALLERY = [
-  { src: '/images/20260604_220537.jpg', title: 'Play Zone', span: 'md:col-span-2 md:row-span-2' },
-  { src: '/images/20260604_220623.jpg', title: 'Indoor Play' },
-  { src: '/images/20260302_203851.jpg', title: 'Trampoline' },
-  { src: '/images/20260604_220227.jpg', title: 'Electric Cars' },
-  { src: '/images/20260610_175214.jpg', title: 'Scooters', span: 'md:col-span-2' },
-  { src: '/images/20260604_220719.jpg', title: 'Family Fun' },
-  { src: '/images/20260604_220824.jpg', title: 'Sarojani Funland' },
-  { src: '/images/20260604_220429.jpg', title: 'Ball Pool' },
-  { src: '/images/20260604_220555.jpg', title: 'Play' },
-  { src: '/images/20260302_205538.jpg', title: 'VR Games' },
+  { src: '/images/new/hero-wide.jpg', title: 'Overview', span: 'md:col-span-2 md:row-span-2' },
+  { src: '/images/new/play-zone.jpg', title: 'Play Zone' },
+  { src: '/images/new/trampoline.jpg', title: 'Trampoline' },
+  { src: '/images/new/electric-cars.jpg', title: 'Electric Cars' },
+  { src: '/images/new/scooters-play.jpg', title: 'Scooter Rides', span: 'md:col-span-2' },
+  { src: '/images/new/ball-pit.jpg', title: 'Ball Pit' },
+  { src: '/images/new/bounce-house.jpg', title: 'Bounce House' },
+  { src: '/images/new/vr.jpg', title: 'Meta Quest 3S VR' },
+  { src: '/images/new/ride-ons.jpg', title: 'Ride-ons' },
+  { src: '/images/new/interior-wide.jpg', title: 'Funland Interior' },
 ]
 function Gallery() {
   const [active, setActive] = useState(null)
@@ -387,7 +387,7 @@ function Gallery() {
     return () => window.removeEventListener('keydown', onKey)
   }, [active])
   return (
-    <section id="gallery" className="py-24 bg-gradient-to-b from-fuchsia-50/40 to-white">
+    <section id="gallery" className="py-16 sm:py-24 bg-gradient-to-b from-rose-50/40 to-white">
       <div className="max-w-7xl mx-auto px-6">
         <Reveal>
           <div className="flex flex-col md:flex-row md:items-end md:justify-between gap-6">
@@ -398,7 +398,7 @@ function Gallery() {
             <p className="text-slate-600 max-w-md">A peek into the giggles, races and mid-air jumps that happen here every day.</p>
           </div>
         </Reveal>
-        <div className="mt-10 grid grid-cols-2 md:grid-cols-4 auto-rows-[180px] md:auto-rows-[220px] gap-4">
+        <div className="mt-10 grid grid-cols-2 md:grid-cols-4 auto-rows-[130px] sm:auto-rows-[170px] md:auto-rows-[220px] gap-3 sm:gap-4">
           {GALLERY.map((g, i) => (
             <motion.button
               key={i}
@@ -459,7 +459,7 @@ function PriceCard({ p, i }) {
           <span className="mb-1 text-slate-500 text-sm">/ per person</span>
         </div>
         {p.popular && <div className="mt-4 h-1 rounded-full animate-shimmer bg-white/60" />}
-        <Link href={`/book?activity=${encodeURIComponent(p.title)}`} className={`mt-5 inline-flex items-center gap-2 text-sm font-semibold ${p.popular ? 'brand-text' : 'text-fuchsia-700'} hover:gap-3 transition-all`}>
+        <Link href={`/book?activity=${encodeURIComponent(p.title)}`} className={`mt-5 inline-flex items-center gap-2 text-sm font-semibold ${p.popular ? 'brand-text' : 'text-rose-700'} hover:gap-3 transition-all`}>
           Book now <ArrowRight className="h-4 w-4" />
         </Link>
       </div>
@@ -468,11 +468,11 @@ function PriceCard({ p, i }) {
 }
 function Pricing() {
   return (
-    <section id="pricing" className="py-24 bg-white">
+    <section id="pricing" className="py-16 sm:py-24 bg-white">
       <div className="max-w-7xl mx-auto px-6">
         <Reveal>
           <div className="text-center max-w-2xl mx-auto">
-            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-violet-100 text-violet-700 text-xs font-semibold uppercase tracking-wider">Pricing</div>
+            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-sky-100 text-sky-700 text-xs font-semibold uppercase tracking-wider">Pricing</div>
             <h2 className="mt-4 font-display text-4xl sm:text-6xl font-extrabold text-slate-900">Simple, honest, worth-every-rupee</h2>
             <p className="mt-4 text-slate-600 text-lg">Save with the Full Play Zone Package — our most popular pick for families.</p>
           </div>
@@ -494,7 +494,7 @@ function Safety() {
     { icon: Users, title: 'Parent-friendly', desc: 'Parents can accompany their kids inside.' },
   ]
   return (
-    <section className="py-24 bg-gradient-to-b from-white to-violet-50/50">
+    <section className="py-16 sm:py-24 bg-gradient-to-b from-white to-sky-50/60">
       <div className="max-w-7xl mx-auto px-6 grid lg:grid-cols-2 gap-14 items-center">
         <Reveal>
           <div>
@@ -518,7 +518,7 @@ function Safety() {
         </Reveal>
         <Reveal delay={0.1}>
           <div className="relative rounded-3xl overflow-hidden shadow-glow aspect-[4/5]">
-            <Image src="/images/20260604_220623.jpg" alt="Safe indoor play area for kids" fill sizes="(max-width:1024px) 100vw, 50vw" className="object-cover" />
+            <Image src="/images/new/bounce-house.jpg" alt="Safe indoor play area for kids" fill sizes="(max-width:1024px) 100vw, 50vw" className="object-cover" />
             <div className="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent" />
             <div className="absolute bottom-6 left-6 right-6 flex items-center gap-3 glass rounded-2xl p-4 border border-white/50">
               <ShieldCheck className="h-6 w-6 text-emerald-600" />
@@ -537,7 +537,7 @@ function Safety() {
 /* ---------- Reviews ---------- */
 function Reviews() {
   return (
-    <section className="py-24 bg-white">
+    <section className="py-16 sm:py-24 bg-white">
       <div className="max-w-7xl mx-auto px-6">
         <Reveal>
           <div className="text-center max-w-2xl mx-auto">
@@ -549,7 +549,7 @@ function Reviews() {
           <div className="flex gap-5 snap-x snap-mandatory">
             {REVIEWS.map((r, i) => (
               <motion.figure key={i} initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ duration: 0.5, delay: i * 0.05 }}
-                className="snap-start shrink-0 w-[85%] sm:w-[420px] rounded-3xl bg-gradient-to-br from-fuchsia-50 to-amber-50 border border-fuchsia-100 p-7 shadow-soft">
+                className="snap-start shrink-0 w-[85%] sm:w-[420px] rounded-3xl bg-gradient-to-br from-rose-50 to-amber-50 border border-rose-100 p-7 shadow-soft">
                 <div className="flex gap-0.5 text-amber-500">{Array.from({ length: r.rating }).map((_, k) => <Star key={k} className="h-4 w-4 fill-amber-500" />)}</div>
                 <blockquote className="mt-4 text-slate-800 text-lg leading-relaxed">“{r.text}”</blockquote>
                 <figcaption className="mt-5 flex items-center gap-3">
@@ -586,7 +586,7 @@ function Parties() {
     } catch (err) { toast.error(err.message) } finally { setLoading(false) }
   }
   return (
-    <section id="parties" className="py-24 relative overflow-hidden">
+    <section id="parties" className="py-16 sm:py-24 relative overflow-hidden">
       <div className="absolute inset-0 brand-gradient animate-gradient" />
       <div className="absolute inset-0 bg-black/30" />
       <div className="relative max-w-7xl mx-auto px-6 grid lg:grid-cols-2 gap-12 items-center text-white">
@@ -604,13 +604,13 @@ function Parties() {
           <div className="font-display text-2xl font-bold">Send an enquiry</div>
           <div className="text-slate-500 text-sm">We’ll get back to you within a few hours.</div>
           <div className="mt-5 grid gap-3">
-            <input required placeholder="Your name" value={form.name} onChange={e=>setForm({...form,name:e.target.value})} className="px-4 py-3 rounded-xl border border-slate-200 focus:border-fuchsia-500 focus:ring-4 focus:ring-fuchsia-100 outline-none" />
-            <input required placeholder="10-digit mobile" value={form.mobile} onChange={e=>setForm({...form,mobile:e.target.value.replace(/\D/g,'').slice(0,10)})} className="px-4 py-3 rounded-xl border border-slate-200 focus:border-fuchsia-500 focus:ring-4 focus:ring-fuchsia-100 outline-none" />
+            <input required placeholder="Your name" value={form.name} onChange={e=>setForm({...form,name:e.target.value})} className="px-4 py-3 rounded-xl border border-slate-200 focus:border-rose-500 focus:ring-4 focus:ring-rose-100 outline-none" />
+            <input required placeholder="10-digit mobile" value={form.mobile} onChange={e=>setForm({...form,mobile:e.target.value.replace(/\D/g,'').slice(0,10)})} className="px-4 py-3 rounded-xl border border-slate-200 focus:border-rose-500 focus:ring-4 focus:ring-rose-100 outline-none" />
             <div className="grid grid-cols-2 gap-3">
-              <input placeholder="Kids (approx)" value={form.groupSize} onChange={e=>setForm({...form,groupSize:e.target.value})} className="px-4 py-3 rounded-xl border border-slate-200 focus:border-fuchsia-500 focus:ring-4 focus:ring-fuchsia-100 outline-none" />
-              <input type="date" value={form.preferredDate} onChange={e=>setForm({...form,preferredDate:e.target.value})} className="px-4 py-3 rounded-xl border border-slate-200 focus:border-fuchsia-500 focus:ring-4 focus:ring-fuchsia-100 outline-none" />
+              <input placeholder="Kids (approx)" value={form.groupSize} onChange={e=>setForm({...form,groupSize:e.target.value})} className="px-4 py-3 rounded-xl border border-slate-200 focus:border-rose-500 focus:ring-4 focus:ring-rose-100 outline-none" />
+              <input type="date" value={form.preferredDate} onChange={e=>setForm({...form,preferredDate:e.target.value})} className="px-4 py-3 rounded-xl border border-slate-200 focus:border-rose-500 focus:ring-4 focus:ring-rose-100 outline-none" />
             </div>
-            <textarea placeholder="Tell us about your plan (theme, cake, guests…)" rows={3} value={form.message} onChange={e=>setForm({...form,message:e.target.value})} className="px-4 py-3 rounded-xl border border-slate-200 focus:border-fuchsia-500 focus:ring-4 focus:ring-fuchsia-100 outline-none" />
+            <textarea placeholder="Tell us about your plan (theme, cake, guests…)" rows={3} value={form.message} onChange={e=>setForm({...form,message:e.target.value})} className="px-4 py-3 rounded-xl border border-slate-200 focus:border-rose-500 focus:ring-4 focus:ring-rose-100 outline-none" />
             <button disabled={loading} className="mt-2 inline-flex items-center justify-center gap-2 px-6 py-3.5 rounded-xl brand-gradient text-white font-semibold shadow-glow hover:brightness-110 disabled:opacity-60">
               {loading ? 'Sending…' : (<>Send enquiry <ArrowRight className="h-4 w-4" /></>)}
             </button>
@@ -626,7 +626,7 @@ function Parties() {
 function Faq() {
   const [open, setOpen] = useState(0)
   return (
-    <section id="faq" className="py-24 bg-white">
+    <section id="faq" className="py-16 sm:py-24 bg-white">
       <div className="max-w-4xl mx-auto px-6">
         <Reveal>
           <div className="text-center">
@@ -664,7 +664,7 @@ function Faq() {
 /* ---------- Visit ---------- */
 function Visit() {
   return (
-    <section id="visit" className="py-24 bg-slate-950 text-white relative overflow-hidden">
+    <section id="visit" className="py-16 sm:py-24 bg-slate-950 text-white relative overflow-hidden">
       <div className="absolute inset-0 mesh-bg opacity-60" />
       <div className="relative max-w-7xl mx-auto px-6 grid lg:grid-cols-2 gap-10">
         <div>
@@ -747,11 +747,11 @@ function Floating() {
           <Phone className="h-6 w-6" />
         </a>
       </div>
-      <div className="md:hidden fixed bottom-0 inset-x-0 z-40 glass border-t border-white/40 pb-[env(safe-area-inset-bottom)]">
+      <div className="md:hidden fixed bottom-0 inset-x-0 z-40 glass border-t border-white/40 pb-[env(safe-area-inset-bottom)] shadow-[0_-8px_24px_-12px_rgba(15,23,42,0.15)]">
         <div className="grid grid-cols-3">
-          <Link href="/book" className="py-3 text-center brand-gradient text-white font-bold">Book Now</Link>
-          <a href="https://wa.me/916360921458" target="_blank" rel="noopener" className="py-3 text-center bg-emerald-500 text-white font-semibold flex items-center justify-center gap-1"><MessageCircle className="h-4 w-4" /> WhatsApp</a>
-          <a href="tel:+916360921458" className="py-3 text-center bg-slate-900 text-white font-semibold flex items-center justify-center gap-1"><Phone className="h-4 w-4" /> Call</a>
+          <Link href="/book" className="py-3 text-center brand-gradient text-white font-bold text-sm sm:text-base">Book Now</Link>
+          <a href="https://wa.me/916360921458" target="_blank" rel="noopener" className="py-3 text-center bg-emerald-500 text-white font-semibold text-sm sm:text-base flex items-center justify-center gap-1.5"><MessageCircle className="h-4 w-4" /> WhatsApp</a>
+          <a href="tel:+916360921458" className="py-3 text-center bg-slate-900 text-white font-semibold text-sm sm:text-base flex items-center justify-center gap-1.5"><Phone className="h-4 w-4" /> Call</a>
         </div>
       </div>
     </>

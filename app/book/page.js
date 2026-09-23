@@ -12,7 +12,7 @@ import {
 } from 'lucide-react'
 
 const ACTIVITIES = [
-  { id: 'full', title: 'Full Play Zone Package', price: 250, duration: '30 mins + 10 mins extendable', icon: PartyPopper, tint: 'from-fuchsia-600 to-orange-500', popular: true },
+  { id: 'full', title: 'Full Play Zone Package', price: 250, duration: '30 mins + 10 mins extendable', icon: PartyPopper, tint: 'from-rose-600 to-orange-500', popular: true },
   { id: 'play', title: 'Play Zone', price: 100, duration: '15 mins', icon: Sparkles, tint: 'from-pink-500 to-rose-500' },
   { id: 'tramp', title: 'Trampoline', price: 100, duration: '15 mins', icon: Rocket, tint: 'from-violet-500 to-indigo-500' },
   { id: 'scoot', title: 'Scooter Ride', price: 100, duration: '10 mins', icon: Bike, tint: 'from-emerald-500 to-teal-500' },
@@ -124,7 +124,7 @@ function BookingInner() {
 
       <div className="max-w-4xl mx-auto px-5 py-8 sm:py-12">
         <div className="text-center">
-          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-fuchsia-100 text-fuchsia-700 text-xs font-semibold uppercase tracking-wider">Booking</div>
+          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-rose-100 text-rose-700 text-xs font-semibold uppercase tracking-wider">Booking</div>
           <h1 className="mt-3 font-display text-3xl sm:text-5xl font-extrabold text-slate-900">Reserve your visit</h1>
           <p className="mt-2 text-slate-600">Simple, quick and confirmed instantly.</p>
         </div>
@@ -156,7 +156,7 @@ function BookingInner() {
                   <div className="text-sm text-slate-500">Pick the experience that’s calling your kid’s name.</div>
                   <div className="mt-5 grid sm:grid-cols-2 gap-3">
                     {ACTIVITIES.map(a => (
-                      <button key={a.id} onClick={() => setActivityId(a.id)} className={`relative text-left rounded-2xl p-4 border transition-all ${activityId === a.id ? 'border-transparent ring-2 ring-fuchsia-500 shadow-glow' : 'border-slate-200 hover:border-slate-300'}`}>
+                      <button key={a.id} onClick={() => setActivityId(a.id)} className={`relative text-left rounded-2xl p-4 border transition-all ${activityId === a.id ? 'border-transparent ring-2 ring-rose-500 shadow-glow' : 'border-slate-200 hover:border-slate-300'}`}>
                         {a.popular && <span className="absolute -top-2 right-3 text-[10px] font-bold brand-gradient text-white px-2 py-0.5 rounded-full">POPULAR</span>}
                         <div className={`h-10 w-10 rounded-xl grid place-items-center text-white bg-gradient-to-br ${a.tint}`}><a.icon className="h-5 w-5" /></div>
                         <div className="mt-3 font-semibold text-slate-900">{a.title}</div>
@@ -174,13 +174,13 @@ function BookingInner() {
                   <div className="mt-5 grid gap-4">
                     <label className="block">
                       <span className="text-sm font-medium text-slate-700 flex items-center gap-2"><CalendarDays className="h-4 w-4" /> Date</span>
-                      <input type="date" min={today} value={date} onChange={e => setDate(e.target.value)} className="mt-2 w-full px-4 py-3 rounded-xl border border-slate-200 focus:border-fuchsia-500 focus:ring-4 focus:ring-fuchsia-100 outline-none" />
+                      <input type="date" min={today} value={date} onChange={e => setDate(e.target.value)} className="mt-2 w-full px-4 py-3 rounded-xl border border-slate-200 focus:border-rose-500 focus:ring-4 focus:ring-rose-100 outline-none" />
                     </label>
                     <div>
                       <span className="text-sm font-medium text-slate-700 flex items-center gap-2"><Clock className="h-4 w-4" /> Time slot</span>
                       <div className="mt-2 grid grid-cols-3 sm:grid-cols-4 gap-2">
                         {SLOTS.map(s => (
-                          <button key={s} onClick={() => setSlot(s)} className={`px-3 py-2 rounded-xl text-sm font-medium border transition ${slot === s ? 'brand-gradient text-white border-transparent shadow-soft' : 'bg-white border-slate-200 text-slate-700 hover:border-fuchsia-300'}`}>{s}</button>
+                          <button key={s} onClick={() => setSlot(s)} className={`px-3 py-2 rounded-xl text-sm font-medium border transition ${slot === s ? 'brand-gradient text-white border-transparent shadow-soft' : 'bg-white border-slate-200 text-slate-700 hover:border-rose-300'}`}>{s}</button>
                         ))}
                       </div>
                     </div>
@@ -202,26 +202,26 @@ function BookingInner() {
                   <div className="mt-5 grid gap-3">
                     <label className="block">
                       <span className="text-sm font-medium text-slate-700 flex items-center gap-2"><User className="h-4 w-4" /> Parent / Guardian name</span>
-                      <input value={parent} onChange={e => setParent(e.target.value)} placeholder="e.g. Priya Sharma" className="mt-2 w-full px-4 py-3 rounded-xl border border-slate-200 focus:border-fuchsia-500 focus:ring-4 focus:ring-fuchsia-100 outline-none" />
+                      <input value={parent} onChange={e => setParent(e.target.value)} placeholder="e.g. Priya Sharma" className="mt-2 w-full px-4 py-3 rounded-xl border border-slate-200 focus:border-rose-500 focus:ring-4 focus:ring-rose-100 outline-none" />
                     </label>
                     <label className="block">
                       <span className="text-sm font-medium text-slate-700 flex items-center gap-2"><Phone className="h-4 w-4" /> Mobile</span>
-                      <input inputMode="numeric" value={mobile} onChange={e => setMobile(e.target.value.replace(/\D/g,'').slice(0,10))} placeholder="10-digit mobile" className="mt-2 w-full px-4 py-3 rounded-xl border border-slate-200 focus:border-fuchsia-500 focus:ring-4 focus:ring-fuchsia-100 outline-none" />
+                      <input inputMode="numeric" value={mobile} onChange={e => setMobile(e.target.value.replace(/\D/g,'').slice(0,10))} placeholder="10-digit mobile" className="mt-2 w-full px-4 py-3 rounded-xl border border-slate-200 focus:border-rose-500 focus:ring-4 focus:ring-rose-100 outline-none" />
                     </label>
                     <div>
                       <span className="text-sm font-medium text-slate-700 flex items-center gap-2"><Baby className="h-4 w-4" /> Children names</span>
                       <div className="mt-2 grid gap-2">
                         {names.map((n, i) => (
-                          <input key={i} value={n} onChange={e => setNames(prev => prev.map((x, j) => j === i ? e.target.value : x))} placeholder={`Child ${i + 1} name`} className="w-full px-4 py-3 rounded-xl border border-slate-200 focus:border-fuchsia-500 focus:ring-4 focus:ring-fuchsia-100 outline-none" />
+                          <input key={i} value={n} onChange={e => setNames(prev => prev.map((x, j) => j === i ? e.target.value : x))} placeholder={`Child ${i + 1} name`} className="w-full px-4 py-3 rounded-xl border border-slate-200 focus:border-rose-500 focus:ring-4 focus:ring-rose-100 outline-none" />
                         ))}
                       </div>
                     </div>
                     <label className="block">
                       <span className="text-sm font-medium text-slate-700">Anything we should know? (optional)</span>
-                      <textarea value={notes} onChange={e => setNotes(e.target.value)} rows={2} placeholder="Allergies, birthday, special request…" className="mt-2 w-full px-4 py-3 rounded-xl border border-slate-200 focus:border-fuchsia-500 focus:ring-4 focus:ring-fuchsia-100 outline-none" />
+                      <textarea value={notes} onChange={e => setNotes(e.target.value)} rows={2} placeholder="Allergies, birthday, special request…" className="mt-2 w-full px-4 py-3 rounded-xl border border-slate-200 focus:border-rose-500 focus:ring-4 focus:ring-rose-100 outline-none" />
                     </label>
                     <label className="mt-2 flex items-start gap-2 text-sm text-slate-700">
-                      <input type="checkbox" checked={agree} onChange={e => setAgree(e.target.checked)} className="mt-1 h-4 w-4 accent-fuchsia-600" />
+                      <input type="checkbox" checked={agree} onChange={e => setAgree(e.target.checked)} className="mt-1 h-4 w-4 accent-rose-600" />
                       <span>I agree to the safety rules and ticket policy. Socks are mandatory inside the play zone.</span>
                     </label>
                   </div>
@@ -287,8 +287,8 @@ function BookingInner() {
               <span className="text-slate-600 text-sm">Total</span>
               <motion.span key={total} initial={{ scale: 0.9, opacity: 0 }} animate={{ scale: 1, opacity: 1 }} className="font-display text-3xl font-extrabold text-slate-900">₹{total}</motion.span>
             </div>
-            <div className="mt-4 rounded-2xl bg-fuchsia-50 border border-fuchsia-100 p-3 text-xs text-slate-600 flex gap-2">
-              <ShieldCheck className="h-4 w-4 text-fuchsia-600 shrink-0" />
+            <div className="mt-4 rounded-2xl bg-rose-50 border border-rose-100 p-3 text-xs text-slate-600 flex gap-2">
+              <ShieldCheck className="h-4 w-4 text-rose-600 shrink-0" />
               <span>Pay at venue. Cancellation up to 2 hours before the slot.</span>
             </div>
           </aside>
