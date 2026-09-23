@@ -60,7 +60,7 @@ const jsonLd = {
     addressCountry: 'IN',
   },
   geo: { '@type': 'GeoCoordinates', latitude: 12.3050, longitude: 76.6553 },
-  openingHours: 'Mo-Su 11:00-21:30',
+  openingHours: 'Mo-Su 09:00-21:00',
   sameAs: ['https://instagram.com/sarojani_funland'],
 }
 

@@ -204,7 +204,7 @@ metadata:
 
 test_plan:
   current_focus:
-    - "Home page — hero, nav, about, attractions, gallery, pricing, parties, faq, visit sections"
+    - "User-reported bug fixes (v2)"
     - "Multi-step booking UI (/book)"
   stuck_tasks: []
   test_all: false
@@ -212,8 +212,45 @@ test_plan:
 
 agent_communication:
     - agent: "main"
-      message: "Backend already verified. Please test the FRONTEND now: (1) Home page across desktop 1440px + mobile 390px viewports covering all sections, (2) Navbar scroll morph + working mobile hamburger, (3) Gallery lightbox open + keyboard arrows + close, (4) FAQ accordion expand/collapse, (5) Birthday parties enquiry form submission (should show success toast), (6) Full booking end-to-end at /book — pick 'Full Play Zone Package', pick a future date + slot, fill parent name 'Test Parent', mobile '6360921458', child name, check agree, submit and verify confetti + booking reference shown. Also verify validation errors appear (invalid mobile / no activity)."
+      message: |
+        User reported these bugs (please verify all fixes on desktop 1440 + mobile 390):
+        1) Pricing cards not fully interactive → verify: click any pricing card (not just the "Book now" text) — the entire card should navigate to /book?activity=<Title>. Test with 3-4 different cards.
+        2) Gallery images not zooming/interactive → verify: hover on gallery tile shows scale-up + "VIEW" label + magnifier badge; click opens lightbox; keyboard ← → navigates; Esc closes; prev/next chevrons work on desktop.
+        3) Scooter Rides card was showing the wrong photo → verify the Scooter Rides card in Attractions shows a photo of yellow scooter + red truck + red car (ride-ons.jpg).
+        4) Location map was Hotel Continental → verify the Visit section iframe shows "Sarojani Funland" pinned in Mysuru (not Hotel Continental). Check the "Get directions" button href equals https://maps.app.goo.gl/Vip1sQCEc5upv6uT6.
+        5) Safety promise image was odd → verify the aspect-[4/5] photo in Safety section is now play-detail.jpg (not bounce-house).
+        6) Real Google reviews → verify names "Sandeep PC", "Mrinal Sen", "Dharani TG" appear in the Reviews carousel with their real 5-star review text.
+        7) Booking page pop-in → visit /book: content should slide/fade in (opacity 0→1, y 24→0) over ~0.55s.
+        8) Booking ID → do a full booking; the success screen must show a reference like "SFL-XXXX" (4 uppercase alphanumeric after prefix) instead of a UUID slice.
+        9) Hours in Visit section → verify "All days · 9:00 AM – 9:00 PM".
+        Please execute the full booking end-to-end and confirm the API response contains bookingRef field.
+
     - agent: "testing"
       message: "✅ Backend testing complete - ALL 8 TESTS PASSED (100%). Fixed minor serialization issue: MongoDB _id field was being returned in POST responses for bookings and enquiries (added delete doc._id after insertOne calls). All endpoints now working correctly: (1) GET /api/ returns 200 with ok:true. (2) POST /api/bookings validates all required fields and mobile format, returns 201 with UUID id, no _id. (3) GET /api/bookings returns items array sorted by createdAt desc, _id excluded. (4) POST /api/enquiries validates name and mobile, returns 201 with UUID id, no _id. (5) CORS headers present on OPTIONS requests. All validation, persistence, and error handling working as expected."
     - agent: "testing"
       message: "✅ FRONTEND TESTING COMPLETE - ALL TESTS PASSED (100%). Comprehensive testing completed on both desktop (1440x900) and mobile (390x844) viewports. HOME PAGE: All sections working perfectly - preloader with real logo, sticky nav with glass morph effect, animated hero with working CTAs, stats counters (12,000+, 7, 100%, 5★), about section with 4 pillars, attractions grid (5 items), how it works, gallery with lightbox and keyboard navigation (ArrowRight/Left/Escape), pricing with MOST POPULAR badge on Full Play Zone Package (₹250), safety section, reviews carousel, birthday parties form with validation and successful submission, FAQ accordion (all 7 FAQs expand/collapse correctly), visit section with Google Maps, footer, floating desktop CTAs, mobile hamburger menu, mobile sticky bottom bar (no truncation). BOOKING FLOW: Complete 4-step flow working - activity selection with POPULAR badge, date/time/count selection with live summary (₹500 for 2 children), validation on step 3 (empty name, invalid mobile, unchecked agree all show error toasts), successful submission shows confetti animation + booking reference (A5E7CB39) + summary. Preselect via ?activity=Trampoline works. NO console errors, NO horizontal overflow on mobile. Site is production-ready! 🎉"
+    - agent: "testing"
+      message: |
+        ✅ USER-REPORTED BUG FIXES VERIFICATION COMPLETE - ALL 9 ITEMS PASSED
+        
+        Tested on BOTH desktop (1440x900) and mobile (390x844) viewports. All bug fixes verified working correctly:
+        
+        1) ✅ PASS - Pricing cards fully clickable: Entire card area is clickable (not just "Book now" text). Tested Full Play Zone Package on desktop and Trampoline on mobile - both navigate correctly to /book?activity=<Title> when clicking empty areas (near price/icon).
+        
+        2) ✅ PASS - Gallery zoom/interactivity: Hover on desktop shows image scale-up (~1.12x), "VIEW" label appears bottom-right, magnifier badge visible top-right. Click opens lightbox with dark blurred background, image caption "Overview · 1 / 10", left/right chevron buttons visible on desktop, close X button top-right. Keyboard navigation works: ArrowRight advances, ArrowLeft goes back, Escape closes lightbox. Mobile: tap opens lightbox, close button works.
+        
+        3) ✅ PASS - Scooter Rides card image: Verified image src is /images/new/ride-ons.jpg showing yellow scooters + red car (NOT interior overview). Correct image displayed on both desktop and mobile.
+        
+        4) ✅ PASS - Location map correct: Iframe title is "Sarojani Funland location", src contains "Sarojani+Funland+Mysuru" (NOT Hotel Continental). "Get directions" button href is https://maps.app.goo.gl/Vip1sQCEc5upv6uT6. Verified on both viewports.
+        
+        5) ✅ PASS - Safety promise image: Verified image src is /images/new/play-detail.jpg (aspect-4/5) showing colorful play zone with slides, bounce house, ball pit. Richer, more polished image than previous.
+        
+        6) ✅ PASS - Real Google reviews visible: All three reviewers present with correct badges: "Sandeep PC" (Local Guide · 27 reviews), "Mrinal Sen" (Recent visitor), "Dharani TG" (Verified visitor). Google 4-color logo SVG (viewBox="0 0 48 48") visible in footer of each review card (6 logos found). Verified on both viewports.
+        
+        7) ✅ PASS - Booking page smooth transition: Content animates in with opacity 0→1, y 24→0, duration 0.55s (smooth, not hard pop-in). Top bar shows real Sarojani Funland logo (logo-sm.png, NOT generic "S"). Verified on both viewports.
+        
+        8) ✅ PASS - Human-friendly booking ID: Completed full booking flow (Full Play Zone Package, tomorrow's date, 5:00 PM, 1 child "Aarav", parent "Test Parent", mobile "6360921458"). Booking reference displayed: "SFL-CYAR" - matches regex ^SFL-[A-Z0-9]{4}$ perfectly. Backend generates 4-char uppercase alphanumeric suffix using Math.random().toString(36).slice(2, 6).toUpperCase(). API response contains bookingRef field.
+        
+        9) ✅ PASS - Hours updated: Visit section shows single row "All days" — "9:00 AM – 9:00 PM" (no Mon-Fri / Sat-Sun split). Verified on both viewports.
+        
+        NO console errors detected (ignoring harmless PerformanceServerTiming/DataCloneError). NO network errors. All 9 bug fixes working perfectly! 🎉

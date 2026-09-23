@@ -49,8 +49,11 @@ async function route(request, { params }) {
         return NextResponse.json({ error: 'Invalid mobile' }, { status: 400, headers: CORS })
       }
       const db = await getDb()
+      const shortId = Math.random().toString(36).slice(2, 6).toUpperCase()
+      const bookingRef = `SFL-${shortId}`
       const doc = {
         id: uuidv4(),
+        bookingRef,
         parentName: body.parentName,
         childrenCount: Number(body.childrenCount || 1),
         childrenNames: Array.isArray(body.childrenNames) ? body.childrenNames : [],

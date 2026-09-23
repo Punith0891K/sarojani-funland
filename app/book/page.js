@@ -110,7 +110,9 @@ function BookingInner() {
   ]
 
   return (
-    <main className="min-h-screen bg-[radial-gradient(1200px_600px_at_10%_-10%,rgba(124,58,237,0.12),transparent_60%),radial-gradient(900px_500px_at_100%_0%,rgba(236,72,153,0.10),transparent_60%),#faf7ff]">
+    <main className="relative min-h-screen bg-[radial-gradient(1200px_600px_at_10%_-10%,rgba(225,29,72,0.12),transparent_60%),radial-gradient(900px_500px_at_100%_0%,rgba(14,165,233,0.10),transparent_60%),#faf7ff] overflow-hidden">
+      <div className="pointer-events-none absolute top-40 -left-24 h-72 w-72 rounded-full bg-amber-300/25 blur-3xl" />
+      <div className="pointer-events-none absolute bottom-40 -right-24 h-80 w-80 rounded-full bg-rose-300/25 blur-3xl" />
       {/* Top bar */}
       <div className="sticky top-0 z-30 glass border-b border-white/40">
         <div className="max-w-4xl mx-auto px-5 h-14 flex items-center justify-between">
@@ -236,15 +238,16 @@ function BookingInner() {
                   <div className="mt-6 font-display text-3xl font-extrabold text-slate-900">Booking confirmed! 🎉</div>
                   <p className="mt-2 text-slate-600">We can’t wait to see {parent}’s little ones at Sarojani Funland.</p>
                   {done && (
-                    <div className="mt-6 mx-auto max-w-md text-left rounded-2xl bg-slate-50 border border-slate-200 p-5">
+                    <div className="mt-6 mx-auto max-w-md text-left rounded-2xl bg-gradient-to-br from-rose-50 to-amber-50 border border-rose-100 p-5">
                       <div className="text-xs uppercase tracking-wider text-slate-500">Booking reference</div>
-                      <div className="font-mono text-sm text-slate-800">{done.id.slice(0, 8).toUpperCase()}</div>
+                      <div className="font-mono text-lg font-bold brand-text tracking-wider">{done.bookingRef || done.id.slice(0, 8).toUpperCase()}</div>
                       <div className="mt-3 grid grid-cols-2 gap-2 text-sm text-slate-700">
                         <div><div className="text-slate-500 text-xs">Activity</div>{done.activity}</div>
                         <div><div className="text-slate-500 text-xs">Total</div>₹{done.totalAmount}</div>
                         <div><div className="text-slate-500 text-xs">Date</div>{done.date}</div>
                         <div><div className="text-slate-500 text-xs">Slot</div>{done.timeSlot}</div>
                       </div>
+                      <div className="mt-3 text-xs text-slate-500">Show this reference at the counter. A copy has been saved to our records.</div>
                     </div>
                   )}
                   <div className="mt-6 flex flex-col sm:flex-row items-center justify-center gap-3">
@@ -301,7 +304,13 @@ function BookingInner() {
 export default function BookingPage() {
   return (
     <Suspense fallback={<div className="min-h-screen grid place-items-center text-slate-500">Loading…</div>}>
-      <BookingInner />
+      <motion.div
+        initial={{ opacity: 0, y: 24 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.55, ease: [0.16, 1, 0.3, 1] }}
+      >
+        <BookingInner />
+      </motion.div>
     </Suspense>
   )
 }

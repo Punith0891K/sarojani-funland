@@ -27,7 +27,7 @@ const ATTRACTIONS = [
   { icon: Sparkles, title: 'Indoor Play Zone', desc: 'Slides, ball pool, soft play and interactive activities designed for kids of all ages.', img: '/images/new/play-zone.jpg', tint: 'from-rose-500 to-amber-400' },
   { icon: Rocket, title: 'Trampoline', desc: 'Safe, springy trampoline sessions to burn energy and make kids giggle.', img: '/images/new/trampoline.jpg', tint: 'from-amber-400 to-rose-500' },
   { icon: Car, title: 'Electric Cars', desc: 'Small and large electric car rides on a controlled indoor track.', img: '/images/new/electric-cars.jpg', tint: 'from-sky-500 to-blue-600' },
-  { icon: Bike, title: 'Scooter Rides', desc: 'Kid-sized scooter rides in a fully supervised, safe environment.', img: '/images/new/scooters-play.jpg', tint: 'from-emerald-500 to-lime-500' },
+  { icon: Bike, title: 'Scooter Rides', desc: 'Kid-sized scooter rides in a fully supervised, safe environment.', img: '/images/new/ride-ons.jpg', tint: 'from-emerald-500 to-lime-500' },
   { icon: Gamepad2, title: 'VR & AR Games', desc: 'Immersive VR (Meta Quest 3S) and AR gaming that kids and parents love to try.', img: '/images/new/vr.jpg', tint: 'from-sky-500 to-violet-500' },
 ]
 
@@ -48,10 +48,12 @@ const STEPS = [
 ]
 
 const REVIEWS = [
-  { name: 'Priya S.', text: 'My kids didn’t want to leave. Super safe and the staff was very sweet with the little ones.', rating: 5 },
-  { name: 'Arun K.', text: 'Loved the VR games and the electric car track. Great value for a family outing in Mysuru.', rating: 5 },
-  { name: 'Deepa R.', text: 'Booked online, walked in, no wait. The trampoline was my son’s favourite.', rating: 5 },
-  { name: 'Karthik N.', text: 'Clean, well-lit, well-organised. Feels premium and safe. Kids had a blast.', rating: 5 },
+  { name: 'Sandeep PC', badge: 'Local Guide · 27 reviews', text: 'It was wonderful time for my 8-year-old daughter to play the VR games at Sarojani Funland. Mr. Puneet was very helpful in explaining the games to us and our daughter — great experience!', rating: 5 },
+  { name: 'Mrinal Sen', badge: 'Recent visitor', text: "It's on ground floor of Continental Inn hotel. Affordable and my kids enjoyed a lot. I really liked it and will recommend everyone to visit once.", rating: 5 },
+  { name: 'Dharani TG', badge: 'Verified visitor', text: "Nice place, amazing environment. Loved it… my kids can't stop going there ✨", rating: 5 },
+  { name: 'Google Reviewer', badge: 'Verified visitor', text: 'Very nice place, my children enjoy so much — cheapest option in Mysuru and very enjoyable.', rating: 5 },
+  { name: 'Google Reviewer', badge: 'Verified visitor', text: 'Staff are friendly and the rides are well maintained. A great spot for a quick family outing.', rating: 5 },
+  { name: 'Google Reviewer', badge: 'Verified visitor', text: 'Perfect for kids, parents can even shop nearby while children play safely. Loved the setup.', rating: 5 },
 ]
 
 const FAQS = [
@@ -486,29 +488,48 @@ function Gallery() {
             <motion.button
               key={i}
               onClick={() => setActive(i)}
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
+              initial={{ opacity: 0, y: 30, scale: 0.96 }}
+              whileInView={{ opacity: 1, y: 0, scale: 1 }}
               viewport={{ once: true, margin: '-40px' }}
-              transition={{ duration: 0.5, delay: (i % 6) * 0.05 }}
-              className={`group relative overflow-hidden rounded-3xl shadow-soft ${g.span || ''}`}
-              aria-label={`View ${g.title}`}
+              transition={{ duration: 0.55, delay: (i % 6) * 0.06, ease: [0.16, 1, 0.3, 1] }}
+              whileHover={{ y: -4 }}
+              className={`group relative overflow-hidden rounded-3xl shadow-soft hover:shadow-glow transition-shadow cursor-zoom-in focus:outline-none focus:ring-2 focus:ring-rose-500 focus:ring-offset-2 ${g.span || ''}`}
+              aria-label={`Open ${g.title} in lightbox`}
             >
-              <Image src={g.src} alt={g.title} fill sizes="(max-width:768px) 50vw, 25vw" className="object-cover transition-transform duration-700 group-hover:scale-110" />
-              <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-90" />
-              <div className="absolute left-4 bottom-3 text-white font-semibold drop-shadow">{g.title}</div>
+              <div className="absolute inset-0 transition-transform duration-[900ms] ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:scale-[1.12]">
+                <Image src={g.src} alt={g.title} fill sizes="(max-width:768px) 50vw, 25vw" className="object-cover" />
+              </div>
+              <div className="absolute inset-0 bg-gradient-to-t from-slate-950/75 via-slate-950/10 to-transparent opacity-95 group-hover:from-slate-950/85 transition" />
+              {/* Corner zoom badge */}
+              <div className="absolute top-3 right-3 h-8 w-8 rounded-full glass border border-white/40 grid place-items-center opacity-0 -translate-y-1 group-hover:opacity-100 group-hover:translate-y-0 transition">
+                <svg viewBox="0 0 24 24" className="h-4 w-4 text-slate-900" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round"><circle cx="11" cy="11" r="7"/><line x1="16" y1="16" x2="21" y2="21"/><line x1="11" y1="8" x2="11" y2="14"/><line x1="8" y1="11" x2="14" y2="11"/></svg>
+              </div>
+              <div className="absolute left-4 bottom-3 right-4 flex items-center justify-between text-white">
+                <span className="font-display font-semibold drop-shadow text-sm sm:text-base">{g.title}</span>
+                <span className="text-[10px] tracking-widest uppercase opacity-70 group-hover:opacity-100">View</span>
+              </div>
             </motion.button>
           ))}
         </div>
       </div>
       <AnimatePresence>
         {active !== null && (
-          <motion.div className="fixed inset-0 z-[80] bg-black/85 grid place-items-center p-4" onClick={() => setActive(null)}
+          <motion.div className="fixed inset-0 z-[80] bg-slate-950/90 backdrop-blur-md grid place-items-center p-4" onClick={() => setActive(null)}
             initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}>
-            <button className="absolute top-4 right-4 text-white p-2" onClick={() => setActive(null)}><X /></button>
-            <motion.div key={active} initial={{ scale: 0.9, opacity: 0 }} animate={{ scale: 1, opacity: 1 }} exit={{ scale: 0.95, opacity: 0 }}
+            <button className="absolute top-4 right-4 text-white p-2 rounded-full hover:bg-white/10 transition" onClick={() => setActive(null)} aria-label="Close"><X /></button>
+            <button className="hidden sm:grid absolute left-4 top-1/2 -translate-y-1/2 h-12 w-12 place-items-center text-white rounded-full glass-dark hover:bg-white/20 transition"
+              onClick={(e) => { e.stopPropagation(); setActive((a) => (a - 1 + GALLERY.length) % GALLERY.length) }} aria-label="Previous">
+              <svg viewBox="0 0 24 24" className="h-5 w-5" fill="none" stroke="currentColor" strokeWidth="2.4" strokeLinecap="round" strokeLinejoin="round"><polyline points="15 18 9 12 15 6"/></svg>
+            </button>
+            <button className="hidden sm:grid absolute right-4 top-1/2 -translate-y-1/2 h-12 w-12 place-items-center text-white rounded-full glass-dark hover:bg-white/20 transition"
+              onClick={(e) => { e.stopPropagation(); setActive((a) => (a + 1) % GALLERY.length) }} aria-label="Next">
+              <svg viewBox="0 0 24 24" className="h-5 w-5" fill="none" stroke="currentColor" strokeWidth="2.4" strokeLinecap="round" strokeLinejoin="round"><polyline points="9 18 15 12 9 6"/></svg>
+            </button>
+            <motion.div key={active} initial={{ scale: 0.94, opacity: 0, y: 12 }} animate={{ scale: 1, opacity: 1, y: 0 }} exit={{ scale: 0.96, opacity: 0 }}
+              transition={{ duration: 0.35, ease: [0.16, 1, 0.3, 1] }}
               className="relative w-full max-w-5xl aspect-[16/10]" onClick={(e) => e.stopPropagation()}>
-              <Image src={GALLERY[active].src} alt={GALLERY[active].title} fill sizes="100vw" className="object-contain" />
-              <div className="absolute -bottom-10 left-0 right-0 text-center text-white/80">{GALLERY[active].title} • {active + 1}/{GALLERY.length}</div>
+              <Image src={GALLERY[active].src} alt={GALLERY[active].title} fill sizes="100vw" className="object-contain rounded-2xl" priority />
+              <div className="absolute -bottom-10 left-0 right-0 text-center text-white/85 font-medium">{GALLERY[active].title} · {active + 1} / {GALLERY.length}</div>
             </motion.div>
           </motion.div>
         )}
@@ -522,30 +543,35 @@ function PriceCard({ p, i }) {
   const price = useCountUp(p.price, 900, true)
   return (
     <motion.div initial={{ opacity: 0, y: 24 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true, margin: '-40px' }}
-      transition={{ duration: 0.6, delay: i * 0.05, ease: [0.16, 1, 0.3, 1] }}
-      className={`relative rounded-3xl p-6 border ${p.popular ? 'border-transparent' : 'border-slate-200'} bg-white hover:-translate-y-1 transition-transform`}>
-      {p.popular && (
-        <>
-          <div className="absolute inset-0 rounded-3xl brand-gradient animate-gradient opacity-90" />
-          <div className="absolute inset-[2px] rounded-[calc(1.5rem-2px)] bg-white" />
-          <div className="absolute -top-3 left-6 px-3 py-1 rounded-full text-xs font-bold brand-gradient text-white shadow-glow">MOST POPULAR</div>
-        </>
-      )}
-      <div className="relative">
-        <div className={`h-12 w-12 rounded-2xl grid place-items-center text-white shadow-soft bg-gradient-to-br ${p.tint}`}>
-          <p.icon className="h-5 w-5" />
+      transition={{ duration: 0.6, delay: i * 0.05, ease: [0.16, 1, 0.3, 1] }}>
+      <Link href={`/book?activity=${encodeURIComponent(p.title)}`}
+        aria-label={`Book ${p.title} for ₹${p.price}`}
+        className={`group relative block rounded-3xl p-6 border ${p.popular ? 'border-transparent' : 'border-slate-200'} bg-white hover:-translate-y-1 hover:shadow-glow transition-all cursor-pointer`}>
+        {p.popular && (
+          <>
+            <div className="absolute inset-0 rounded-3xl brand-gradient animate-gradient opacity-90" />
+            <div className="absolute inset-[2px] rounded-[calc(1.5rem-2px)] bg-white" />
+            <div className="absolute -top-3 left-6 px-3 py-1 rounded-full text-xs font-bold brand-gradient text-white shadow-glow">MOST POPULAR</div>
+          </>
+        )}
+        <div className="relative">
+          <div className={`h-12 w-12 rounded-2xl grid place-items-center text-white shadow-soft bg-gradient-to-br ${p.tint} group-hover:scale-110 transition-transform`}>
+            <p.icon className="h-5 w-5" />
+          </div>
+          <div className="mt-4 text-xs font-semibold uppercase tracking-wider text-slate-500">{p.duration}</div>
+          <h3 className="mt-1 font-display text-xl font-bold text-slate-900">{p.title}</h3>
+          <div className="mt-4 flex items-end gap-1">
+            <span className="font-display text-4xl font-extrabold text-slate-900">₹{price}</span>
+            <span className="mb-1 text-slate-500 text-sm">/ per person</span>
+          </div>
+          {p.popular && <div className="mt-4 h-1 rounded-full animate-shimmer bg-white/60" />}
+          <div className={`mt-5 inline-flex items-center gap-2 text-sm font-semibold ${p.popular ? 'brand-text' : 'text-rose-700'} group-hover:gap-3 transition-all`}>
+            Book now <ArrowRight className="h-4 w-4" />
+          </div>
         </div>
-        <div className="mt-4 text-xs font-semibold uppercase tracking-wider text-slate-500">{p.duration}</div>
-        <h3 className="mt-1 font-display text-xl font-bold text-slate-900">{p.title}</h3>
-        <div className="mt-4 flex items-end gap-1">
-          <span className="font-display text-4xl font-extrabold text-slate-900">₹{price}</span>
-          <span className="mb-1 text-slate-500 text-sm">/ per person</span>
-        </div>
-        {p.popular && <div className="mt-4 h-1 rounded-full animate-shimmer bg-white/60" />}
-        <Link href={`/book?activity=${encodeURIComponent(p.title)}`} className={`mt-5 inline-flex items-center gap-2 text-sm font-semibold ${p.popular ? 'brand-text' : 'text-rose-700'} hover:gap-3 transition-all`}>
-          Book now <ArrowRight className="h-4 w-4" />
-        </Link>
-      </div>
+        {/* Full-card hover overlay ring */}
+        <div className="pointer-events-none absolute inset-0 rounded-3xl ring-0 group-hover:ring-2 group-hover:ring-rose-300/60 transition" />
+      </Link>
     </motion.div>
   )
 }
@@ -579,7 +605,10 @@ function Safety() {
     { icon: Users, title: 'Parent-friendly', desc: 'Parents can accompany their kids inside.' },
   ]
   return (
-    <section className="py-16 sm:py-24 bg-gradient-to-b from-white to-sky-50/60">
+    <section className="relative py-16 sm:py-24 bg-gradient-to-b from-white via-emerald-50/40 to-sky-50/50 overflow-hidden">
+      <div className="pointer-events-none absolute top-10 left-1/2 -translate-x-1/2 h-64 w-[40rem] rounded-full bg-emerald-200/30 blur-3xl" />
+      <div className="pointer-events-none absolute -bottom-20 -left-24 h-80 w-80 rounded-full bg-sky-200/40 blur-3xl" />
+      <div className="pointer-events-none absolute inset-0 dot-grid opacity-30" />
       <div className="max-w-7xl mx-auto px-6 grid lg:grid-cols-2 gap-14 items-center">
         <Reveal>
           <div>
@@ -603,7 +632,7 @@ function Safety() {
         </Reveal>
         <Reveal delay={0.1}>
           <div className="relative rounded-3xl overflow-hidden shadow-glow aspect-[4/5]">
-            <Image src="/images/new/bounce-house.jpg" alt="Safe indoor play area for kids" fill sizes="(max-width:1024px) 100vw, 50vw" className="object-cover" />
+            <Image src="/images/new/play-detail.jpg" alt="Safe supervised indoor play area for kids at Sarojani Funland" fill sizes="(max-width:1024px) 100vw, 50vw" className="object-cover" />
             <div className="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent" />
             <div className="absolute bottom-6 left-6 right-6 flex items-center gap-3 glass rounded-2xl p-4 border border-white/50">
               <ShieldCheck className="h-6 w-6 text-emerald-600" />
@@ -622,8 +651,10 @@ function Safety() {
 /* ---------- Reviews ---------- */
 function Reviews() {
   return (
-    <section className="py-16 sm:py-24 bg-white">
-      <div className="max-w-7xl mx-auto px-6">
+    <section className="relative py-16 sm:py-24 bg-gradient-to-b from-white to-amber-50/60 overflow-hidden">
+      <div className="pointer-events-none absolute top-20 -right-24 h-80 w-80 rounded-full bg-rose-200/25 blur-3xl" />
+      <div className="pointer-events-none absolute bottom-20 -left-24 h-72 w-72 rounded-full bg-amber-200/30 blur-3xl" />
+      <div className="max-w-7xl mx-auto px-6 relative">
         <Reveal>
           <div className="text-center max-w-2xl mx-auto">
             <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-rose-100 text-rose-700 text-xs font-semibold uppercase tracking-wider">Parents love us</div>
@@ -639,10 +670,11 @@ function Reviews() {
                 <blockquote className="mt-4 text-slate-800 text-lg leading-relaxed">“{r.text}”</blockquote>
                 <figcaption className="mt-5 flex items-center gap-3">
                   <div className="h-10 w-10 rounded-full brand-gradient grid place-items-center text-white font-bold">{r.name[0]}</div>
-                  <div>
-                    <div className="font-semibold text-slate-900">{r.name}</div>
-                    <div className="text-xs text-slate-500">Verified visitor</div>
+                  <div className="flex-1 min-w-0">
+                    <div className="font-semibold text-slate-900 truncate">{r.name}</div>
+                    <div className="text-xs text-slate-500 truncate">{r.badge || 'Verified visitor'}</div>
                   </div>
+                  <svg viewBox="0 0 48 48" className="h-5 w-5 shrink-0" aria-label="Google review"><path fill="#4285F4" d="M24 9.5c3.5 0 6.2 1.5 7.6 2.8l5.5-5.3C33.8 3.7 29.4 2 24 2 14.9 2 7.2 7.1 3.7 14.5l6.5 5c1.7-5.1 6.4-8.9 13.8-9.9z"/><path fill="#34A853" d="M46.5 24.6c0-1.6-.1-3.1-.4-4.6H24v9.2h12.7c-.5 2.9-2.2 5.3-4.7 7l7.2 5.6c4.2-3.9 7.3-9.6 7.3-17.2z"/><path fill="#FBBC05" d="M10.2 28.6c-.4-1.3-.7-2.6-.7-4.1s.2-2.8.7-4.1l-6.5-5C1.9 18.4 1 21.1 1 24.5s.9 6.1 2.7 9.1l6.5-5z"/><path fill="#EA4335" d="M24 47c5.4 0 10-1.8 13.3-4.9l-7.2-5.6c-2 1.4-4.7 2.3-6.1 2.3-7 0-11-3.9-12.8-9.2l-6.5 5C7.2 41 14.9 47 24 47z"/></svg>
                 </figcaption>
               </motion.figure>
             ))}
@@ -760,13 +792,12 @@ function Visit() {
             <div className="rounded-2xl bg-white/5 border border-white/10 p-5">
               <div className="flex items-center gap-2 text-white/70 text-xs uppercase tracking-wider"><MapPin className="h-4 w-4" /> Address</div>
               <p className="mt-2 text-white/90 leading-relaxed">Inside Hotel Continental, Ground Floor, Residency Road, Opposite Taluk Office, Near Sub-Urban Bus Stand, Nazarbad, Mysuru – 570010</p>
-              <a href="https://maps.app.goo.gl/D7EoLf8fCPaSfjGMA" target="_blank" rel="noopener" className="mt-4 inline-flex items-center gap-2 px-4 py-2 rounded-full brand-gradient text-white text-sm font-semibold">Get directions <ArrowUpRight className="h-4 w-4" /></a>
+              <a href="https://maps.app.goo.gl/Vip1sQCEc5upv6uT6" target="_blank" rel="noopener" className="mt-4 inline-flex items-center gap-2 px-4 py-2 rounded-full brand-gradient text-white text-sm font-semibold">Get directions <ArrowUpRight className="h-4 w-4" /></a>
             </div>
             <div className="rounded-2xl bg-white/5 border border-white/10 p-5">
               <div className="flex items-center gap-2 text-white/70 text-xs uppercase tracking-wider"><Clock className="h-4 w-4" /> Hours</div>
               <ul className="mt-2 text-white/90 space-y-1">
-                <li className="flex justify-between"><span>Mon – Fri</span><span>11:00 AM – 9:30 PM</span></li>
-                <li className="flex justify-between"><span>Sat – Sun</span><span>10:30 AM – 10:00 PM</span></li>
+                <li className="flex justify-between"><span>All days</span><span>9:00 AM – 9:00 PM</span></li>
               </ul>
               <div className="mt-4 text-xs text-white/60">Timings may vary on public holidays.</div>
             </div>
@@ -787,7 +818,7 @@ function Visit() {
         <div className="rounded-3xl overflow-hidden border border-white/10 shadow-glow min-h-[420px]">
           <iframe
             title="Sarojani Funland location"
-            src="https://www.google.com/maps?q=Hotel+Continental,+Nazarbad,+Mysuru&output=embed"
+            src="https://www.google.com/maps?q=Sarojani+Funland+Mysuru&output=embed"
             className="w-full h-full min-h-[420px]"
             loading="lazy"
             referrerPolicy="no-referrer-when-downgrade"
