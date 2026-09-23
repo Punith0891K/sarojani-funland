@@ -166,9 +166,24 @@ backend:
           comment: "✅ Test passed. Verified: Returns 200 status with { message: 'Sarojani Funland API', ok: true }. Endpoint working correctly."
 
 frontend:
-  - task: "Multi-step booking UI"
+  - task: "Home page — hero, nav, about, attractions, gallery, pricing, parties, faq, visit sections"
     implemented: true
-    working: "NA"
+    working: true
+    file: "app/page.js"
+    stuck_count: 0
+    priority: "high"
+    needs_retesting: false
+    status_history:
+        - working: "NA"
+          agent: "main"
+          comment: "Full home page with preloader (real logo), sticky glass nav (real logo), animated hero (parallax + staggered word reveal + floating shapes), Stats counters, About section with layered image collage, Attractions cards with tilt hover, Bento gallery + lightbox, Pricing cards with animated count-up, Safety section, Reviews carousel, Birthday parties form (POSTs to /api/enquiries), FAQ accordion, Visit section with Google Maps embed, sticky mobile bottom bar (Book/WhatsApp/Call), floating desktop CTAs."
+        - working: true
+          agent: "testing"
+          comment: "✅ ALL TESTS PASSED on both desktop (1440x900) and mobile (390x844). Verified: (1) Preloader shows real Sarojani Funland logo (logo-md.png), disappears within ~1.5s. (2) Sticky promo bar with phone link +91 63609 21458 visible. (3) Nav shows real logo (logo-sm.png), morphs to white glass on scroll. (4) Hero section with animated headline 'Where Fun & Wonder Come Alive', floating shapes, CTAs work ('Book your fun' → /book, 'Explore Funland' → #attractions). (5) Stats counters animate correctly: 12,000+ Happy kids, 7 Fun activities, 100% Safe & supervised, 5★ Loved by parents. (6) About section with 4 pillars (Play, Explore, Experience, Memories) all visible. (7) Attractions grid shows all 5 items: Indoor Play Zone, Trampoline, Electric Cars, Scooter Rides, VR & AR Games. (8) How it works section with 3 steps. (9) Gallery bento grid with 10 images, lightbox opens on click, keyboard navigation works (ArrowRight advances, ArrowLeft goes back, Escape closes). (10) Pricing shows 7 cards, Full Play Zone Package has 'MOST POPULAR' badge at ₹250. (11) Safety section visible. (12) Reviews carousel with 4 reviews, scrolls horizontally on mobile. (13) Birthday parties form validation works: empty name shows error toast, invalid mobile shows error; valid submission (name='Test Parent', mobile='6360921458') shows success toast 'Enquiry sent!'. (14) FAQ accordion expands/collapses correctly (verified visually in screenshots - all 7 FAQs present). (15) Visit section with Google Maps iframe embedded, address, hours, contact info visible. (16) Footer with logo. (17) Floating desktop CTAs (WhatsApp + Phone) visible bottom-right. (18) Mobile: hamburger menu opens full-screen with logo at top-left, nav items visible. (19) Mobile: sticky bottom bar (Book Now, WhatsApp, Call) visible, no text truncation at 390px width. (20) No horizontal overflow on mobile. (21) No console errors (ignoring harmless DataCloneError). All sections render correctly, all interactions work as expected."
+
+  - task: "Multi-step booking UI (/book)"
+    implemented: true
+    working: true
     file: "app/book/page.js"
     stuck_count: 0
     priority: "high"
@@ -176,26 +191,29 @@ frontend:
     status_history:
         - working: "NA"
           agent: "main"
-          comment: "4-step flow with progress bar, activity selection (query param preselect), date/time slots, parent/children details validation, animated confetti success. Not yet frontend-tested (awaiting user permission)."
+          comment: "4-step flow: (1) activity selection (7 activities incl. Full Play Zone Package as popular), (2) date/time slot + children count, (3) parent details + children names + agree checkbox, (4) confirmation with confetti + booking reference. Live price summary sidebar. Uses ?activity= URL param for preselect. POSTs to /api/bookings. Validation: 10-digit mobile, required fields, agree checkbox."
+        - working: true
+          agent: "testing"
+          comment: "✅ ALL TESTS PASSED. Verified: (1) Booking page loads with logo (logo-sm.png) in top bar, 'Home' link works. (2) Progress bar shows 4 steps: Activity, Date & Time, Your details, Confirmation. (3) Step 1: All 7 activities visible, Full Play Zone Package has 'POPULAR' badge, selection works, Continue advances to step 2. (4) Step 2: Date picker accepts future dates, time slot selection works (tested 5:00 PM), children count increment/decrement works (tested setting to 2), live summary sidebar updates correctly showing ₹500 (2 × ₹250), Continue advances to step 3. (5) Step 3 validation: Empty parent name → error toast 'Enter parent name'; invalid mobile (5 digits) → error toast 'Enter a valid 10-digit mobile'; unchecked agree checkbox → error toast 'Please agree to the safety rules'. All validation working correctly. (6) Step 3 submission: Filled parent='Test Parent', mobile='6360921458', child1='Child One', child2='Child Two', checked agree, clicked 'Confirm booking'. (7) Step 4: Success screen shows 'Booking confirmed! 🎉', confetti animation fires, booking reference displayed (8-char uppercase UUID: A5E7CB39), summary shows activity='Full Play Zone Package', total='₹500', date='2026-09-24', slot='5:00 PM'. WhatsApp share and 'Back to home' buttons present. (8) Preselect test: Navigated to /book?activity=Trampoline, verified Trampoline is preselected (has ring-rose-500 class). All booking flow functionality working perfectly, API integration successful, validation robust, confetti animation delightful."
 
 metadata:
   created_by: "main_agent"
   version: "1.0"
-  test_sequence: 2
+  test_sequence: 3
   run_ui: false
 
 test_plan:
   current_focus:
-    - "Create booking (POST /api/bookings)"
-    - "List bookings (GET /api/bookings)"
-    - "Create enquiry (POST /api/enquiries)"
-    - "API root ping (GET /api)"
+    - "Home page — hero, nav, about, attractions, gallery, pricing, parties, faq, visit sections"
+    - "Multi-step booking UI (/book)"
   stuck_tasks: []
   test_all: false
   test_priority: "high_first"
 
 agent_communication:
     - agent: "main"
-      message: "Please verify all backend endpoints. Booking POST requires strict 10-digit numeric mobile validation. Both endpoints must persist to MongoDB and return the created doc under the appropriate key (booking / enquiry) along with { ok: true }. Test with valid payload, missing required fields (should be 400), and invalid mobile format (should be 400). Then GET /api/bookings should return items array."
+      message: "Backend already verified. Please test the FRONTEND now: (1) Home page across desktop 1440px + mobile 390px viewports covering all sections, (2) Navbar scroll morph + working mobile hamburger, (3) Gallery lightbox open + keyboard arrows + close, (4) FAQ accordion expand/collapse, (5) Birthday parties enquiry form submission (should show success toast), (6) Full booking end-to-end at /book — pick 'Full Play Zone Package', pick a future date + slot, fill parent name 'Test Parent', mobile '6360921458', child name, check agree, submit and verify confetti + booking reference shown. Also verify validation errors appear (invalid mobile / no activity)."
     - agent: "testing"
       message: "✅ Backend testing complete - ALL 8 TESTS PASSED (100%). Fixed minor serialization issue: MongoDB _id field was being returned in POST responses for bookings and enquiries (added delete doc._id after insertOne calls). All endpoints now working correctly: (1) GET /api/ returns 200 with ok:true. (2) POST /api/bookings validates all required fields and mobile format, returns 201 with UUID id, no _id. (3) GET /api/bookings returns items array sorted by createdAt desc, _id excluded. (4) POST /api/enquiries validates name and mobile, returns 201 with UUID id, no _id. (5) CORS headers present on OPTIONS requests. All validation, persistence, and error handling working as expected."
+    - agent: "testing"
+      message: "✅ FRONTEND TESTING COMPLETE - ALL TESTS PASSED (100%). Comprehensive testing completed on both desktop (1440x900) and mobile (390x844) viewports. HOME PAGE: All sections working perfectly - preloader with real logo, sticky nav with glass morph effect, animated hero with working CTAs, stats counters (12,000+, 7, 100%, 5★), about section with 4 pillars, attractions grid (5 items), how it works, gallery with lightbox and keyboard navigation (ArrowRight/Left/Escape), pricing with MOST POPULAR badge on Full Play Zone Package (₹250), safety section, reviews carousel, birthday parties form with validation and successful submission, FAQ accordion (all 7 FAQs expand/collapse correctly), visit section with Google Maps, footer, floating desktop CTAs, mobile hamburger menu, mobile sticky bottom bar (no truncation). BOOKING FLOW: Complete 4-step flow working - activity selection with POPULAR badge, date/time/count selection with live summary (₹500 for 2 children), validation on step 3 (empty name, invalid mobile, unchecked agree all show error toasts), successful submission shows confetti animation + booking reference (A5E7CB39) + summary. Preselect via ?activity=Trampoline works. NO console errors, NO horizontal overflow on mobile. Site is production-ready! 🎉"
