@@ -3,7 +3,7 @@ import { Providers } from './providers'
 import { Toaster } from 'sonner'
 
 export const metadata = {
-  metadataBase: new URL('https://sarojanifunland.vercel.app'),
+  metadataBase: new URL('https://www.sarojanifunland.in'),
   title: {
     default: 'Sarojani Funland | Kids Play Area, Trampoline & VR in Mysuru',
     template: '%s | Sarojani Funland Mysuru',
@@ -19,7 +19,7 @@ export const metadata = {
   openGraph: {
     title: 'Sarojani Funland | Kids Play Area in Mysuru',
     description: 'Trampolines, electric cars, VR games and more. Book your visit at Hotel Continental, Nazarbad.',
-    url: 'https://sarojanifunland.vercel.app',
+    url: 'https://www.sarojanifunland.in',
     siteName: 'Sarojani Funland',
     images: [{ url: '/images/new/hero-wide.jpg', width: 1200, height: 630, alt: 'Sarojani Funland Mysuru' }],
     locale: 'en_IN',
@@ -46,8 +46,8 @@ const jsonLd = {
   '@context': 'https://schema.org',
   '@type': 'AmusementPark',
   name: 'Sarojani Funland',
-  image: 'https://sarojanifunland.vercel.app/images/new/hero-wide.jpg',
-  url: 'https://sarojanifunland.vercel.app',
+  image: 'https://www.sarojanifunland.in/images/new/hero-wide.jpg',
+  url: 'https://www.sarojanifunland.in',
   telephone: '+91 63609 21458',
   email: 'sarojanifunland@gmail.com',
   priceRange: '₹₹',
