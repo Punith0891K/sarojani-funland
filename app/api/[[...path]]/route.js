@@ -1,9 +1,22 @@
 import { NextResponse } from 'next/server'
 import { MongoClient } from 'mongodb'
 import { v4 as uuidv4 } from 'uuid'
+import { createClient } from '@supabase/supabase-js'
 
 const uri = process.env.MONGO_URL
 const dbName = process.env.DB_NAME || 'sarojani_funland'
+
+const SUPABASE_URL = process.env.NEXT_PUBLIC_SUPABASE_URL || process.env.SUPABASE_URL
+const SUPABASE_KEY = process.env.SUPABASE_SERVICE_ROLE_KEY || process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY || process.env.SUPABASE_ANON_KEY
+
+let supabase = null
+if (SUPABASE_URL && SUPABASE_KEY) {
+  try {
+    supabase = createClient(SUPABASE_URL, SUPABASE_KEY, { auth: { persistSession: false } })
+  } catch (e) {
+    console.error('Supabase init failed', e)
+  }
+}
 
 let cached = global._mongo
 if (!cached) cached = global._mongo = { conn: null, promise: null }
@@ -69,6 +82,26 @@ async function route(request, { params }) {
       }
       await db.collection('bookings').insertOne(doc)
       delete doc._id
+
+      // Mirror to Supabase (matches user's existing table schema)
+      if (supabase) {
+        try {
+          await supabase.from('bookings').insert({
+            parent_name: doc.parentName,
+            child_name: (doc.childrenNames && doc.childrenNames.join(', ')) || '',
+            mobile: doc.mobile,
+            activity: `${doc.activity} - ₹${doc.unitPrice}`,
+            booking_date: doc.date,
+            time_slot: doc.timeSlot,
+            notes: doc.notes || null,
+            total_amount: doc.totalAmount,
+            children_count: doc.childrenCount,
+          })
+        } catch (e) {
+          console.error('Supabase mirror failed', e?.message || e)
+        }
+      }
+
       return NextResponse.json({ ok: true, booking: doc }, { status: 201, headers: CORS })
     }
 

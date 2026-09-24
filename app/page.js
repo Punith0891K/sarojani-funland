@@ -462,13 +462,16 @@ function Gallery() {
   const [active, setActive] = useState(null)
   useEffect(() => {
     if (active === null) return
+    // Body scroll lock
+    const original = document.body.style.overflow
+    document.body.style.overflow = 'hidden'
     const onKey = (e) => {
       if (e.key === 'Escape') setActive(null)
       if (e.key === 'ArrowRight') setActive((a) => (a + 1) % GALLERY.length)
       if (e.key === 'ArrowLeft') setActive((a) => (a - 1 + GALLERY.length) % GALLERY.length)
     }
     window.addEventListener('keydown', onKey)
-    return () => window.removeEventListener('keydown', onKey)
+    return () => { window.removeEventListener('keydown', onKey); document.body.style.overflow = original }
   }, [active])
   return (
     <section id="gallery" className="relative py-16 sm:py-24 bg-gradient-to-b from-rose-50/40 via-white to-amber-50/30 overflow-hidden">
@@ -527,9 +530,18 @@ function Gallery() {
             </button>
             <motion.div key={active} initial={{ scale: 0.94, opacity: 0, y: 12 }} animate={{ scale: 1, opacity: 1, y: 0 }} exit={{ scale: 0.96, opacity: 0 }}
               transition={{ duration: 0.35, ease: [0.16, 1, 0.3, 1] }}
-              className="relative w-full max-w-5xl aspect-[16/10]" onClick={(e) => e.stopPropagation()}>
-              <Image src={GALLERY[active].src} alt={GALLERY[active].title} fill sizes="100vw" className="object-contain rounded-2xl" priority />
+              className="relative w-full max-w-5xl aspect-[16/10] touch-pan-y"
+              onClick={(e) => e.stopPropagation()}
+              drag="x"
+              dragConstraints={{ left: 0, right: 0 }}
+              dragElastic={0.2}
+              onDragEnd={(e, info) => {
+                if (info.offset.x < -70) setActive((a) => (a + 1) % GALLERY.length)
+                else if (info.offset.x > 70) setActive((a) => (a - 1 + GALLERY.length) % GALLERY.length)
+              }}>
+              <Image src={GALLERY[active].src} alt={GALLERY[active].title} fill sizes="100vw" className="object-contain rounded-2xl pointer-events-none select-none" priority />
               <div className="absolute -bottom-10 left-0 right-0 text-center text-white/85 font-medium">{GALLERY[active].title} · {active + 1} / {GALLERY.length}</div>
+              <div className="sm:hidden absolute top-3 left-1/2 -translate-x-1/2 text-white/60 text-[10px] tracking-widest uppercase">Swipe →</div>
             </motion.div>
           </motion.div>
         )}
@@ -650,31 +662,60 @@ function Safety() {
 
 /* ---------- Reviews ---------- */
 function Reviews() {
+  const scrollerRef = useRef(null)
+  useEffect(() => {
+    const el = scrollerRef.current
+    if (!el) return
+    let isDown = false, startX = 0, scrollLeft = 0
+    const down = (e) => { isDown = true; el.classList.add('cursor-grabbing'); startX = (e.pageX ?? e.touches?.[0]?.pageX) - el.offsetLeft; scrollLeft = el.scrollLeft }
+    const up = () => { isDown = false; el.classList.remove('cursor-grabbing') }
+    const move = (e) => { if (!isDown) return; e.preventDefault(); const x = (e.pageX ?? e.touches?.[0]?.pageX) - el.offsetLeft; el.scrollLeft = scrollLeft - (x - startX) * 1.4 }
+    el.addEventListener('mousedown', down); el.addEventListener('mouseleave', up); el.addEventListener('mouseup', up); el.addEventListener('mousemove', move)
+    return () => { el.removeEventListener('mousedown', down); el.removeEventListener('mouseleave', up); el.removeEventListener('mouseup', up); el.removeEventListener('mousemove', move) }
+  }, [])
+  const scrollBy = (dir) => {
+    const el = scrollerRef.current
+    if (!el) return
+    el.scrollBy({ left: dir * (el.clientWidth * 0.9), behavior: 'smooth' })
+  }
   return (
     <section className="relative py-16 sm:py-24 bg-gradient-to-b from-white to-amber-50/60 overflow-hidden">
       <div className="pointer-events-none absolute top-20 -right-24 h-80 w-80 rounded-full bg-rose-200/25 blur-3xl" />
       <div className="pointer-events-none absolute bottom-20 -left-24 h-72 w-72 rounded-full bg-amber-200/30 blur-3xl" />
       <div className="max-w-7xl mx-auto px-6 relative">
         <Reveal>
-          <div className="text-center max-w-2xl mx-auto">
-            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-rose-100 text-rose-700 text-xs font-semibold uppercase tracking-wider">Parents love us</div>
-            <h2 className="mt-4 font-display text-4xl sm:text-6xl font-extrabold text-slate-900">Stories from happy families</h2>
+          <div className="flex flex-col sm:flex-row sm:items-end sm:justify-between gap-6">
+            <div className="max-w-2xl">
+              <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-rose-100 text-rose-700 text-xs font-semibold uppercase tracking-wider">Parents love us</div>
+              <h2 className="mt-4 font-display text-4xl sm:text-6xl font-extrabold text-slate-900 leading-[1.02]">Stories from happy families</h2>
+              <div className="mt-3 flex items-center gap-2 text-sm text-slate-600">
+                <span className="inline-flex items-center gap-1 text-amber-600 font-semibold">{Array.from({ length: 5 }).map((_, i) => <Star key={i} className="h-4 w-4 fill-amber-500" />)}</span>
+                <span className="font-medium text-slate-800">5.0</span>
+                <span>· 23 Google reviews</span>
+              </div>
+            </div>
+            <div className="hidden sm:flex items-center gap-2">
+              <button onClick={() => scrollBy(-1)} aria-label="Previous reviews" className="h-11 w-11 rounded-full bg-white border border-slate-200 hover:border-rose-300 grid place-items-center shadow-soft transition"><svg viewBox="0 0 24 24" className="h-5 w-5 text-slate-700" fill="none" stroke="currentColor" strokeWidth="2.4" strokeLinecap="round" strokeLinejoin="round"><polyline points="15 18 9 12 15 6"/></svg></button>
+              <button onClick={() => scrollBy(1)} aria-label="Next reviews" className="h-11 w-11 rounded-full brand-gradient text-white grid place-items-center shadow-glow hover:brightness-110 transition"><svg viewBox="0 0 24 24" className="h-5 w-5" fill="none" stroke="currentColor" strokeWidth="2.4" strokeLinecap="round" strokeLinejoin="round"><polyline points="9 18 15 12 9 6"/></svg></button>
+            </div>
           </div>
         </Reveal>
-        <div className="mt-12 overflow-x-auto no-scrollbar -mx-6 px-6">
+        <div ref={scrollerRef} className="mt-10 overflow-x-auto no-scrollbar -mx-6 px-6 cursor-grab select-none scroll-smooth">
           <div className="flex gap-5 snap-x snap-mandatory">
             {REVIEWS.map((r, i) => (
               <motion.figure key={i} initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ duration: 0.5, delay: i * 0.05 }}
-                className="snap-start shrink-0 w-[85%] sm:w-[420px] rounded-3xl bg-gradient-to-br from-rose-50 to-amber-50 border border-rose-100 p-7 shadow-soft">
-                <div className="flex gap-0.5 text-amber-500">{Array.from({ length: r.rating }).map((_, k) => <Star key={k} className="h-4 w-4 fill-amber-500" />)}</div>
-                <blockquote className="mt-4 text-slate-800 text-lg leading-relaxed">“{r.text}”</blockquote>
-                <figcaption className="mt-5 flex items-center gap-3">
-                  <div className="h-10 w-10 rounded-full brand-gradient grid place-items-center text-white font-bold">{r.name[0]}</div>
-                  <div className="flex-1 min-w-0">
-                    <div className="font-semibold text-slate-900 truncate">{r.name}</div>
-                    <div className="text-xs text-slate-500 truncate">{r.badge || 'Verified visitor'}</div>
+                className="snap-start shrink-0 w-[85%] sm:w-[420px] rounded-3xl bg-gradient-to-br from-white to-rose-50 border border-rose-100 p-6 sm:p-7 shadow-soft">
+                <div className="flex items-center justify-between">
+                  <div className="flex gap-0.5 text-amber-500">{Array.from({ length: r.rating }).map((_, k) => <Star key={k} className="h-4 w-4 fill-amber-500" />)}</div>
+                  <svg viewBox="0 0 48 48" className="h-5 w-5" aria-label="Google review"><path fill="#4285F4" d="M24 9.5c3.5 0 6.2 1.5 7.6 2.8l5.5-5.3C33.8 3.7 29.4 2 24 2 14.9 2 7.2 7.1 3.7 14.5l6.5 5c1.7-5.1 6.4-8.9 13.8-9.9z"/><path fill="#34A853" d="M46.5 24.6c0-1.6-.1-3.1-.4-4.6H24v9.2h12.7c-.5 2.9-2.2 5.3-4.7 7l7.2 5.6c4.2-3.9 7.3-9.6 7.3-17.2z"/><path fill="#FBBC05" d="M10.2 28.6c-.4-1.3-.7-2.6-.7-4.1s.2-2.8.7-4.1l-6.5-5C1.9 18.4 1 21.1 1 24.5s.9 6.1 2.7 9.1l6.5-5z"/><path fill="#EA4335" d="M24 47c5.4 0 10-1.8 13.3-4.9l-7.2-5.6c-2 1.4-4.7 2.3-6.1 2.3-7 0-11-3.9-12.8-9.2l-6.5 5C7.2 41 14.9 47 24 47z"/></svg>
+                </div>
+                <blockquote className="mt-4 text-slate-800 text-base sm:text-lg leading-relaxed">“{r.text}”</blockquote>
+                <figcaption className="mt-5 flex items-center gap-3 pt-4 border-t border-rose-100">
+                  <div className="h-11 w-11 rounded-full brand-gradient grid place-items-center text-white font-bold text-lg shrink-0">{r.name[0]}</div>
+                  <div className="min-w-0">
+                    <div className="font-semibold text-slate-900 text-base">{r.name}</div>
+                    <div className="text-xs text-slate-500">{r.badge || 'Verified visitor'}</div>
                   </div>
-                  <svg viewBox="0 0 48 48" className="h-5 w-5 shrink-0" aria-label="Google review"><path fill="#4285F4" d="M24 9.5c3.5 0 6.2 1.5 7.6 2.8l5.5-5.3C33.8 3.7 29.4 2 24 2 14.9 2 7.2 7.1 3.7 14.5l6.5 5c1.7-5.1 6.4-8.9 13.8-9.9z"/><path fill="#34A853" d="M46.5 24.6c0-1.6-.1-3.1-.4-4.6H24v9.2h12.7c-.5 2.9-2.2 5.3-4.7 7l7.2 5.6c4.2-3.9 7.3-9.6 7.3-17.2z"/><path fill="#FBBC05" d="M10.2 28.6c-.4-1.3-.7-2.6-.7-4.1s.2-2.8.7-4.1l-6.5-5C1.9 18.4 1 21.1 1 24.5s.9 6.1 2.7 9.1l6.5-5z"/><path fill="#EA4335" d="M24 47c5.4 0 10-1.8 13.3-4.9l-7.2-5.6c-2 1.4-4.7 2.3-6.1 2.3-7 0-11-3.9-12.8-9.2l-6.5 5C7.2 41 14.9 47 24 47z"/></svg>
                 </figcaption>
               </motion.figure>
             ))}

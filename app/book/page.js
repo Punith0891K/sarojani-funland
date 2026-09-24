@@ -6,9 +6,10 @@ import { useSearchParams } from 'next/navigation'
 import { motion, AnimatePresence } from 'framer-motion'
 import confetti from 'canvas-confetti'
 import { toast } from 'sonner'
+import { jsPDF } from 'jspdf'
 import {
   ArrowLeft, ArrowRight, Check, User, Phone, CalendarDays, Clock, Sparkles,
-  Rocket, Car, Bike, Gamepad2, PartyPopper, Users, Baby, ShieldCheck, Home,
+  Rocket, Car, Bike, Gamepad2, PartyPopper, Users, Baby, ShieldCheck, Home, Download, Share2,
 } from 'lucide-react'
 
 const ACTIVITIES = [
@@ -22,6 +23,105 @@ const ACTIVITIES = [
 ]
 
 const SLOTS = ['11:00 AM','12:00 PM','1:00 PM','2:00 PM','3:00 PM','4:00 PM','5:00 PM','6:00 PM','7:00 PM','8:00 PM','9:00 PM']
+
+function buildReceiptText(b, parentName) {
+  return [
+    '🎉 SAROJANI FUNLAND — Booking Receipt',
+    '',
+    `Reference: ${b.bookingRef || (b.id || '').slice(0, 8).toUpperCase()}`,
+    `Guest: ${parentName || b.parentName}`,
+    `Activity: ${b.activity}`,
+    `Date: ${b.date}`,
+    `Slot: ${b.timeSlot}`,
+    `Children: ${b.childrenCount}`,
+    `Total: ₹${b.totalAmount}`,
+    `Status: ${b.status || 'confirmed'}`,
+    '',
+    '📍 Hotel Continental, Ground Floor,',
+    '    Residency Road, Nazarbad, Mysuru 570010',
+    '📞 +91 63609 21458',
+    '',
+    'Show this reference at the counter. See you soon!',
+  ].join('\n')
+}
+
+function shareReceipt(b, parentName) {
+  const text = buildReceiptText(b, parentName)
+  const url = `https://wa.me/?text=${encodeURIComponent(text)}`
+  window.open(url, '_blank', 'noopener,noreferrer')
+}
+
+function downloadReceipt(b, parentName, mobile, names) {
+  const doc = new jsPDF({ unit: 'pt', format: 'a5' })
+  const W = doc.internal.pageSize.getWidth()
+  const H = doc.internal.pageSize.getHeight()
+
+  // Colored header band
+  doc.setFillColor(225, 29, 72)
+  doc.rect(0, 0, W, 90, 'F')
+  doc.setFillColor(245, 158, 11)
+  doc.rect(0, 90, W, 10, 'F')
+
+  doc.setTextColor(255, 255, 255)
+  doc.setFont('helvetica', 'bold')
+  doc.setFontSize(22)
+  doc.text('SAROJANI FUNLAND', W / 2, 42, { align: 'center' })
+  doc.setFont('helvetica', 'normal')
+  doc.setFontSize(11)
+  doc.text('Booking Receipt', W / 2, 62, { align: 'center' })
+
+  // Reference box
+  doc.setTextColor(15, 23, 42)
+  doc.setFont('helvetica', 'bold')
+  doc.setFontSize(10)
+  doc.text('BOOKING REFERENCE', 32, 130)
+  doc.setFillColor(255, 244, 242)
+  doc.roundedRect(32, 138, W - 64, 40, 8, 8, 'F')
+  doc.setFontSize(20)
+  doc.setTextColor(225, 29, 72)
+  doc.text(String(b.bookingRef || (b.id || '').slice(0, 8).toUpperCase()), 46, 166)
+
+  // Details
+  doc.setTextColor(30, 41, 59)
+  doc.setFontSize(11)
+  const rows = [
+    ['Guest', parentName || b.parentName || '-'],
+    ['Mobile', mobile || b.mobile || '-'],
+    ['Activity', b.activity || '-'],
+    ['Date', b.date || '-'],
+    ['Time Slot', b.timeSlot || '-'],
+    ['Children', String(b.childrenCount || 1)],
+    ...(Array.isArray(names) && names.length ? [['Names', names.filter(Boolean).join(', ')]] : []),
+    ['Amount', `INR ${b.totalAmount}`],
+    ['Status', (b.status || 'confirmed').toUpperCase()],
+  ]
+  let y = 210
+  rows.forEach(([k, v]) => {
+    doc.setFont('helvetica', 'normal'); doc.setTextColor(100, 116, 139)
+    doc.text(k, 32, y)
+    doc.setFont('helvetica', 'bold'); doc.setTextColor(15, 23, 42)
+    const lines = doc.splitTextToSize(String(v), W - 140)
+    doc.text(lines, 128, y)
+    y += 14 * Math.max(1, lines.length) + 4
+  })
+
+  // Footer
+  const footY = H - 80
+  doc.setDrawColor(226, 232, 240)
+  doc.line(32, footY, W - 32, footY)
+  doc.setFont('helvetica', 'normal')
+  doc.setTextColor(71, 85, 105)
+  doc.setFontSize(9)
+  doc.text('Hotel Continental, Ground Floor, Residency Road,', W / 2, footY + 18, { align: 'center' })
+  doc.text('Nazarbad, Mysuru - 570010, Karnataka', W / 2, footY + 32, { align: 'center' })
+  doc.text('+91 63609 21458  •  sarojanifunland@gmail.com', W / 2, footY + 46, { align: 'center' })
+  doc.setFont('helvetica', 'italic')
+  doc.text('Show this reference at the counter. Thank you!', W / 2, footY + 64, { align: 'center' })
+
+  doc.save(`Sarojani-Funland-${b.bookingRef || 'booking'}.pdf`)
+}
+
+
 
 function BookingInner() {
   const params = useSearchParams()
@@ -250,8 +350,9 @@ function BookingInner() {
                       <div className="mt-3 text-xs text-slate-500">Show this reference at the counter. A copy has been saved to our records.</div>
                     </div>
                   )}
-                  <div className="mt-6 flex flex-col sm:flex-row items-center justify-center gap-3">
-                    <a href="https://wa.me/916360921458" target="_blank" rel="noopener" className="inline-flex items-center gap-2 px-5 py-3 rounded-full bg-emerald-500 text-white font-semibold">Share on WhatsApp</a>
+                  <div className="mt-6 flex flex-col sm:flex-row items-center justify-center gap-3 flex-wrap">
+                    <button onClick={() => downloadReceipt(done, parent, mobile, names)} className="inline-flex items-center gap-2 px-5 py-3 rounded-full bg-slate-900 text-white font-semibold hover:bg-slate-800 transition"><Download className="h-4 w-4" /> Download receipt</button>
+                    <button onClick={() => shareReceipt(done, parent)} className="inline-flex items-center gap-2 px-5 py-3 rounded-full bg-emerald-500 text-white font-semibold hover:bg-emerald-600 transition"><Share2 className="h-4 w-4" /> Share on WhatsApp</button>
                     <Link href="/" className="inline-flex items-center gap-2 px-5 py-3 rounded-full brand-gradient text-white font-semibold">Back to home <ArrowRight className="h-4 w-4" /></Link>
                   </div>
                 </motion.div>
