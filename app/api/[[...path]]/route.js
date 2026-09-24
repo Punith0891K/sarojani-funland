@@ -1,39 +1,86 @@
 import { NextResponse } from 'next/server'
+import { timingSafeEqual } from 'crypto'
 import { MongoClient } from 'mongodb'
-import { v4 as uuidv4 } from 'uuid'
-import { createClient } from '@supabase/supabase-js'
+import { getSupabaseAdmin } from '@/lib/supabase/server'
 
-const uri = process.env.MONGO_URL
-const dbName = process.env.DB_NAME || 'sarojani_funland'
+/* ------------------------------------------------------------------ *
+ * Primary database: Supabase (tables defined in supabase/schema.sql)
+ * Optional mirror : MongoDB — only used when MONGO_URL is set
+ * ------------------------------------------------------------------ */
 
-const SUPABASE_URL = process.env.NEXT_PUBLIC_SUPABASE_URL || process.env.SUPABASE_URL
-const SUPABASE_KEY = process.env.SUPABASE_SERVICE_ROLE_KEY || process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY || process.env.SUPABASE_ANON_KEY
-
-let supabase = null
-if (SUPABASE_URL && SUPABASE_KEY) {
-  try {
-    supabase = createClient(SUPABASE_URL, SUPABASE_KEY, { auth: { persistSession: false } })
-  } catch (e) {
-    console.error('Supabase init failed', e)
-  }
-}
+const mongoUri = process.env.MONGO_URL
+const mongoDbName = process.env.DB_NAME || 'sarojani_funland'
 
 let cached = global._mongo
 if (!cached) cached = global._mongo = { conn: null, promise: null }
 
-async function getDb() {
+async function getMongoDb() {
   if (cached.conn) return cached.conn
   if (!cached.promise) {
-    cached.promise = MongoClient.connect(uri, { maxPoolSize: 10 }).then((c) => c.db(dbName))
+    cached.promise = MongoClient.connect(mongoUri, { maxPoolSize: 10 }).then((c) => c.db(mongoDbName))
   }
   cached.conn = await cached.promise
   return cached.conn
+}
+
+// Best-effort copy into MongoDB. Never fails the request.
+async function mirrorToMongo(collection, doc) {
+  if (!mongoUri) return
+  try {
+    const db = await getMongoDb()
+    await db.collection(collection).insertOne({ ...doc })
+  } catch (e) {
+    console.error(`Mongo mirror (${collection}) failed:`, e?.message || e)
+  }
 }
 
 const CORS = {
   'Access-Control-Allow-Origin': '*',
   'Access-Control-Allow-Methods': 'GET,POST,PUT,DELETE,OPTIONS',
   'Access-Control-Allow-Headers': 'Content-Type, Authorization',
+}
+
+const json = (body, status = 200) => NextResponse.json(body, { status, headers: CORS })
+
+// Guards the customer list. Set ADMIN_API_TOKEN and send `Authorization: Bearer <token>`.
+function isAdmin(request) {
+  const token = process.env.ADMIN_API_TOKEN
+  if (!token) return false
+  const given = (request.headers.get('authorization') || '').replace(/^Bearer\s+/i, '')
+  const a = Buffer.from(given)
+  const b = Buffer.from(token)
+  return a.length === b.length && timingSafeEqual(a, b)
+}
+
+// Booking reference is derived from the row id (unique, no extra column needed)
+const refFromId = (id) => `SFL-${String(id).padStart(4, '0')}`
+
+// The existing table stores activity as "Title - ₹Price"; split it back apart
+function splitActivity(value = '') {
+  const m = String(value).match(/^(.*) - ₹\s*([\d.]+)$/)
+  return m ? { activity: m[1], unitPrice: Number(m[2]) } : { activity: String(value), unitPrice: 0 }
+}
+
+// DB row (snake_case) -> API shape (camelCase) the frontend already expects
+function toBooking(row, overrides = {}) {
+  const { activity, unitPrice } = splitActivity(row.activity)
+  return {
+    id: row.id,
+    bookingRef: refFromId(row.id),
+    parentName: row.parent_name,
+    childrenCount: row.children_count,
+    childrenNames: row.child_name ? row.child_name.split(', ') : [],
+    mobile: row.mobile,
+    activity,
+    unitPrice,
+    totalAmount: Number(row.total_amount),
+    date: row.booking_date,
+    timeSlot: row.time_slot,
+    notes: row.notes || '',
+    status: 'confirmed',
+    createdAt: row.created_at,
+    ...overrides,
+  }
 }
 
 export async function OPTIONS() {
@@ -48,7 +95,37 @@ async function route(request, { params }) {
   try {
     // Root ping
     if (path === '/' && method === 'GET') {
-      return NextResponse.json({ message: 'Sarojani Funland API', ok: true }, { headers: CORS })
+      return json({ message: 'Sarojani Funland API', ok: true })
+    }
+
+    // Connectivity check: open http://localhost:3000/api/health
+    if (path === '/health' && method === 'GET') {
+      const details = process.env.NODE_ENV !== 'production' || isAdmin(request)
+      const out = {
+        ok: true,
+        env: {
+          SUPABASE_URL: Boolean(process.env.SUPABASE_URL || process.env.NEXT_PUBLIC_SUPABASE_URL),
+          SUPABASE_SECRET_KEY: Boolean(process.env.SUPABASE_SECRET_KEY),
+        },
+        tables: {},
+      }
+      let supabase
+      try {
+        supabase = getSupabaseAdmin()
+      } catch (e) {
+        return json({ ...out, ok: false, error: e.message }, 503)
+      }
+      for (const table of ['bookings', 'enquiries']) {
+        const { error } = await supabase.from(table).select('id').limit(1)
+        if (error) {
+          out.ok = false
+          console.error(`Health check: ${table} failed:`, error)
+          out.tables[table] = { ok: false, ...(details && { code: error.code, error: error.message }) }
+        } else {
+          out.tables[table] = { ok: true }
+        }
+      }
+      return json(out, out.ok ? 200 : 503)
     }
 
     // Create booking
@@ -56,88 +133,97 @@ async function route(request, { params }) {
       const body = await request.json()
       const required = ['parentName', 'mobile', 'activity', 'date', 'timeSlot']
       for (const k of required) {
-        if (!body[k]) return NextResponse.json({ error: `Missing ${k}` }, { status: 400, headers: CORS })
+        if (!body[k]) return json({ error: `Missing ${k}` }, 400)
       }
-      if (!/^[0-9]{10}$/.test(String(body.mobile))) {
-        return NextResponse.json({ error: 'Invalid mobile' }, { status: 400, headers: CORS })
-      }
-      const db = await getDb()
-      const shortId = Math.random().toString(36).slice(2, 6).toUpperCase()
-      const bookingRef = `SFL-${shortId}`
-      const doc = {
-        id: uuidv4(),
-        bookingRef,
-        parentName: body.parentName,
-        childrenCount: Number(body.childrenCount || 1),
-        childrenNames: Array.isArray(body.childrenNames) ? body.childrenNames : [],
-        mobile: body.mobile,
-        activity: body.activity,
-        unitPrice: Number(body.unitPrice || 0),
-        totalAmount: Number(body.totalAmount || 0),
-        date: body.date,
-        timeSlot: body.timeSlot,
-        notes: body.notes || '',
-        status: 'confirmed',
-        createdAt: new Date().toISOString(),
-      }
-      await db.collection('bookings').insertOne(doc)
-      delete doc._id
+      if (!/^[0-9]{10}$/.test(String(body.mobile))) return json({ error: 'Invalid mobile' }, 400)
+      if (!/^\d{4}-\d{2}-\d{2}$/.test(String(body.date))) return json({ error: 'Invalid date' }, 400)
 
-      // Mirror to Supabase (matches user's existing table schema)
-      if (supabase) {
-        try {
-          await supabase.from('bookings').insert({
-            parent_name: doc.parentName,
-            child_name: (doc.childrenNames && doc.childrenNames.join(', ')) || '',
-            mobile: doc.mobile,
-            activity: `${doc.activity} - ₹${doc.unitPrice}`,
-            booking_date: doc.date,
-            time_slot: doc.timeSlot,
-            notes: doc.notes || null,
-            total_amount: doc.totalAmount,
-            children_count: doc.childrenCount,
-          })
-        } catch (e) {
-          console.error('Supabase mirror failed', e?.message || e)
-        }
+      const childrenNames = Array.isArray(body.childrenNames) ? body.childrenNames : []
+      const unitPrice = Number(body.unitPrice || 0)
+
+      const { data: row, error } = await getSupabaseAdmin()
+        .from('bookings')
+        .insert({
+          parent_name: body.parentName,
+          child_name: childrenNames.join(', '),
+          children_count: Number(body.childrenCount || 1),
+          mobile: String(body.mobile),
+          activity: `${body.activity} - ₹${unitPrice}`,
+          booking_date: body.date,
+          time_slot: body.timeSlot,
+          notes: body.notes || null,
+          total_amount: Math.round(Number(body.totalAmount || 0)),
+          created_at: new Date().toISOString(),
+        })
+        .select()
+        .single()
+      if (error) {
+        console.error('Supabase booking insert failed:', error)
+        return json({ error: 'Could not save your booking. Please try again.' }, 500)
       }
 
-      return NextResponse.json({ ok: true, booking: doc }, { status: 201, headers: CORS })
+      const booking = toBooking(row, { childrenNames, activity: body.activity, unitPrice })
+      await mirrorToMongo('bookings', booking)
+      return json({ ok: true, booking }, 201)
     }
 
     // Enquiry (birthday / groups)
     if (path === '/enquiries' && method === 'POST') {
       const body = await request.json()
-      const db = await getDb()
-      const doc = {
-        id: uuidv4(),
-        name: body.name || '',
-        mobile: body.mobile || '',
-        type: body.type || 'birthday',
-        groupSize: Number(body.groupSize || 0),
-        preferredDate: body.preferredDate || '',
-        message: body.message || '',
-        createdAt: new Date().toISOString(),
+      const name = String(body.name || '').trim()
+      const mobile = String(body.mobile || '')
+      if (!name || !/^[0-9]{10}$/.test(mobile)) return json({ error: 'Invalid input' }, 400)
+
+      const { data, error } = await getSupabaseAdmin()
+        .from('enquiries')
+        .insert({
+          name,
+          mobile,
+          type: body.type || 'birthday',
+          group_size: Number(body.groupSize) || 0,
+          preferred_date: body.preferredDate || null,
+          message: body.message || '',
+        })
+        .select()
+        .single()
+      if (error) {
+        console.error('Supabase enquiry insert failed:', error)
+        return json({ error: 'Could not send your enquiry. Please try again.' }, 500)
       }
-      if (!doc.name || !/^[0-9]{10}$/.test(String(doc.mobile))) {
-        return NextResponse.json({ error: 'Invalid input' }, { status: 400, headers: CORS })
+
+      const enquiry = {
+        id: data.id,
+        name: data.name,
+        mobile: data.mobile,
+        type: data.type,
+        groupSize: data.group_size,
+        preferredDate: data.preferred_date || '',
+        message: data.message || '',
+        createdAt: data.created_at,
       }
-      await db.collection('enquiries').insertOne(doc)
-      delete doc._id
-      return NextResponse.json({ ok: true, enquiry: doc }, { status: 201, headers: CORS })
+      await mirrorToMongo('enquiries', enquiry)
+      return json({ ok: true, enquiry }, 201)
     }
 
-    // List bookings (admin-ish, unauth for MVP)
+    // List bookings — contains customer names and phone numbers, so admin-only
     if (path === '/bookings' && method === 'GET') {
-      const db = await getDb()
-      const items = await db.collection('bookings').find({}, { projection: { _id: 0 } }).sort({ createdAt: -1 }).limit(50).toArray()
-      return NextResponse.json({ items }, { headers: CORS })
+      if (!isAdmin(request)) return json({ error: 'Unauthorized' }, 401)
+      const { data, error } = await getSupabaseAdmin()
+        .from('bookings')
+        .select('*')
+        .order('created_at', { ascending: false })
+        .limit(50)
+      if (error) {
+        console.error('Supabase bookings list failed:', error)
+        return json({ error: 'Server error' }, 500)
+      }
+      return json({ items: data.map((r) => toBooking(r)) })
     }
 
-    return NextResponse.json({ error: 'Not found', path }, { status: 404, headers: CORS })
+    return json({ error: 'Not found', path }, 404)
   } catch (e) {
     console.error('API error', e)
-    return NextResponse.json({ error: 'Server error', detail: String(e?.message || e) }, { status: 500, headers: CORS })
+    return json({ error: 'Server error' }, 500)
   }
 }
 

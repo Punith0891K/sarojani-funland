@@ -9,7 +9,7 @@ import { toast } from 'sonner'
 import { jsPDF } from 'jspdf'
 import {
   ArrowLeft, ArrowRight, Check, User, Phone, CalendarDays, Clock, Sparkles,
-  Rocket, Car, Bike, Gamepad2, PartyPopper, Users, Baby, ShieldCheck, Home, Download, Share2,
+  Rocket, Car, Bike, Gamepad2, PartyPopper, Users, Baby, ShieldCheck, Home, Download, Share2, Ticket,
 } from 'lucide-react'
 
 const ACTIVITIES = [
@@ -123,6 +123,79 @@ function downloadReceipt(b, parentName, mobile, names) {
 
 
 
+const RESERVE_MESSAGES = ['Reserving your spot…', 'Locking in your slot…', 'Almost there…']
+
+// Small themed box shown while the booking is being saved on the server
+function ReservingOverlay({ show }) {
+  const [i, setI] = useState(0)
+
+  useEffect(() => {
+    if (!show) return
+    setI(0)
+    const id = setInterval(() => setI((n) => Math.min(n + 1, RESERVE_MESSAGES.length - 1)), 1800)
+    return () => clearInterval(id)
+  }, [show])
+
+  const ringMask = 'radial-gradient(farthest-side, transparent calc(100% - 4px), #000 calc(100% - 4px))'
+
+  return (
+    <AnimatePresence>
+      {show && (
+        <motion.div
+          key="reserving"
+          role="status"
+          aria-live="polite"
+          className="fixed inset-0 z-[90] grid place-items-center bg-slate-900/40 backdrop-blur-sm px-6"
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          exit={{ opacity: 0 }}
+          transition={{ duration: 0.2 }}
+        >
+          <motion.div
+            initial={{ opacity: 0, scale: 0.9, y: 12 }}
+            animate={{ opacity: 1, scale: 1, y: 0 }}
+            exit={{ opacity: 0, scale: 0.96 }}
+            transition={{ duration: 0.35, ease: [0.16, 1, 0.3, 1] }}
+            className="w-full max-w-[290px] rounded-3xl bg-white px-6 py-7 text-center shadow-glow ring-1 ring-black/5"
+          >
+            <div className="relative mx-auto h-16 w-16">
+              <motion.span
+                className="absolute inset-0 rounded-full"
+                style={{
+                  background: 'conic-gradient(from 0deg, transparent 0%, #e11d48 35%, #f59e0b 65%, #0ea5e9 100%)',
+                  WebkitMask: ringMask,
+                  mask: ringMask,
+                }}
+                animate={{ rotate: 360 }}
+                transition={{ duration: 1, repeat: Infinity, ease: 'linear' }}
+              />
+              <motion.div
+                className="absolute inset-[8px] grid place-items-center rounded-full brand-gradient text-white"
+                animate={{ scale: [1, 1.08, 1] }}
+                transition={{ duration: 1.4, repeat: Infinity, ease: 'easeInOut' }}
+              >
+                <Ticket className="h-6 w-6" />
+              </motion.div>
+            </div>
+            <div className="mt-5 h-7 overflow-hidden">
+              <motion.div
+                key={i}
+                initial={{ opacity: 0, y: 8 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.3 }}
+                className="font-display text-lg font-bold text-slate-900"
+              >
+                {RESERVE_MESSAGES[i]}
+              </motion.div>
+            </div>
+            <p className="mt-1 text-xs text-slate-500">Please don’t close or refresh this page.</p>
+          </motion.div>
+        </motion.div>
+      )}
+    </AnimatePresence>
+  )
+}
+
 function BookingInner() {
   const params = useSearchParams()
   const preselect = params.get('activity')
@@ -165,8 +238,10 @@ function BookingInner() {
       if (names.some(n => !n.trim())) return toast.error('Enter each child’s name')
       if (!agree) return toast.error('Please agree to the safety rules')
     }
+    // Step 3 submits the booking; submit() moves to the confirmation step
+    // only once the server has actually saved it.
+    if (step === 3) return submit()
     setStep((s) => Math.min(4, s + 1))
-    if (step === 3) submit()
   }
   const back = () => setStep((s) => Math.max(1, s - 1))
 
@@ -211,6 +286,7 @@ function BookingInner() {
 
   return (
     <main className="relative min-h-screen bg-[radial-gradient(1200px_600px_at_10%_-10%,rgba(225,29,72,0.12),transparent_60%),radial-gradient(900px_500px_at_100%_0%,rgba(14,165,233,0.10),transparent_60%),#faf7ff] overflow-hidden">
+      <ReservingOverlay show={loading} />
       <div className="pointer-events-none absolute top-40 -left-24 h-72 w-72 rounded-full bg-amber-300/25 blur-3xl" />
       <div className="pointer-events-none absolute bottom-40 -right-24 h-80 w-80 rounded-full bg-rose-300/25 blur-3xl" />
       {/* Top bar */}
@@ -340,7 +416,7 @@ function BookingInner() {
                   {done && (
                     <div className="mt-6 mx-auto max-w-md text-left rounded-2xl bg-gradient-to-br from-rose-50 to-amber-50 border border-rose-100 p-5">
                       <div className="text-xs uppercase tracking-wider text-slate-500">Booking reference</div>
-                      <div className="font-mono text-lg font-bold brand-text tracking-wider">{done.bookingRef || done.id.slice(0, 8).toUpperCase()}</div>
+                      <div className="font-mono text-lg font-bold brand-text tracking-wider">{done.bookingRef || String(done.id).slice(0, 8).toUpperCase()}</div>
                       <div className="mt-3 grid grid-cols-2 gap-2 text-sm text-slate-700">
                         <div><div className="text-slate-500 text-xs">Activity</div>{done.activity}</div>
                         <div><div className="text-slate-500 text-xs">Total</div>₹{done.totalAmount}</div>

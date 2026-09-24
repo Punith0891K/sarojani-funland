@@ -60,33 +60,22 @@ export default function Preloader() {
             transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
             className="relative flex flex-col items-center"
           >
-            {/* Rotating gradient ring */}
-            <div className="relative">
+            {/* Logo card */}
+            <motion.div
+              className="relative rounded-3xl overflow-hidden ring-1 ring-white/15 shadow-[0_20px_60px_-15px_rgba(225,29,72,0.45)]"
+              animate={{ scale: [1, 1.02, 1] }}
+              transition={{ duration: 1.8, repeat: Infinity, ease: 'easeInOut' }}
+            >
+              <Image src="/images/logo-md.png" alt="Sarojani Funland" width={300} height={200} priority className="w-[220px] sm:w-[280px] h-auto block" />
+              {/* Shimmer sweep */}
               <motion.div
-                className="absolute inset-0 rounded-[2rem] p-[3px]"
-                style={{ background: 'conic-gradient(from 0deg, #e11d48, #facc15, #22c55e, #0ea5e9, #e11d48)' }}
-                animate={{ rotate: 360 }}
-                transition={{ duration: 3.6, repeat: Infinity, ease: 'linear' }}
-              >
-                <div className="w-full h-full rounded-[calc(2rem-3px)] bg-slate-950" />
-              </motion.div>
-              {/* Logo card */}
-              <motion.div
-                className="relative m-[6px] rounded-[calc(2rem-9px)] overflow-hidden ring-1 ring-white/10"
-                animate={{ scale: [1, 1.02, 1] }}
-                transition={{ duration: 1.8, repeat: Infinity, ease: 'easeInOut' }}
-              >
-                <Image src="/images/logo-md.png" alt="Sarojani Funland" width={300} height={200} priority className="w-[220px] sm:w-[280px] h-auto block" />
-                {/* Shimmer sweep */}
-                <motion.div
-                  initial={{ x: '-140%' }}
-                  animate={{ x: '160%' }}
-                  transition={{ duration: 1.4, ease: 'easeInOut', repeat: Infinity, repeatDelay: 0.4 }}
-                  className="pointer-events-none absolute inset-y-0 -left-1/3 w-1/3"
-                  style={{ background: 'linear-gradient(90deg, transparent, rgba(255,255,255,0.55), transparent)' }}
-                />
-              </motion.div>
-            </div>
+                initial={{ x: '-140%' }}
+                animate={{ x: '160%' }}
+                transition={{ duration: 1.4, ease: 'easeInOut', repeat: Infinity, repeatDelay: 0.4 }}
+                className="pointer-events-none absolute inset-y-0 -left-1/3 w-1/3"
+                style={{ background: 'linear-gradient(90deg, transparent, rgba(255,255,255,0.55), transparent)' }}
+              />
+            </motion.div>
 
             {/* Progress bar */}
             <div className="mt-6 w-[220px] sm:w-[280px]">
